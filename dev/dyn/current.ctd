@@ -1,17 +1,17 @@
 classes
 {
-net.jamcraft.chowtime.dyn.items.ItemCone 0.0.5
+net.jamcraft.chowtime.dyn.items.ItemCone 0.0.6
 net.jamcraft.chowtime.dyn.items.ItemStrawberryJam 0.0.2
 net.jamcraft.chowtime.dyn.items.ItemVinegar 0.0.3
 net.jamcraft.chowtime.dyn.items.ItemAJuice 0.0.2
 net.jamcraft.chowtime.dyn.items.ItemCJuice 0.0.2
 net.jamcraft.chowtime.dyn.items.ItemPJuice 0.0.4
-net.jamcraft.chowtime.dyn.items.ItemWatermellonIceCream 0.0.4
+net.jamcraft.chowtime.dyn.items.ItemWatermellonIceCream 0.0.5
 net.jamcraft.chowtime.dyn.items.ItemWMICCone 0.0.3
 net.jamcraft.chowtime.dyn.items.ItemChocoIceCreamCone 0.0.2
-net.jamcraft.chowtime.dyn.items.ItemChocoIceCream 0.0.3
+net.jamcraft.chowtime.dyn.items.ItemChocoIceCream 0.0.4
 net.jamcraft.chowtime.dyn.items.ItemStrawberryICCone 0.0.2
-net.jamcraft.chowtime.dyn.items.ItemStrawberryIceCream 0.0.1
+net.jamcraft.chowtime.dyn.items.ItemStrawberryIceCream 0.0.2
 net.jamcraft.chowtime.dyn.items.ItemAppleJam 0.0.1
 net.jamcraft.chowtime.dyn.items.ItemGrapeBread 0.0.2
 net.jamcraft.chowtime.dyn.items.ItemGrapeJam 0.0.1
