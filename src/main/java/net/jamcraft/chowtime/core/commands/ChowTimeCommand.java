@@ -69,7 +69,7 @@ public class ChowTimeCommand implements ICommand
     @Override
     public void processCommand(ICommandSender commandSender, String[] astring)
     {
-        if (astring.length != 1 || astring[0].equals("help"))
+        if (astring.length == 0 || astring[0].equals("help"))
             throw new WrongUsageException(getCommandUsage(commandSender));
         if (astring[0].equals("getXP"))
         {

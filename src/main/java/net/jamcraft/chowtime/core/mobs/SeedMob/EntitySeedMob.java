@@ -28,9 +28,11 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.Random;
 
@@ -41,13 +43,14 @@ public class EntitySeedMob extends EntityAnimal
 {
 
     private int inLove;
+    private int cooldown = 0;
     private EntityPlayer field_146084_br;
 
     public EntitySeedMob(World par1World)
     {
         super(par1World);
 
-        this.setHealth(10.0F);
+        this.setHealth(20.0F); //This is in half-hearts
         this.getNavigator().setAvoidsWater(true);
         this.getNavigator().setSpeed(0.222);
         this.setSize(0.5F, 0.8F);
@@ -64,6 +67,7 @@ public class EntitySeedMob extends EntityAnimal
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 5.0F));
         this.tasks.addTask(7, new EntityAILookIdle(this));
     }
+
 
     public boolean isAIEnabled()
     {
@@ -95,6 +99,18 @@ public class EntitySeedMob extends EntityAnimal
                 double d1 = this.rand.nextGaussian() * 0.02D;
                 double d2 = this.rand.nextGaussian() * 0.02D;
                 this.worldObj.spawnParticle(s, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d0, d1, d2);
+            }
+        }
+        if (this.cooldown > 0)
+        {
+            this.cooldown--;
+            if (cooldown % 2 == 0)
+            {
+                double d0 = this.rand.nextGaussian() * 0.02D;
+                double d1 = this.rand.nextGaussian() * 0.02D;
+                double d2 = this.rand.nextGaussian() * 0.02D;
+
+                this.worldObj.spawnParticle("smoke", this.posX + rand.nextFloat(), this.posY + 0.5D + rand.nextFloat(), this.posZ + rand.nextFloat(), d0, d1, d2);
             }
         }
     }
@@ -148,22 +164,22 @@ public class EntitySeedMob extends EntityAnimal
 
     protected String getLivingSound()
     {
-        return "mob.glog.say";
+        return "chowtime:mob.glog.say";
     }
 
     protected String getHurtSound()
     {
-        return "mob.glog.hurt";
+        return "chowtime:mob.glog.hurt";
     }
 
     protected String getDeathSound()
     {
-        return "mob.glog.death";
+        return "chowtime:mob.glog.grunt";
     }
 
     protected void playStepSound(int par1, int par2, int par3, int par4)
     {
-        this.worldObj.playSoundAtEntity(this, "mob.glog.step", 0.1F, 1.0F);
+        this.worldObj.playSoundAtEntity(this, "chowtime:mob.glog.step", 0.1F, 1.0F);
     }
 
     public boolean interact(EntityPlayer par1EntityPlayer)
@@ -173,66 +189,36 @@ public class EntitySeedMob extends EntityAnimal
         Random random = new Random();
         int n = random.nextInt(SeedRegistry.getSeeds().length);
 
-        //        if (par1EntityPlayer.inventory.getCurrentItem() == new ItemStack(Items.lead)){
-        //           if(!this.getLeashed()){
-        //            this.setLeashedToEntity(par1EntityPlayer, true);
-        //           }else{
-        //            this.setLeashedToEntity(par1EntityPlayer, false);
-        //           }
-        //        }
-        if (!worldObj.isRemote && itemstack != null && itemstack.getItem() == Items.wheat_seeds && !par1EntityPlayer.capabilities.isCreativeMode)
+        if (itemstack != null && itemstack.getItem() == Items.wheat_seeds && !par1EntityPlayer.capabilities.isCreativeMode)
         {
-            par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(SeedRegistry.getSeeds()[n], 1, 0));
-            par1EntityPlayer.inventory.consumeInventoryItem(Items.wheat_seeds);
-            par1EntityPlayer.inventoryContainer.detectAndSendChanges();
-            //Replaced with registrar code :D
-            /*    switch(n){
-                    case 0:
-                        par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(CTInits.BarleySeeds, 1, 0));
-                        par1EntityPlayer.inventory.consumeInventoryItem(Items.wheat_seeds);
-                        break;
-                    case 1:
-                        par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(CTInits.StrawberrySeeds, 1, 0));
-                        par1EntityPlayer.inventory.consumeInventoryItem(Items.wheat_seeds);
-                        break;
-                    case 2:
-                        par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(CTInits.GrapeSeeds, 1, 0));
-                        par1EntityPlayer.inventory.consumeInventoryItem(Items.wheat_seeds);
-                        break;
-                    case 3:
-                        par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(CTInits.CornSeeds, 1, 0));
-                        par1EntityPlayer.inventory.consumeInventoryItem(Items.wheat_seeds);
-                        break;
-                    case 4:
-                        par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(CTInits.RaspberrySeeds, 1, 0));
-                        par1EntityPlayer.inventory.consumeInventoryItem(Items.wheat_seeds);
-                        break;
-                    case 5:
-                        par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(CTInits.BlueberrySeeds, 1, 0));
-                        par1EntityPlayer.inventory.consumeInventoryItem(Items.wheat_seeds);
-                        break;
-                    case 6:
-                        par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(CTInits.CranberrySeeds, 1, 0));
-                        par1EntityPlayer.inventory.consumeInventoryItem(Items.wheat_seeds);
-                        break;
-                    case 7:
-                        par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(CTInits.CornSeeds, 1, 0));
-                        par1EntityPlayer.inventory.consumeInventoryItem(Items.wheat_seeds);
-                        break;
-                    case 8:
-                        par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(CTInits.TomatoSeeds, 1, 0));
-                        par1EntityPlayer.inventory.consumeInventoryItem(Items.wheat_seeds);
-                        break;
-                    default:
-                        break;
-                }*/
-            return true;
+            if (cooldown > 0)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    double d0 = this.rand.nextGaussian() * 0.02D;
+                    double d1 = this.rand.nextGaussian() * 0.02D;
+                    double d2 = this.rand.nextGaussian() * 0.02D;
+                    this.worldObj.spawnParticle("largeexplode", this.posX + this.rand.nextFloat(), this.posY + 0.5D + (double) this.rand.nextFloat(), this.posZ + this.rand.nextFloat(), d0, d1, d2);
+                }
+                this.worldObj.playSoundAtEntity(this, "chowtime:mob.glog.grunt", 0.9F, 1.0F);
+                return false;
+            }
+            else
+            {
+                if (!worldObj.isRemote)
+                {
+                    par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(SeedRegistry.getSeeds()[n], 1, 0));
+                    par1EntityPlayer.inventory.consumeInventoryItem(Items.wheat_seeds);
+                    par1EntityPlayer.inventoryContainer.detectAndSendChanges();
+                }
+                this.cooldown = 600;//30 sec.
+                return true;
+            }
         }
         else
         {
             return super.interact(par1EntityPlayer);
         }
-        //}
 
     }
 
@@ -241,7 +227,7 @@ public class EntitySeedMob extends EntityAnimal
     {
         return null;
     }
-    
+
     public boolean getCanSpawnHere()
     {
         int i = MathHelper.floor_double(this.posX);
@@ -253,6 +239,20 @@ public class EntitySeedMob extends EntityAnimal
     public EntityAgeable createChild(EntityAgeable var1)
     {
         return new EntitySeedMob(this.worldObj);
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound tags)
+    {
+        inLove=tags.getInteger("inlove");
+        cooldown=tags.getInteger("cooldown");
+    }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound tags)
+    {
+        tags.setInteger("inlove",inLove);
+        tags.setInteger("cooldown",cooldown);
     }
     //
     //    @Override

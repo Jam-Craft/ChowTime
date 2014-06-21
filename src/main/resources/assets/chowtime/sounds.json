@@ -1,0 +1,11 @@
+{
+    "mob.glog.grunt":
+    {
+        "category":"neutral",
+        "sounds":
+        [
+            "mob/glog/grunt1",
+            "mob/glog/grunt2"
+        ]
+    }
+}

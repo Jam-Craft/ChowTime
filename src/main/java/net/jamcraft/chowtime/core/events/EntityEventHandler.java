@@ -265,11 +265,11 @@ public class EntityEventHandler
                 {
                     // This needs to change slightly... if you go from 99 to
                     // 101, you never get the message...
-                    if (ChowTime.harvestXP == 20)
+                    if (ChowTime.harvestXP == 19)
                         event.entityPlayer.addChatMessage(new ChatComponentTranslation("chat.HXPGain20"));
-                    if (ChowTime.harvestXP == 100)
+                    if (ChowTime.harvestXP == 99)
                         event.entityPlayer.addChatMessage(new ChatComponentTranslation("chat.HXPGain100"));
-                    if (ChowTime.harvestXP == 300)
+                    if (ChowTime.harvestXP == 299)
                         event.entityPlayer.addChatMessage(new ChatComponentTranslation("chat.HXPGain300"));
                 }
             }
