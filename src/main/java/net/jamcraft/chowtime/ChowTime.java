@@ -18,7 +18,6 @@
 
 package net.jamcraft.chowtime;
 
-import com.google.common.base.Throwables;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -38,6 +37,7 @@ import net.jamcraft.chowtime.core.materials.CloudMaterial;
 import net.jamcraft.chowtime.core.mobs.GingerbreadMan.EntityGingerbreadMan;
 import net.jamcraft.chowtime.core.mobs.SeedMob.EntitySeedMob;
 import net.jamcraft.chowtime.core.network.PacketHandler;
+import net.jamcraft.chowtime.core.registrars.HarvestLevelRegistry;
 import net.jamcraft.chowtime.core.registrars.SeedRegistry;
 import net.jamcraft.chowtime.dyn.DynItems;
 import net.jamcraft.chowtime.dyn.DynMain;
@@ -63,7 +63,6 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.EnumMap;
 
 /**
@@ -133,15 +132,15 @@ public class ChowTime
         CTRegistry.CTItems();
         CTRegistry.CTTileEntities();
 
-//        try
-//        {
-//            Field farmland = ObfHelper.getField(Blocks.class, "farmland", "ak");
-//            ObfHelper.setFinalStatic(farmland, CTInits.CTFarmland);
-//        }
-//        catch (Exception e)
-//        {
-//            Throwables.propagate(e);
-//        }
+        //        try
+        //        {
+        //            Field farmland = ObfHelper.getField(Blocks.class, "farmland", "ak");
+        //            ObfHelper.setFinalStatic(farmland, CTInits.CTFarmland);
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Throwables.propagate(e);
+        //        }
 
         //Do this before items registered to *hopefully* remove all the annoying errors
         DynTextures.addDynTP();
@@ -167,15 +166,15 @@ public class ChowTime
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
-//        try
-//        {
-//            Field farmland = ObfHelper.getField(Blocks.class, "farmland", "ak");
-//            ObfHelper.setFinalStatic(farmland, CTInits.CTFarmland);
-//        }
-//        catch (Exception e)
-//        {
-//            Throwables.propagate(e);
-//        }
+        //        try
+        //        {
+        //            Field farmland = ObfHelper.getField(Blocks.class, "farmland", "ak");
+        //            ObfHelper.setFinalStatic(farmland, CTInits.CTFarmland);
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Throwables.propagate(e);
+        //        }
         // FMLInterModComms.sendMessage("prisoncraft", "blacklist",
         // Block.blockRegistry.getNameForObject(Blocks.bookshelf));
         FMLCommonHandler.instance().bus().register(new ConnectionHandler());
@@ -195,6 +194,15 @@ public class ChowTime
         SeedRegistry.AddSeed((ItemSeeds) CTInits.RaspberrySeeds);
         SeedRegistry.AddSeed((ItemSeeds) CTInits.StrawberrySeeds);
         SeedRegistry.AddSeed((ItemSeeds) CTInits.TomatoSeeds);
+
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropBarley, CTInits.BarleySeeds, 1);
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropBlueberry, CTInits.BlueberrySeeds, 1);
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropTomato, CTInits.TomatoSeeds, 2);
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropCranberry, CTInits.CranberrySeeds, 2);
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropRaspberry, CTInits.RaspberrySeeds, 2);
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropGrape, CTInits.GrapeSeeds, 3);
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropCorn, CTInits.CornSeeds, 4);
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropStrawberry, CTInits.StrawberrySeeds, 5);
 
         proxy.registerRenderers();
 

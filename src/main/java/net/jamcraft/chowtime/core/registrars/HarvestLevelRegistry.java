@@ -19,6 +19,7 @@
 package net.jamcraft.chowtime.core.registrars;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,29 +31,38 @@ import java.util.Map;
  */
 public class HarvestLevelRegistry
 {
-    private static  Map<Block, Integer> reg=new HashMap<Block, Integer>();
+    private static Map<Block, Integer> blockReg = new HashMap<Block, Integer>();
+    private static Map<Item, Block> seedReg = new HashMap<Item, Block>();
 
-    public static void AddBlockHavestXP(Block block, int harvestXP)
+    public static void AddBlockHavestXP(Block crop, Item seed, int harvestXP)
     {
-        reg.put(block,harvestXP);
+        blockReg.put(crop, Integer.valueOf(harvestXP));
+        seedReg.put(seed, crop);
     }
 
-    public static Block[] GetBlocks(int harvestXP)
+    public static Block[] GetCropsForLevel(int harvestXP)
     {
-        List<Block> blocks=new ArrayList<Block>();
-        for(Block b: reg.keySet())
+        List<Block> blocks = new ArrayList<Block>();
+        for (Block b : blockReg.keySet())
         {
-            if(harvestXP>=reg.get(b)) blocks.add(b);
+            if (harvestXP >= blockReg.get(b)) blocks.add(b);
         }
-        return blocks.toArray(new Block[]{});
+        return blocks.toArray(new Block[] { });
     }
 
-    public static boolean IsInList(Block block)
+    public static boolean IsCropAtLevel(Block block, int level)
     {
-        for(Block b: reg.keySet())
+        if (!blockReg.keySet().contains(block)) return false;
+        for (Block b : blockReg.keySet())
         {
-            if(b.equals(block))return true;
+            if (b.equals(block) && blockReg.get(b) == level) return true;
         }
         return false;
+    }
+
+    public static boolean IsSeedAtLevel(Item seed, int level)
+    {
+        if (!seedReg.keySet().contains(seed)) return false;
+        return IsCropAtLevel(seedReg.get(seed), level);
     }
 }

@@ -18,30 +18,25 @@
 
 package net.jamcraft.chowtime.core.events;
 
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.network.FMLNetworkEvent;
 import net.jamcraft.chowtime.ChowTime;
-import net.jamcraft.chowtime.core.CTInits;
 import net.jamcraft.chowtime.core.Config;
 import net.jamcraft.chowtime.core.crops.*;
-import net.jamcraft.chowtime.core.items.*;
+import net.jamcraft.chowtime.core.registrars.HarvestLevelRegistry;
 import net.jamcraft.chowtime.remote.RemoteMain;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockFarmland;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
-import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.WorldEvent;
 
 import java.io.*;
@@ -207,19 +202,23 @@ public class EntityEventHandler
             if (!(event.entityPlayer instanceof FakePlayer))
             {
                 boolean canHarvest = true;
+                Block block2 = event.entityPlayer.worldObj.getBlock(event.x, event.y + 1, event.z);
                 if (ChowTime.harvestXP < 20)
                 {
-                    if ((event.block instanceof CropTomato || event.entityPlayer.worldObj.getBlock(event.x, event.y + 1, event.z) instanceof CropTomato) || (event.block instanceof CropCranberry || event.entityPlayer.worldObj.getBlock(event.x, event.y + 1, event.z) instanceof CropCranberry) || (event.block instanceof CropRaspberry || event.entityPlayer.worldObj.getBlock(event.x, event.y + 1, event.z) instanceof CropRaspberry))
+                    if (HarvestLevelRegistry.IsCropAtLevel(event.block, 2) || HarvestLevelRegistry.IsCropAtLevel(block2, 2))
+                        //                    if ((event.block instanceof CropTomato || event.entityPlayer.worldObj.getBlock(event.x, event.y + 1, event.z) instanceof CropTomato) || (event.block instanceof CropCranberry || event.entityPlayer.worldObj.getBlock(event.x, event.y + 1, event.z) instanceof CropCranberry) || (event.block instanceof CropRaspberry || event.entityPlayer.worldObj.getBlock(event.x, event.y + 1, event.z) instanceof CropRaspberry))
                         canHarvest = false;
                 }
                 if (ChowTime.harvestXP < 100)
                 {
-                    if ((event.block instanceof CropCorn || event.entityPlayer.worldObj.getBlock(event.x, event.y + 1, event.z) instanceof CropCorn) || (event.block instanceof CropGrape || event.entityPlayer.worldObj.getBlock(event.x, event.y + 1, event.z) instanceof CropGrape))
+                    if (HarvestLevelRegistry.IsCropAtLevel(event.block, 3) || HarvestLevelRegistry.IsCropAtLevel(block2, 3) || HarvestLevelRegistry.IsCropAtLevel(event.block, 4) || HarvestLevelRegistry.IsCropAtLevel(block2, 4))
+                        //                    if ((event.block instanceof CropCorn || event.entityPlayer.worldObj.getBlock(event.x, event.y + 1, event.z) instanceof CropCorn) || (event.block instanceof CropGrape || event.entityPlayer.worldObj.getBlock(event.x, event.y + 1, event.z) instanceof CropGrape))
                         canHarvest = false;
                 }
                 if (ChowTime.harvestXP < 300)
                 {
-                    if ((event.block instanceof CropStrawberry || event.entityPlayer.worldObj.getBlock(event.x, event.y + 1, event.z) instanceof CropStrawberry))
+                    if (HarvestLevelRegistry.IsCropAtLevel(event.block, 5) || HarvestLevelRegistry.IsCropAtLevel(block2, 5))
+                        //                    if ((event.block instanceof CropStrawberry || event.entityPlayer.worldObj.getBlock(event.x, event.y + 1, event.z) instanceof CropStrawberry))
                         canHarvest = false;
                 }
                 if (!canHarvest)
@@ -230,15 +229,15 @@ public class EntityEventHandler
             }
             if (event.metadata == 7 && !(event.entityPlayer instanceof FakePlayer))
             {
-                if (ChowTime.harvestXP >= 0 && event.block instanceof CropBarley || event.block instanceof CropBlueberry)
+                if (ChowTime.harvestXP >= 0 && HarvestLevelRegistry.IsCropAtLevel(event.block, 1))
                     ChowTime.harvestXP++;
-                if (ChowTime.harvestXP >= 20 && event.block instanceof CropTomato || event.block instanceof CropCranberry || event.block instanceof CropRaspberry)
+                else if (ChowTime.harvestXP >= 20 && HarvestLevelRegistry.IsCropAtLevel(event.block, 2))
                     ChowTime.harvestXP += 2;
-                if (ChowTime.harvestXP >= 100 && event.block instanceof CropGrape)
+                else if (ChowTime.harvestXP >= 100 && HarvestLevelRegistry.IsCropAtLevel(event.block, 3))
                     ChowTime.harvestXP += 4;
-                if (ChowTime.harvestXP >= 100 && event.block instanceof CropCorn)
+                else if (ChowTime.harvestXP >= 100 && HarvestLevelRegistry.IsCropAtLevel(event.block, 4))
                     ChowTime.harvestXP += 5;
-                if (ChowTime.harvestXP >= 300 && event.block instanceof CropStrawberry)
+                else if (ChowTime.harvestXP >= 300 && HarvestLevelRegistry.IsCropAtLevel(event.block, 5))
                     ChowTime.harvestXP += 10;
             }
         }
@@ -279,17 +278,20 @@ public class EntityEventHandler
                 boolean canPlant = true;
                 if (ChowTime.harvestXP < 20)
                 {
-                    if (event.entityPlayer.getHeldItem().getItem() instanceof SeedCranberry || event.entityPlayer.getHeldItem().getItem() instanceof SeedTomato || event.entityPlayer.getHeldItem().getItem() instanceof SeedRaspberry)
+                    if (HarvestLevelRegistry.IsSeedAtLevel(event.entityPlayer.getHeldItem().getItem(), 2))
+                        //                    if (event.entityPlayer.getHeldItem().getItem() instanceof SeedCranberry || event.entityPlayer.getHeldItem().getItem() instanceof SeedTomato || event.entityPlayer.getHeldItem().getItem() instanceof SeedRaspberry)
                         canPlant = false;
                 }
                 if (ChowTime.harvestXP < 100)
                 {
-                    if (event.entityPlayer.getHeldItem().getItem() instanceof SeedCorn || event.entityPlayer.getHeldItem().getItem() instanceof SeedGrape)
+                    if (HarvestLevelRegistry.IsSeedAtLevel(event.entityPlayer.getHeldItem().getItem(), 3) || HarvestLevelRegistry.IsSeedAtLevel(event.entityPlayer.getHeldItem().getItem(), 4))
+                        //                    if (event.entityPlayer.getHeldItem().getItem() instanceof SeedCorn || event.entityPlayer.getHeldItem().getItem() instanceof SeedGrape)
                         canPlant = false;
                 }
                 if (ChowTime.harvestXP < 300)
                 {
-                    if (event.entityPlayer.getHeldItem().getItem() instanceof SeedStrawberry)
+                    if (HarvestLevelRegistry.IsSeedAtLevel(event.entityPlayer.getHeldItem().getItem(), 5))
+                        //                    if (event.entityPlayer.getHeldItem().getItem() instanceof SeedStrawberry)
                         canPlant = false;
                 }
                 if (!canPlant)
@@ -302,16 +304,16 @@ public class EntityEventHandler
         }
     }
 
-//    @SubscribeEvent
-//    public void useHoe(UseHoeEvent event)
-//    {
-//        Block block = event.world.getBlock(event.x, event.y, event.z);
-//        if ((block instanceof BlockDirt || block instanceof BlockGrass) && event.world.getBlock(event.x, event.y + 1, event.z) instanceof BlockAir)
-//        {
-//            event.world.playSoundEffect((double)((float)event.x + 0.5F), (double)((float)event.y + 0.5F), (double)((float)event.z + 0.5F), Blocks.farmland.stepSound.getStepResourcePath(), (Blocks.farmland.stepSound.getVolume() + 1.0F) / 2.0F, Blocks.farmland.stepSound.getPitch() * 0.8F);
-//            event.current.damageItem(1, event.entityPlayer);
-//            event.world.setBlock(event.x, event.y, event.z, CTInits.CTFarmland);
-//            event.current.useItemRightClick(event.world, event.entityPlayer);
-//        }
-//    }
+    //    @SubscribeEvent
+    //    public void useHoe(UseHoeEvent event)
+    //    {
+    //        Block block = event.world.getBlock(event.x, event.y, event.z);
+    //        if ((block instanceof BlockDirt || block instanceof BlockGrass) && event.world.getBlock(event.x, event.y + 1, event.z) instanceof BlockAir)
+    //        {
+    //            event.world.playSoundEffect((double)((float)event.x + 0.5F), (double)((float)event.y + 0.5F), (double)((float)event.z + 0.5F), Blocks.farmland.stepSound.getStepResourcePath(), (Blocks.farmland.stepSound.getVolume() + 1.0F) / 2.0F, Blocks.farmland.stepSound.getPitch() * 0.8F);
+    //            event.current.damageItem(1, event.entityPlayer);
+    //            event.world.setBlock(event.x, event.y, event.z, CTInits.CTFarmland);
+    //            event.current.useItemRightClick(event.world, event.entityPlayer);
+    //        }
+    //    }
 }
