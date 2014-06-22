@@ -47,12 +47,11 @@ public class Config
 
     public static void save()
     {
-        config.removeCategory(config.getCategory("Dynamic"));
-        config.get("Dynamic", "RemoteLocation", remoteLoc);
-        config.get("Dynamic", "ForceLocal", forceLocal);
-        config.get("Dynamic", "useDev", useDev);
-        config.removeCategory(config.getCategory("Static"));
-        config.get("Static", "RenderChowTimeInfo", shouldRenderXP);
+        config.load();
+//        config.get("Dynamic", "RemoteLocation", remoteLoc).set(remoteLoc);
+//        config.get("Dynamic", "ForceLocal", forceLocal).set(forceLocal);
+//        config.get("Dynamic", "useDev", useDev).set(useDev);
+        config.get("Static", "RenderChowTimeInfo", shouldRenderXP).set(shouldRenderXP);
         config.save();
     }
 }

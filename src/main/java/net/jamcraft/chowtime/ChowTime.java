@@ -30,6 +30,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.jamcraft.chowtime.core.*;
 import net.jamcraft.chowtime.core.commands.ChowTimeCommand;
+import net.jamcraft.chowtime.core.commands.client.ChowTimeClientCommand;
 import net.jamcraft.chowtime.core.events.ConnectionHandler;
 import net.jamcraft.chowtime.core.events.EntityEventHandler;
 import net.jamcraft.chowtime.core.events.GuiEventHandler;
@@ -55,6 +56,7 @@ import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
@@ -152,7 +154,7 @@ public class ChowTime
         MinecraftForge.EVENT_BUS.register(new EntityEventHandler());
         MinecraftForge.EVENT_BUS.register(VersionChecker.instance);
 
-        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+        if (FMLCommonHandler.instance().getEffectiveSide().isClient())
             MinecraftForge.EVENT_BUS.register(new GuiEventHandler());
 
         //        MinecraftForge.EVENT_BUS.register(BucketHandler.INSTANCE);
@@ -177,6 +179,10 @@ public class ChowTime
         //        }
         // FMLInterModComms.sendMessage("prisoncraft", "blacklist",
         // Block.blockRegistry.getNameForObject(Blocks.bookshelf));
+
+        if(FMLCommonHandler.instance().getEffectiveSide().isClient())
+            ClientCommandHandler.instance.registerCommand(new ChowTimeClientCommand());
+
         FMLCommonHandler.instance().bus().register(new ConnectionHandler());
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(CTInits.Juicer, 1, 0), "WBW", "WPW", "ISI", 'W', "plankWood", 'B', Items.glass_bottle, 'P', Blocks.piston, 'I', "ingotIron", 'S', Blocks.stone));

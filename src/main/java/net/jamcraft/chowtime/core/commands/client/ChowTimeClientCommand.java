@@ -16,9 +16,8 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core.commands;
+package net.jamcraft.chowtime.core.commands.client;
 
-import net.jamcraft.chowtime.ChowTime;
 import net.jamcraft.chowtime.core.Config;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -30,32 +29,30 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by James Hollowell on 5/24/2014.
+ * Created by James Hollowell on 6/22/2014.
  */
-public class ChowTimeCommand implements ICommand
+public class ChowTimeClientCommand implements ICommand
 {
     @SuppressWarnings("rawtypes")
     private List aliases;
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public ChowTimeCommand()
+    public ChowTimeClientCommand()
     {
         this.aliases = new ArrayList();
-        this.aliases.add("chowtime");
+        this.aliases.add("chowtimeui");
     }
 
     @Override
     public String getCommandName()
     {
-        return "chowtime";
+        return "chowtimeui";
     }
 
     @Override
     public String getCommandUsage(ICommandSender var1)
     {
-        String use = "/chowtime getXP | ";
-        use += "/chowtime setXP <xp>";
-        return use;
+        return "/chowtimeui toggleXPBar";
     }
 
     @SuppressWarnings("rawtypes")
@@ -70,21 +67,14 @@ public class ChowTimeCommand implements ICommand
     {
         if (astring.length == 0 || astring[0].equals("help"))
             throw new WrongUsageException(getCommandUsage(commandSender));
-        if (astring[0].equals("getXP"))
-        {
-            commandSender.addChatMessage(new ChatComponentTranslation("chat.getXP", ChowTime.harvestXP));
-        }
-        else if (astring[0].equals("setXP"))
-        {
-            int xp = Integer.parseInt(astring[1]);
-            ChowTime.harvestXP = xp;
-            commandSender.addChatMessage(new ChatComponentTranslation("chat.setXP", xp));
-        }
-        else if (astring[0].equals("toggleXPBar"))
+        if (astring[0].equals("toggleXPBar"))
         {
             Config.shouldRenderXP = !Config.shouldRenderXP;
+            Config.save();
             commandSender.addChatMessage(new ChatComponentTranslation("chat.toggleXPBar"));
         }
+        else
+            throw new WrongUsageException(getCommandUsage(commandSender));
     }
 
     @Override
@@ -101,8 +91,6 @@ public class ChowTimeCommand implements ICommand
         final String ARG_LC = astring[astring.length - 1].toLowerCase();
         if (astring.length == 1)
         {
-            if ("getXP".toLowerCase().startsWith(ARG_LC)) MATCHES.add("getXP");
-            if ("setXP".toLowerCase().startsWith(ARG_LC)) MATCHES.add("setXP");
             if ("toggleXPBar".toLowerCase().startsWith(ARG_LC))
                 MATCHES.add("toggleXPBar");
         }
@@ -118,10 +106,7 @@ public class ChowTimeCommand implements ICommand
     @Override
     public int compareTo(Object o)
     {
-        if(o instanceof ICommand)
-        {
-            return this.getCommandName().compareTo(((ICommand) o).getCommandName());
-        }
         return 0;
     }
 }
+
