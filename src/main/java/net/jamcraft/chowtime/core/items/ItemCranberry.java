@@ -29,7 +29,7 @@ public class ItemCranberry extends ItemFood
 {
     public ItemCranberry()
     {
-        super(1,false);
+        super(3,false);
         this.setCreativeTab(ChowTime.creativeTab);
         setUnlocalizedName("cranberry");
         this.setTextureName(ModConstants.MODID + ":cranberry");
