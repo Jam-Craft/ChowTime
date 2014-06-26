@@ -35,7 +35,7 @@ import net.minecraft.world.World;
 /**
  * Created by Kayla Marie on 5/15/14.
  */
-public class IceCreamMaker extends BlockContainer
+public class IceCreamMaker extends BlockContainer implements IMachineBlock
 {
     @SideOnly(Side.CLIENT)
     protected IIcon top;

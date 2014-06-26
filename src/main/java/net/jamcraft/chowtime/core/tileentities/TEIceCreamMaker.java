@@ -62,18 +62,21 @@ public class TEIceCreamMaker extends TileEntity implements ISidedInventory
     {
     }
 
-    @Override public int getSizeInventory()
+    @Override
+    public int getSizeInventory()
     {
         return INV_SIZE;
     }
 
-    @Override public ItemStack getStackInSlot(int var1)
+    @Override
+    public ItemStack getStackInSlot(int var1)
     {
         if (var1 > INV_SIZE) return null;
         return inventory[var1];
     }
 
-    @Override public ItemStack decrStackSize(int slot, int amount)
+    @Override
+    public ItemStack decrStackSize(int slot, int amount)
     {
         ItemStack itemStack = getStackInSlot(slot);
         if (itemStack != null)
@@ -95,7 +98,8 @@ public class TEIceCreamMaker extends TileEntity implements ISidedInventory
         return itemStack;
     }
 
-    @Override public ItemStack getStackInSlotOnClosing(int slot)
+    @Override
+    public ItemStack getStackInSlotOnClosing(int slot)
     {
         ItemStack itemStack = getStackInSlot(slot);
         if (itemStack != null)
@@ -105,7 +109,8 @@ public class TEIceCreamMaker extends TileEntity implements ISidedInventory
         return itemStack;
     }
 
-    @Override public void setInventorySlotContents(int slot, ItemStack itemStack)
+    @Override
+    public void setInventorySlotContents(int slot, ItemStack itemStack)
     {
         inventory[slot] = itemStack;
         if (itemStack != null && itemStack.stackSize > getInventoryStackLimit())
@@ -114,35 +119,42 @@ public class TEIceCreamMaker extends TileEntity implements ISidedInventory
         }
     }
 
-    @Override public String getInventoryName()
+    @Override
+    public String getInventoryName()
     {
         return "container.IceCreamMaker";
     }
 
-    @Override public boolean hasCustomInventoryName()
+    @Override
+    public boolean hasCustomInventoryName()
     {
         return false;
     }
 
-    @Override public int getInventoryStackLimit()
+    @Override
+    public int getInventoryStackLimit()
     {
         return 64;
     }
 
-    @Override public boolean isUseableByPlayer(EntityPlayer var1)
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer var1)
     {
         return true;
     }
 
-    @Override public void openInventory()
+    @Override
+    public void openInventory()
     {
     }
 
-    @Override public void closeInventory()
+    @Override
+    public void closeInventory()
     {
     }
 
-    @Override public boolean isItemValidForSlot(int slot, ItemStack stack)
+    @Override
+    public boolean isItemValidForSlot(int slot, ItemStack stack)
     {
         if (slot == IN1_LOC || slot == IN2_LOC)
             return IceCreamRecipies.GetRecipesFromStack(stack) != null;
@@ -150,24 +162,28 @@ public class TEIceCreamMaker extends TileEntity implements ISidedInventory
         return false;
     }
 
-    @Override public int[] getAccessibleSlotsFromSide(int side)
+    @Override
+    public int[] getAccessibleSlotsFromSide(int side)
     {
         if (ForgeDirection.UP.ordinal() == side)
             return new int[] { IN1_LOC, IN2_LOC };
-        if (side == ForgeDirection.DOWN.ordinal()) return new int[] { OUT_LOC, BUCKET_OUT_LOC };
+        if (side == ForgeDirection.DOWN.ordinal())
+            return new int[] { OUT_LOC, BUCKET_OUT_LOC };
         return new int[] { FUEL_LOC };
     }
 
-    @Override public boolean canInsertItem(int slot, ItemStack itemStack, int side)
+    @Override
+    public boolean canInsertItem(int slot, ItemStack itemStack, int side)
     {
-        if (slot == OUT_LOC || slot==BUCKET_OUT_LOC || side == ForgeDirection.DOWN.ordinal())
+        if (slot == OUT_LOC || slot == BUCKET_OUT_LOC || side == ForgeDirection.DOWN.ordinal())
             return false;
         return isItemValidForSlot(slot, itemStack);
     }
 
-    @Override public boolean canExtractItem(int slot, ItemStack itemStack, int side)
+    @Override
+    public boolean canExtractItem(int slot, ItemStack itemStack, int side)
     {
-        return (slot == OUT_LOC || slot==BUCKET_OUT_LOC)&& side == ForgeDirection.DOWN.ordinal();
+        return (slot == OUT_LOC || slot == BUCKET_OUT_LOC) && side == ForgeDirection.DOWN.ordinal();
     }
 
     @Override
@@ -267,8 +283,8 @@ public class TEIceCreamMaker extends TileEntity implements ISidedInventory
         {
             if (ticksLeft < maxTicks && IceCreamRecipies.GetRecipeFromStack(inventory[0], inventory[1]) != null)
             {
-                ItemStack output=IceCreamRecipies.GetRecipeFromStack(inventory[0], inventory[1]).getOutput();
-                if ((inventory[2] == null || output.getItem().equals(inventory[2].getItem())&&output.getMaxStackSize()>inventory[2].stackSize))
+                ItemStack output = IceCreamRecipies.GetRecipeFromStack(inventory[0], inventory[1]).getOutput();
+                if ((inventory[2] == null || output.getItem().equals(inventory[2].getItem()) && output.getMaxStackSize() > inventory[2].stackSize))
                 {
                     ticksLeft++;
                     temp += 3;
@@ -380,6 +396,11 @@ public class TEIceCreamMaker extends TileEntity implements ISidedInventory
     public int getTemp()
     {
         return temp;
+    }
+
+    public int getFreezeTemp()
+    {
+        return freezeTemp;
     }
 
     public int getScaledFreezeTemp(int scale)

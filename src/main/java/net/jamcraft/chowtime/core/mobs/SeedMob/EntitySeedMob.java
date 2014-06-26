@@ -254,6 +254,12 @@ public class EntitySeedMob extends EntityAnimal
         tags.setInteger("inlove",inLove);
         tags.setInteger("cooldown",cooldown);
     }
+
+    public int getCooldown()
+    {
+        return cooldown;
+    }
+
     //
     //    @Override
     //    public String getOwnerName() {

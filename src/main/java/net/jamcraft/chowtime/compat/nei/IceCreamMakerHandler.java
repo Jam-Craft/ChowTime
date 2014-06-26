@@ -16,7 +16,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.api.nei;
+package net.jamcraft.chowtime.compat.nei;
 
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;

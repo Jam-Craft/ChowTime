@@ -16,7 +16,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core.items;
+package net.jamcraft.chowtime.core.items.seeds;
 
 import net.jamcraft.chowtime.ChowTime;
 import net.jamcraft.chowtime.core.CTInits;

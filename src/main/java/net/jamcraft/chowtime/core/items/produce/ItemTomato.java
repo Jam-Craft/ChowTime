@@ -16,22 +16,22 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.remote;
+package net.jamcraft.chowtime.core.items.produce;
 
-import net.jamcraft.chowtime.core.util.Version;
+import net.jamcraft.chowtime.ChowTime;
+import net.jamcraft.chowtime.core.ModConstants;
+import net.minecraft.item.ItemFood;
 
 /**
- * Created by James Hollowell on 5/15/2014.
+ * Created by DarkKnight on 5/18/14.
  */
-public class DynDescription
+public class ItemTomato extends ItemFood
 {
-    public Version version;
-
-    @Override
-    public boolean equals(Object o)
+    public ItemTomato()
     {
-        if (!(o instanceof DynDescription)) return false;
-        DynDescription other = (DynDescription) o;
-        return other.version.equals(version);
+        super(3,true);
+        this.setCreativeTab(ChowTime.creativeTab);
+        setUnlocalizedName("tomato");
+        this.setTextureName(ModConstants.MODID + ":tomato");
     }
 }

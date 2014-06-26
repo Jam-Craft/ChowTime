@@ -16,35 +16,22 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.api.nei;
+package net.jamcraft.chowtime.core.items.produce;
 
-import codechicken.nei.api.API;
-import codechicken.nei.api.IConfigureNEI;
+import net.jamcraft.chowtime.ChowTime;
+import net.jamcraft.chowtime.core.ModConstants;
+import net.minecraft.item.Item;
 
 /**
- * Created by James Hollowell on 5/25/2014.
+ * Created by Kayla Marie on 5/15/14.
  */
-public class NEIConfig implements IConfigureNEI
+public class ItemBarley extends Item
 {
-    @Override public void loadConfig()
+
+    public ItemBarley()
     {
-        API.registerRecipeHandler(new JuicerHandler());
-        API.registerUsageHandler(new JuicerHandler());
-
-        API.registerUsageHandler(new FermenterHandler());
-        API.registerRecipeHandler(new FermenterHandler());
-
-        API.registerRecipeHandler(new IceCreamMakerHandler());
-        API.registerUsageHandler(new IceCreamMakerHandler());
-    }
-
-    @Override public String getName()
-    {
-        return "ChowTime";
-    }
-
-    @Override public String getVersion()
-    {
-        return "1.0";
+        super();
+        this.setCreativeTab(ChowTime.creativeTab);
+        this.setTextureName(ModConstants.MODID + ":barleyCrop");
     }
 }

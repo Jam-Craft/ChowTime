@@ -80,11 +80,11 @@ public class ChowTimeCommand implements ICommand
             ChowTime.harvestXP = xp;
             commandSender.addChatMessage(new ChatComponentTranslation("chat.setXP", xp));
         }
-        else if (astring[0].equals("toggleXPBar"))
-        {
-            Config.shouldRenderXP = !Config.shouldRenderXP;
-            commandSender.addChatMessage(new ChatComponentTranslation("chat.toggleXPBar"));
-        }
+//        else if (astring[0].equals("toggleXPBar"))
+//        {
+//            Config.shouldRenderXP = !Config.shouldRenderXP;
+//            commandSender.addChatMessage(new ChatComponentTranslation("chat.toggleXPBar"));
+//        }
     }
 
     @Override
@@ -103,8 +103,8 @@ public class ChowTimeCommand implements ICommand
         {
             if ("getXP".toLowerCase().startsWith(ARG_LC)) MATCHES.add("getXP");
             if ("setXP".toLowerCase().startsWith(ARG_LC)) MATCHES.add("setXP");
-            if ("toggleXPBar".toLowerCase().startsWith(ARG_LC))
-                MATCHES.add("toggleXPBar");
+//            if ("toggleXPBar".toLowerCase().startsWith(ARG_LC))
+//                MATCHES.add("toggleXPBar");
         }
         return MATCHES.isEmpty() ? null : MATCHES;
     }

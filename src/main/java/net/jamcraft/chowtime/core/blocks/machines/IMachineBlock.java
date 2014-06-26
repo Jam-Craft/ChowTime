@@ -16,22 +16,12 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.remote;
-
-import net.jamcraft.chowtime.core.util.Version;
+package net.jamcraft.chowtime.core.blocks.machines;
 
 /**
- * Created by James Hollowell on 5/15/2014.
+ * Created by James Hollowell on 6/25/2014.
  */
-public class DynDescription
+public interface IMachineBlock
 {
-    public Version version;
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if (!(o instanceof DynDescription)) return false;
-        DynDescription other = (DynDescription) o;
-        return other.version.equals(version);
-    }
+    //Doesn't do anything. Simply used as a common inheritance point for all machines
 }

@@ -35,7 +35,7 @@ import net.minecraft.world.World;
 /**
  * Created by Kayla Marie on 5/14/14.
  */
-public class Fermenter extends BlockContainer
+public class Fermenter extends BlockContainer implements IMachineBlock
 {
     @SideOnly(Side.CLIENT)
     protected IIcon top;

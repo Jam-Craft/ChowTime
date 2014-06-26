@@ -22,7 +22,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import net.jamcraft.chowtime.ChowTime;
 import net.jamcraft.chowtime.core.Config;
 import net.jamcraft.chowtime.core.ModConstants;
-import net.jamcraft.chowtime.core.ObfHelper;
+import net.jamcraft.chowtime.core.util.ObfHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentTranslation;

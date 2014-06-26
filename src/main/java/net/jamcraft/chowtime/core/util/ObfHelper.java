@@ -16,7 +16,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core;
+package net.jamcraft.chowtime.core.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

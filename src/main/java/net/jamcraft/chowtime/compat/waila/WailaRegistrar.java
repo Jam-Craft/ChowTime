@@ -16,22 +16,22 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core.items;
+package net.jamcraft.chowtime.compat.waila;
 
-import net.jamcraft.chowtime.ChowTime;
-import net.jamcraft.chowtime.core.ModConstants;
-import net.minecraft.item.ItemFood;
+import mcp.mobius.waila.api.IWailaRegistrar;
+import net.jamcraft.chowtime.core.blocks.machines.IMachineBlock;
+import net.jamcraft.chowtime.core.mobs.SeedMob.EntitySeedMob;
 
 /**
- * Created by DarkKnight on 5/18/14.
+ * Created by James Hollowell on 6/25/2014.
  */
-public class ItemRaspberry extends ItemFood
+public class WailaRegistrar
 {
-    public ItemRaspberry()
+    @SuppressWarnings("unused")
+    public static void registerCallbacks(IWailaRegistrar registrar)
     {
-        super(3,false);
-        this.setCreativeTab(ChowTime.creativeTab);
-        setUnlocalizedName("raspberry");
-        this.setTextureName(ModConstants.MODID + ":raspberry");
+        registrar.registerBodyProvider(new MachineDataProvider(), IMachineBlock.class);
+
+        registrar.registerBodyProvider(new EntityDataProvider(), EntitySeedMob.class);
     }
 }

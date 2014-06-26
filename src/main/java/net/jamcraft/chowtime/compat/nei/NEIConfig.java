@@ -16,23 +16,35 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core.items;
+package net.jamcraft.chowtime.compat.nei;
 
-import net.jamcraft.chowtime.ChowTime;
-import net.jamcraft.chowtime.core.CTInits;
-import net.jamcraft.chowtime.core.ModConstants;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemSeeds;
+import codechicken.nei.api.API;
+import codechicken.nei.api.IConfigureNEI;
 
 /**
- * Created by Kayla Marie on 5/17/14.
+ * Created by James Hollowell on 5/25/2014.
  */
-public class SeedGrape extends ItemSeeds {
+public class NEIConfig implements IConfigureNEI
+{
+    @Override public void loadConfig()
+    {
+        API.registerRecipeHandler(new JuicerHandler());
+        API.registerUsageHandler(new JuicerHandler());
 
-    public SeedGrape(){
-        super(CTInits.CropGrape, Blocks.farmland);
-        this.setCreativeTab(ChowTime.creativeTab);
-        this.setTextureName(ModConstants.MODID + ":" + "grapeSeeds");
-        setUnlocalizedName("grapeSeeds");
+        API.registerUsageHandler(new FermenterHandler());
+        API.registerRecipeHandler(new FermenterHandler());
+
+        API.registerRecipeHandler(new IceCreamMakerHandler());
+        API.registerUsageHandler(new IceCreamMakerHandler());
+    }
+
+    @Override public String getName()
+    {
+        return "ChowTime";
+    }
+
+    @Override public String getVersion()
+    {
+        return "1.0";
     }
 }

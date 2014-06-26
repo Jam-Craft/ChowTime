@@ -16,7 +16,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core;
+package net.jamcraft.chowtime.core.util;
 
 /**
  * Created by James Hollowell on 5/15/2014.

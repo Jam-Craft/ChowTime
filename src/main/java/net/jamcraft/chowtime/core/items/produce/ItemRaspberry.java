@@ -16,7 +16,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core.items;
+package net.jamcraft.chowtime.core.items.produce;
 
 import net.jamcraft.chowtime.ChowTime;
 import net.jamcraft.chowtime.core.ModConstants;
@@ -25,14 +25,13 @@ import net.minecraft.item.ItemFood;
 /**
  * Created by DarkKnight on 5/18/14.
  */
-public class ItemStrawberry extends ItemFood
+public class ItemRaspberry extends ItemFood
 {
-
-    public ItemStrawberry()
+    public ItemRaspberry()
     {
-        super(4,false);
+        super(3,false);
         this.setCreativeTab(ChowTime.creativeTab);
-        setUnlocalizedName("strawberry");
-        this.setTextureName(ModConstants.MODID + ":strawberry");
+        setUnlocalizedName("raspberry");
+        this.setTextureName(ModConstants.MODID + ":raspberry");
     }
 }

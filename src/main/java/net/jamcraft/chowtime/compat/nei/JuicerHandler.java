@@ -16,12 +16,12 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.api.nei;
+package net.jamcraft.chowtime.compat.nei;
 
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import net.jamcraft.chowtime.core.client.gui.GuiFermenter;
-import net.jamcraft.chowtime.core.recipies.FermenterRecipies;
+import net.jamcraft.chowtime.core.client.gui.GuiJuicer;
+import net.jamcraft.chowtime.core.recipies.JuicerRecipes;
 import net.jamcraft.chowtime.core.recipies.Recipe1_1;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
@@ -35,20 +35,20 @@ import java.util.List;
 /**
  * Created by James Hollowell on 5/25/2014.
  */
-public class FermenterHandler extends TemplateRecipeHandler
+public class JuicerHandler extends TemplateRecipeHandler
 {
-    class CachedFermenterRecipe extends CachedRecipe
+    class CachedJuicerRecipe extends CachedRecipe
     {
         private ItemStack input;
         private ItemStack output;
 
-        public CachedFermenterRecipe(ItemStack in, ItemStack out)
+        public CachedJuicerRecipe(ItemStack in, ItemStack out)
         {
             input = in;
             output = out;
         }
 
-        public CachedFermenterRecipe(Recipe1_1 r)
+        public CachedJuicerRecipe(Recipe1_1 r)
         {
             input=r.getInput();
             output=r.getOutput();
@@ -71,12 +71,12 @@ public class FermenterHandler extends TemplateRecipeHandler
 
     @Override public String getGuiTexture()
     {
-        return "chowtime:textures/gui/guiFermenter.png";
+        return "chowtime:textures/gui/guiJuicer.png";
     }
 
     @Override public String getRecipeName()
     {
-        return StatCollector.translateToLocal("container.Fermenter");
+        return StatCollector.translateToLocal("container.Juicer");
     }
 
     @Override
@@ -84,18 +84,18 @@ public class FermenterHandler extends TemplateRecipeHandler
     {
         if(outputId.equals("item"))
             loadCraftingRecipes((ItemStack)results[0]);
-        else if (outputId.equals("allFermenter")) {
-            for (Recipe1_1 r: FermenterRecipies.GetAllRecipies()) {
-                arecipes.add(new CachedFermenterRecipe(r));
+        else if (outputId.equals("allJuicer")) {
+            for (Recipe1_1 r: JuicerRecipes.GetAllRecipies()) {
+                arecipes.add(new CachedJuicerRecipe(r));
             }
         }
     }
 
     @Override
     public void loadCraftingRecipes(ItemStack result){
-        for(Recipe1_1 r:FermenterRecipies.GetAllRecipies())
+        for(Recipe1_1 r:JuicerRecipes.GetAllRecipies())
         {
-            if(r.getOutput().isItemEqual(result)) arecipes.add(new CachedFermenterRecipe(r));
+            if(r.getOutput().isItemEqual(result)) arecipes.add(new CachedJuicerRecipe(r));
         }
     }
 
@@ -105,9 +105,9 @@ public class FermenterHandler extends TemplateRecipeHandler
         if (ingredients.length == 0) return;
         if("item".equals(inputId))
         {
-            for(Recipe1_1 r: FermenterRecipies.GetAllRecipies())
+            for(Recipe1_1 r: JuicerRecipes.GetAllRecipies())
             {
-                if(r.getInput().isItemEqual((ItemStack) ingredients[0])) arecipes.add(new CachedFermenterRecipe(r));
+                if(r.getInput().isItemEqual((ItemStack) ingredients[0])) arecipes.add(new CachedJuicerRecipe(r));
             }
         }
     }
@@ -171,10 +171,10 @@ public class FermenterHandler extends TemplateRecipeHandler
     @Override
     public void loadTransferRects()
     {
-        RecipeTransferRect rect=new RecipeTransferRect(new Rectangle(73, 25, 24, 17),"allFermenter");
+        RecipeTransferRect rect=new RecipeTransferRect(new Rectangle(73, 25, 24, 17),"allJuicer");
         transferRects.add(rect);
         List<Class<? extends GuiContainer>> guis= new ArrayList<Class<? extends GuiContainer>>();
-        guis.add(GuiFermenter.class);
+        guis.add(GuiJuicer.class);
         RecipeTransferRectHandler.registerRectsToGuis(guis,transferRects);
     }
 }

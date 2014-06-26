@@ -16,7 +16,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core.lib;
+package net.jamcraft.chowtime.core.util;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;

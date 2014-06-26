@@ -22,6 +22,7 @@ import net.jamcraft.chowtime.core.container.slot.SlotICMaker;
 import net.jamcraft.chowtime.core.container.slot.SlotIceFuel;
 import net.jamcraft.chowtime.core.container.slot.SlotOutput;
 import net.jamcraft.chowtime.core.recipies.IceCreamRecipies;
+import net.jamcraft.chowtime.core.tileentities.TEFermenter;
 import net.jamcraft.chowtime.core.tileentities.TEIceCreamMaker;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -101,7 +102,7 @@ public class ContainerICMaker extends Container
                  */
                 if (TEIceCreamMaker.isIceFuel(slotItemStack))
                 {
-                    if (!this.mergeItemStack(slotItemStack, 3, 3, false))
+                    if (!this.mergeItemStack(slotItemStack, TEIceCreamMaker.FUEL_LOC, TEIceCreamMaker.FUEL_LOC, true))
                     {
                         return null;
                     }

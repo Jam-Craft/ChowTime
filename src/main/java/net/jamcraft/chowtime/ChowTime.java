@@ -40,6 +40,8 @@ import net.jamcraft.chowtime.core.mobs.SeedMob.EntitySeedMob;
 import net.jamcraft.chowtime.core.network.PacketHandler;
 import net.jamcraft.chowtime.core.registrars.HarvestLevelRegistry;
 import net.jamcraft.chowtime.core.registrars.SeedRegistry;
+import net.jamcraft.chowtime.core.util.ObfHelper;
+import net.jamcraft.chowtime.core.util.VersionChecker;
 import net.jamcraft.chowtime.dyn.DynItems;
 import net.jamcraft.chowtime.dyn.DynMain;
 import net.jamcraft.chowtime.dyn.DynTextures;
@@ -163,6 +165,9 @@ public class ChowTime
         dir = event.getModConfigurationDirectory();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+
+        //Register Waila callbacks
+        FMLInterModComms.sendMessage("Waila", "register", "net.jamcraft.chowtime.compat.waila.WailaRegistrar.registerCallbacks");
     }
 
     @Mod.EventHandler

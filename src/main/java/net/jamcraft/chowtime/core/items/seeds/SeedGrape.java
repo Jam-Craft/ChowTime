@@ -16,22 +16,23 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core.items;
+package net.jamcraft.chowtime.core.items.seeds;
 
 import net.jamcraft.chowtime.ChowTime;
+import net.jamcraft.chowtime.core.CTInits;
 import net.jamcraft.chowtime.core.ModConstants;
-import net.minecraft.item.ItemFood;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemSeeds;
 
 /**
- * Created by DarkKnight on 5/18/14.
+ * Created by Kayla Marie on 5/17/14.
  */
-public class ItemBlueberry extends ItemFood
-{
-    public ItemBlueberry()
-    {
-        super(2,false);
+public class SeedGrape extends ItemSeeds {
+
+    public SeedGrape(){
+        super(CTInits.CropGrape, Blocks.farmland);
         this.setCreativeTab(ChowTime.creativeTab);
-        setUnlocalizedName("blueberry");
-        this.setTextureName(ModConstants.MODID + ":blueberry");
+        this.setTextureName(ModConstants.MODID + ":" + "grapeSeeds");
+        setUnlocalizedName("grapeSeeds");
     }
 }

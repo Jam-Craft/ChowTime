@@ -19,7 +19,7 @@
 package net.jamcraft.chowtime.remote;
 
 import com.google.gson.JsonIOException;
-import net.jamcraft.chowtime.core.Version;
+import net.jamcraft.chowtime.core.util.Version;
 
 import java.io.*;
 import java.util.ArrayList;
