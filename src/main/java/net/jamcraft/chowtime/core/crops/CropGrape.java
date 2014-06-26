@@ -18,7 +18,6 @@
 
 package net.jamcraft.chowtime.core.crops;
 
-import static net.minecraftforge.common.EnumPlantType.Crop;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.jamcraft.chowtime.core.CTInits;
@@ -35,11 +34,13 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.Random;
 
+import static net.minecraftforge.common.EnumPlantType.Crop;
+
 /**
  * Created by Kayla Marie on 5/17/14.
  */
-public class CropGrape extends BlockCrops{
-
+public class CropGrape extends BlockCrops implements ICrop
+{
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;
 
@@ -50,7 +51,7 @@ public class CropGrape extends BlockCrops{
         this.setTickRandomly(true);
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.25F, 0.5F + f);
         this.disableStats();
-//        this.setBlockTextureName(ModConstants.MODID + ":barley");
+        //        this.setBlockTextureName(ModConstants.MODID + ":barley");
     }
 
     public int getRenderType()
@@ -163,7 +164,7 @@ public class CropGrape extends BlockCrops{
 
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z)
-    {     
+    {
         return Crop;
     }
 }

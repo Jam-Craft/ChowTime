@@ -16,24 +16,12 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.compat.waila;
-
-import mcp.mobius.waila.api.IWailaRegistrar;
-import net.jamcraft.chowtime.core.blocks.machines.IMachineBlock;
-import net.jamcraft.chowtime.core.crops.ICrop;
-import net.jamcraft.chowtime.core.mobs.SeedMob.EntitySeedMob;
+package net.jamcraft.chowtime.core.crops;
 
 /**
- * Created by James Hollowell on 6/25/2014.
+ * Created by James Hollowell on 6/26/2014.
  */
-public class WailaRegistrar
+public interface ICrop
 {
-    @SuppressWarnings("unused")
-    public static void registerCallbacks(IWailaRegistrar registrar)
-    {
-        registrar.registerBodyProvider(new MachineDataProvider(), IMachineBlock.class);
-        registrar.registerBodyProvider(new CropDataProvider(), ICrop.class);
-
-        registrar.registerBodyProvider(new EntityDataProvider(), EntitySeedMob.class);
-    }
+    //Blank, used for common parent for crops
 }

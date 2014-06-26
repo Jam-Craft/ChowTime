@@ -285,7 +285,9 @@ public class TEIceCreamMaker extends TileEntity implements ISidedInventory
             if (ticksLeft < maxTicks && IceCreamRecipies.GetRecipeFromStack(inventory[0], inventory[1]) != null)
             {
                 ItemStack output = IceCreamRecipies.GetRecipeFromStack(inventory[0], inventory[1]).getOutput();
-                if (inventory[2] == null || output.getItem().equals(inventory[2].getItem()) && output.getMaxStackSize() > inventory[2].stackSize && (inventory[3]==null||inventory[3].getMaxStackSize()>inventory[3].stackSize))
+                if (inventory[2] == null ||
+                        (output.getItem().equals(inventory[2].getItem()) && output.getMaxStackSize() > inventory[2].stackSize) &&
+                                (inventory[3] == null || inventory[3].getMaxStackSize() > inventory[3].stackSize))
                 {
                     ticksLeft++;
                     temp += 3;

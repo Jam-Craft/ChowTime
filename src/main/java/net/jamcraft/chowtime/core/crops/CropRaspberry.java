@@ -38,7 +38,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 /**
  * Created by DarkKnight on 5/18/14.
  */
-public class CropRaspberry extends BlockCrops{
+public class CropRaspberry extends BlockCrops implements ICrop{
 
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;
