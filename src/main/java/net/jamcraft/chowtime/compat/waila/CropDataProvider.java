@@ -51,8 +51,8 @@ public class CropDataProvider implements IWailaDataProvider
     {
         boolean isAccessible=false;
         int level= HarvestXPCore.GetHarvestLevelFromXP(HarvestXPClient.INSTANCE.xp);
-        isAccessible=HarvestLevelRegistry.IsCropAtLevel(accessor.getBlock(),level);
-        currenttip.add("Can break: "+(isAccessible?"yes":"no"));
+        isAccessible=HarvestLevelRegistry.IsCropAtLevel(accessor.getBlock(),level+1);
+        currenttip.add("Can break: "+(isAccessible?"no":"yes"));
         return currenttip;
     }
 
