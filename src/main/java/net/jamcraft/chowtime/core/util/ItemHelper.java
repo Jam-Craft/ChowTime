@@ -32,28 +32,29 @@ import java.util.Random;
  */
 public class ItemHelper
 {
-    /**Bucket intellegent decrease of stack size
+    /**
+     * Bucket intellegent decrease of stack size
      *
      * @param itemStack Stack to decrease.
-     * @param world World object in case of spawning items on ground
-     * @param x Spawn center x
-     * @param y Spawn center y
-     * @param z Spawn center z
+     * @param world     World object in case of spawning items on ground
+     * @param x         Spawn center x
+     * @param y         Spawn center y
+     * @param z         Spawn center z
      * @return The resultant itemstack
      */
     public static ItemStack decreaseStack(ItemStack itemStack, World world, int x, int y, int z)
     {
-        ItemStack stack=itemStack.copy();
+        ItemStack stack = itemStack.copy();
         stack.stackSize--;
-        if(stack.getItem() instanceof ItemBucket || stack.getItem() instanceof ItemBucketMilk)
+        if (stack.getItem() instanceof ItemBucket || stack.getItem() instanceof ItemBucketMilk)
         {
-            if(stack.stackSize<=0)
+            if (stack.stackSize <= 0)
             {
-                stack=new ItemStack(Items.bucket);
+                stack = new ItemStack(Items.bucket);
             }
             else
             {
-                ItemHelper.spawnItemStackInWorld(new ItemStack(Items.bucket),world,x,y,z);
+                ItemHelper.spawnItemStackInWorld(new ItemStack(Items.bucket), world, x, y, z);
             }
 
         }
@@ -69,13 +70,13 @@ public class ItemHelper
 
     public static void spawnItemStackInWorld(ItemStack stack, World world, int x, int y, int z)
     {
-        if(!world.isRemote)
+        if (!world.isRemote && stack != null)
         {
             Random rand = new Random();
             final float f = rand.nextFloat() * 0.8F + 0.1F;
             final float f1 = rand.nextFloat() * 0.8F + 0.1F;
             final float f2 = rand.nextFloat() * 0.8F + 0.1F;
-            EntityItem entityitem = new EntityItem(world, (double) ((float) x + f), (double) ((float) y + f1), (double) ((float) z + f2), stack);
+            EntityItem entityitem = new EntityItem(world, (double) ((float) x + f), (double) ((float) y + f1), (double) ((float) z + f2), stack.copy());
             entityitem.motionX = (double) ((float) rand.nextGaussian() * .05F);
             entityitem.motionY = (double) ((float) rand.nextGaussian() * 0.25F);
             entityitem.motionZ = (double) ((float) rand.nextGaussian() * .05F);

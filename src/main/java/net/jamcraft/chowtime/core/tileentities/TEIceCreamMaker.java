@@ -20,6 +20,7 @@ package net.jamcraft.chowtime.core.tileentities;
 
 import net.jamcraft.chowtime.core.recipies.IceCreamRecipies;
 import net.jamcraft.chowtime.core.recipies.Recipe2_1;
+import net.jamcraft.chowtime.core.util.ItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -434,5 +435,13 @@ public class TEIceCreamMaker extends TileEntity implements ISidedInventory
             return 1000;
         }
         return 0;
+    }
+
+    public void dropContents()
+    {
+        for (ItemStack stack : inventory)
+        {
+            ItemHelper.spawnItemStackInWorld(stack, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        }
     }
 }

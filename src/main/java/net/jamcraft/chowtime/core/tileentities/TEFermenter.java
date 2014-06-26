@@ -20,9 +20,8 @@ package net.jamcraft.chowtime.core.tileentities;
 
 import net.jamcraft.chowtime.core.recipies.FermenterRecipies;
 import net.jamcraft.chowtime.core.recipies.Recipe1_1;
-import net.minecraft.block.BlockAir;
+import net.jamcraft.chowtime.core.util.ItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -45,18 +44,21 @@ public class TEFermenter extends TileEntity implements ISidedInventory
     {
     }
 
-    @Override public int getSizeInventory()
+    @Override
+    public int getSizeInventory()
     {
         return INV_SIZE;
     }
 
-    @Override public ItemStack getStackInSlot(int var1)
+    @Override
+    public ItemStack getStackInSlot(int var1)
     {
         if (var1 > INV_SIZE) return null;
         return inventory[var1];
     }
 
-    @Override public ItemStack decrStackSize(int slot, int amount)
+    @Override
+    public ItemStack decrStackSize(int slot, int amount)
     {
         ItemStack itemStack = getStackInSlot(slot);
         if (itemStack != null)
@@ -78,7 +80,8 @@ public class TEFermenter extends TileEntity implements ISidedInventory
         return itemStack;
     }
 
-    @Override public ItemStack getStackInSlotOnClosing(int slot)
+    @Override
+    public ItemStack getStackInSlotOnClosing(int slot)
     {
         ItemStack itemStack = getStackInSlot(slot);
         if (itemStack != null)
@@ -88,7 +91,8 @@ public class TEFermenter extends TileEntity implements ISidedInventory
         return itemStack;
     }
 
-    @Override public void setInventorySlotContents(int slot, ItemStack itemStack)
+    @Override
+    public void setInventorySlotContents(int slot, ItemStack itemStack)
     {
         inventory[slot] = itemStack;
         if (itemStack != null && itemStack.stackSize > getInventoryStackLimit())
@@ -97,35 +101,42 @@ public class TEFermenter extends TileEntity implements ISidedInventory
         }
     }
 
-    @Override public String getInventoryName()
+    @Override
+    public String getInventoryName()
     {
         return "container.Fermenter";
     }
 
-    @Override public boolean hasCustomInventoryName()
+    @Override
+    public boolean hasCustomInventoryName()
     {
         return false;
     }
 
-    @Override public int getInventoryStackLimit()
+    @Override
+    public int getInventoryStackLimit()
     {
         return 64;
     }
 
-    @Override public boolean isUseableByPlayer(EntityPlayer var1)
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer var1)
     {
         return true;
     }
 
-    @Override public void openInventory()
+    @Override
+    public void openInventory()
     {
     }
 
-    @Override public void closeInventory()
+    @Override
+    public void closeInventory()
     {
     }
 
-    @Override public boolean isItemValidForSlot(int slot, ItemStack stack)
+    @Override
+    public boolean isItemValidForSlot(int slot, ItemStack stack)
     {
         if (slot != 0) return false;
         for (Recipe1_1 r : FermenterRecipies.recipe11List)
@@ -136,20 +147,23 @@ public class TEFermenter extends TileEntity implements ISidedInventory
         //        return true;
     }
 
-    @Override public int[] getAccessibleSlotsFromSide(int side)
+    @Override
+    public int[] getAccessibleSlotsFromSide(int side)
     {
         //if(ForgeDirection.UP.flag==side) return new int[]{ 0 };
         return new int[] { 0, 1 };
     }
 
-    @Override public boolean canInsertItem(int slot, ItemStack itemStack, int side)
+    @Override
+    public boolean canInsertItem(int slot, ItemStack itemStack, int side)
     {
         return true;
         //        if(slot!=0||side!=ForgeDirection.UP.flag) return false;
         //        return isItemValidForSlot(slot,itemStack);
     }
 
-    @Override public boolean canExtractItem(int slot, ItemStack itemStack, int side)
+    @Override
+    public boolean canExtractItem(int slot, ItemStack itemStack, int side)
     {
         //        return true;
         return slot == 1;//&&side!=ForgeDirection.UP.flag;
@@ -235,8 +249,8 @@ public class TEFermenter extends TileEntity implements ISidedInventory
         }
         if (ticksLeft < maxTicks && FermenterRecipies.GetRecipeFromStack(inventory[0]) != null)
         {
-            Recipe1_1 r=FermenterRecipies.GetRecipeFromStack(inventory[0]);
-            if (inventory[1] == null || (r.getOutput().isItemEqual(inventory[1])&&r.getOutput().getMaxStackSize()>inventory[1].stackSize))
+            Recipe1_1 r = FermenterRecipies.GetRecipeFromStack(inventory[0]);
+            if (inventory[1] == null || (r.getOutput().isItemEqual(inventory[1]) && r.getOutput().getMaxStackSize() > inventory[1].stackSize))
             {
                 ticksLeft++;
             }
@@ -254,7 +268,7 @@ public class TEFermenter extends TileEntity implements ISidedInventory
             ticksLeft = 0;
             ferment();
         }
-//        if(this.worldObj.getBlock(xCoord, yCoord + 1, zCoord) instanceof BlockAir) worldObj.setBlock(xCoord, yCoord + 1, zCoord, Blocks.farmland);
+        //        if(this.worldObj.getBlock(xCoord, yCoord + 1, zCoord) instanceof BlockAir) worldObj.setBlock(xCoord, yCoord + 1, zCoord, Blocks.farmland);
     }
 
     private void ferment()
@@ -293,5 +307,13 @@ public class TEFermenter extends TileEntity implements ISidedInventory
     {
         if (maxTicks == 0) return 0;
         return ticksLeft * scale / maxTicks;
+    }
+
+    public void dropContents()
+    {
+        for (ItemStack stack : inventory)
+        {
+            ItemHelper.spawnItemStackInWorld(stack, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+        }
     }
 }

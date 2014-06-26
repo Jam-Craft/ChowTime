@@ -182,8 +182,6 @@ public class ChowTime
         //        {
         //            Throwables.propagate(e);
         //        }
-        // FMLInterModComms.sendMessage("prisoncraft", "blacklist",
-        // Block.blockRegistry.getNameForObject(Blocks.bookshelf));
 
         if(FMLCommonHandler.instance().getEffectiveSide().isClient())
             ClientCommandHandler.instance.registerCommand(new ChowTimeClientCommand());

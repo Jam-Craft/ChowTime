@@ -20,6 +20,7 @@ package net.jamcraft.chowtime.core.tileentities;
 
 import net.jamcraft.chowtime.core.recipies.JuicerRecipes;
 import net.jamcraft.chowtime.core.recipies.Recipe1_1;
+import net.jamcraft.chowtime.core.util.ItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -264,5 +265,13 @@ public class TEJuicer extends TileEntity implements ISidedInventory
     {
         if (maxTicks == 0) return 0;
         return ticksLeft * scale / maxTicks;
+    }
+
+    public void dropContents()
+    {
+        for(ItemStack stack: inventory)
+        {
+            ItemHelper.spawnItemStackInWorld(stack, this.worldObj,this.xCoord,this.yCoord,this.zCoord);
+        }
     }
 }

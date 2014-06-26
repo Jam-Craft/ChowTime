@@ -24,6 +24,7 @@ import net.jamcraft.chowtime.ChowTime;
 import net.jamcraft.chowtime.core.GuiIDS;
 import net.jamcraft.chowtime.core.ModConstants;
 import net.jamcraft.chowtime.core.tileentities.TEJuicer;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -77,6 +78,17 @@ public class Juicer extends BlockContainer implements IMachineBlock
 
             return true;
         }
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int meta)
+    {
+        TileEntity te=world.getTileEntity(x,y,z);
+        if(te instanceof TEJuicer)
+        {
+            ((TEJuicer) te).dropContents();
+        }
+        super.breakBlock(world, x, y, z, block, meta);
     }
 
     @SideOnly(Side.CLIENT)
