@@ -62,8 +62,8 @@ public class MachineDataProvider implements IWailaDataProvider
         {
             TEIceCreamMaker te = (TEIceCreamMaker) accessor.getTileEntity();
             currenttip.add("Completion: "+te.getScaledProgress(100)+"%");
-            currenttip.add("Temperature: "+te.getTemp()+"\u00b0C");
-            currenttip.add("Freezing Temperature: "+te.getFreezeTemp()+"\u00b0C");
+            currenttip.add("Temperature: "+te.getTemp()/1000.0+"\u00b0C");
+            currenttip.add("Freezing Temperature: "+te.getFreezeTemp()/1000.0+"\u00b0C");
         }
         return currenttip;
     }
