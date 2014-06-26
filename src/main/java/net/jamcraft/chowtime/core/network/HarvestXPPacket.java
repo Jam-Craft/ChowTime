@@ -18,32 +18,40 @@
 
 package net.jamcraft.chowtime.core.network;
 
-import cpw.mods.fml.common.network.FMLIndexedMessageToMessageCodec;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
+import net.jamcraft.chowtime.core.harvestxp.HarvestXPClient;
 
 /**
- * Created by James Hollowell on 5/18/2014.
+ * Created by James Hollowell on 6/26/2014.
  */
-public class PacketHandler extends FMLIndexedMessageToMessageCodec<IPacket>
+public class HarvestXPPacket implements IPacket
 {
-    public PacketHandler()
+    int xp = 0;
+
+    public HarvestXPPacket()
     {
-        addDiscriminator(0, SHA1Packet.class);
-        addDiscriminator(1, HarvestXPPacket.class);
+    }
+
+    public HarvestXPPacket(int xp)
+    {
+        this.xp = xp;
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, IPacket msg, ByteBuf target)
-            throws Exception
+    public void readBytes(ByteBuf bytes)
     {
-        msg.writeBytes(target);
+        this.xp = bytes.readInt();
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf source, IPacket msg)
+    public void writeBytes(ByteBuf bytes)
     {
-        msg.readBytes(source);
-        msg.postProcess();
+        bytes.writeInt(xp);
+    }
+
+    @Override
+    public void postProcess()
+    {
+        HarvestXPClient.INSTANCE.SyncServer(xp);
     }
 }

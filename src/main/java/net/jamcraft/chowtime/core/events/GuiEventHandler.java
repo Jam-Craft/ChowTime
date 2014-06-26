@@ -20,6 +20,8 @@ package net.jamcraft.chowtime.core.events;
 
 import net.jamcraft.chowtime.ChowTime;
 import net.jamcraft.chowtime.core.Config;
+import net.jamcraft.chowtime.core.harvestxp.HarvestXPClient;
+import net.jamcraft.chowtime.core.harvestxp.HarvestXPCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
@@ -60,7 +62,7 @@ public class GuiEventHandler
                 fontrenderer.drawString("_", j2 + i * 6 - 2, k2 + 2, 0);
             fontrenderer.drawString(s3, j2, k2, 0x00c2e0);
 
-            s3 = "XP: " + ChowTime.harvestXP;
+            s3 = "XP: " + HarvestXPClient.INSTANCE.xp;
             j2 = k - fontrenderer.getStringWidth(s3) - 5;
             k2 += 12;
             fontrenderer.drawString(s3, j2 + 1, k2, 0);
@@ -70,10 +72,10 @@ public class GuiEventHandler
             fontrenderer.drawString(s3, j2, k2, 0x22c530);
 
             int xp = 0;
-            if (ChowTime.harvestXP < 20) xp = 20;
-            if (ChowTime.harvestXP >= 20 && ChowTime.harvestXP < 100) xp = 100;
-            if (ChowTime.harvestXP >= 100 && ChowTime.harvestXP < 300) xp = 300;
-            if (ChowTime.harvestXP < 300)
+            if (HarvestXPClient.INSTANCE.xp < 20) xp = 20;
+            if (HarvestXPClient.INSTANCE.xp >= 20 && HarvestXPClient.INSTANCE.xp < 100) xp = 100;
+            if (HarvestXPClient.INSTANCE.xp >= 100 && HarvestXPClient.INSTANCE.xp < 300) xp = 300;
+            if (HarvestXPClient.INSTANCE.xp < 300)
             {
                 s3 = "Next farming upgrade:";
                 j2 = k - fontrenderer.getStringWidth(s3) - 5;

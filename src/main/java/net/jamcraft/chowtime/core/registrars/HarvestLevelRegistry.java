@@ -55,7 +55,7 @@ public class HarvestLevelRegistry
         if (!blockReg.keySet().contains(block)) return false;
         for (Block b : blockReg.keySet())
         {
-            if (b.equals(block) && blockReg.get(b) <= level) return true;
+            if (b.equals(block) && blockReg.get(b) >= level) return true;
         }
         return false;
     }
@@ -66,11 +66,4 @@ public class HarvestLevelRegistry
         return IsCropAtLevel(seedReg.get(seed), level);
     }
 
-    public static int GetHarvestLevelFromXP(int xp)
-    {
-        if(xp<=20) return 1;
-        if(xp<=100) return 2;
-        if(xp<=300) return 4; //also includes 3 for some reason...
-        return 5;
-    }
 }

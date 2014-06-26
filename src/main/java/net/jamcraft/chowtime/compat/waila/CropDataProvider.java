@@ -22,7 +22,8 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import net.jamcraft.chowtime.ChowTime;
-import net.jamcraft.chowtime.core.CTInits;
+import net.jamcraft.chowtime.core.harvestxp.HarvestXPClient;
+import net.jamcraft.chowtime.core.harvestxp.HarvestXPCore;
 import net.jamcraft.chowtime.core.registrars.HarvestLevelRegistry;
 import net.minecraft.item.ItemStack;
 
@@ -49,7 +50,7 @@ public class CropDataProvider implements IWailaDataProvider
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
     {
         boolean isAccessible=false;
-        int level= HarvestLevelRegistry.GetHarvestLevelFromXP(ChowTime.harvestXP);
+        int level= HarvestXPCore.GetHarvestLevelFromXP(HarvestXPClient.INSTANCE.xp);
         isAccessible=HarvestLevelRegistry.IsCropAtLevel(accessor.getBlock(),level);
         currenttip.add("Can break: "+(isAccessible?"yes":"no"));
         return currenttip;

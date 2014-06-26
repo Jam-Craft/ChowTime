@@ -16,34 +16,18 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core.network;
-
-import cpw.mods.fml.common.network.FMLIndexedMessageToMessageCodec;
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
+package net.jamcraft.chowtime.core.harvestxp;
 
 /**
- * Created by James Hollowell on 5/18/2014.
+ * Created by James Hollowell on 6/26/2014.
  */
-public class PacketHandler extends FMLIndexedMessageToMessageCodec<IPacket>
+public abstract class HarvestXPCore
 {
-    public PacketHandler()
+    public static int GetHarvestLevelFromXP(int xp)
     {
-        addDiscriminator(0, SHA1Packet.class);
-        addDiscriminator(1, HarvestXPPacket.class);
-    }
-
-    @Override
-    public void encodeInto(ChannelHandlerContext ctx, IPacket msg, ByteBuf target)
-            throws Exception
-    {
-        msg.writeBytes(target);
-    }
-
-    @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf source, IPacket msg)
-    {
-        msg.readBytes(source);
-        msg.postProcess();
+        if (xp <= 20) return 1;
+        if (xp <= 100) return 2;
+        if (xp <= 300) return 4; //also includes 3 for some reason...
+        return 5;
     }
 }

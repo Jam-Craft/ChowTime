@@ -20,6 +20,7 @@ package net.jamcraft.chowtime.core.commands;
 
 import net.jamcraft.chowtime.ChowTime;
 import net.jamcraft.chowtime.core.Config;
+import net.jamcraft.chowtime.core.harvestxp.HarvestXPServer;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
@@ -72,12 +73,12 @@ public class ChowTimeCommand implements ICommand
             throw new WrongUsageException(getCommandUsage(commandSender));
         if (astring[0].equals("getXP"))
         {
-            commandSender.addChatMessage(new ChatComponentTranslation("chat.getXP", ChowTime.harvestXP));
+            commandSender.addChatMessage(new ChatComponentTranslation("chat.getXP", HarvestXPServer.INSTANCE.GetXPForUser(commandSender.getCommandSenderName())));
         }
         else if (astring[0].equals("setXP"))
         {
             int xp = Integer.parseInt(astring[1]);
-            ChowTime.harvestXP = xp;
+            HarvestXPServer.INSTANCE.SetXPForUser(commandSender.getCommandSenderName(),xp);
             commandSender.addChatMessage(new ChatComponentTranslation("chat.setXP", xp));
         }
 //        else if (astring[0].equals("toggleXPBar"))

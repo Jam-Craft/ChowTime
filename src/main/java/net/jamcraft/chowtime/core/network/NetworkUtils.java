@@ -18,8 +18,13 @@
 
 package net.jamcraft.chowtime.core.network;
 
+import cpw.mods.fml.common.network.FMLOutboundHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelFutureListener;
 import net.jamcraft.chowtime.ChowTime;
+import net.minecraft.entity.player.EntityPlayer;
 
 public class NetworkUtils
 {
@@ -49,5 +54,20 @@ public class NetworkUtils
             s += buff.readChar();
         }
         return s;
+    }
+
+//    @SideOnly(Side.SERVER)
+    public static void SendPacketToPlayer(EntityPlayer player, IPacket packet)
+    {
+        ChowTime.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.PLAYER);
+        ChowTime.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);
+        ChowTime.channels.get(Side.SERVER).writeAndFlush(packet).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+    }
+
+//    @SideOnly(Side.CLIENT)
+    public static void SendPacktToServer(IPacket packet)
+    {
+        ChowTime.channels.get(Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.TOSERVER);
+        ChowTime.channels.get(Side.CLIENT).writeAndFlush(packet).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
     }
 }

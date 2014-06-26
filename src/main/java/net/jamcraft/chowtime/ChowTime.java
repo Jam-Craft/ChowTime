@@ -34,6 +34,8 @@ import net.jamcraft.chowtime.core.commands.client.ChowTimeClientCommand;
 import net.jamcraft.chowtime.core.events.ConnectionHandler;
 import net.jamcraft.chowtime.core.events.EntityEventHandler;
 import net.jamcraft.chowtime.core.events.GuiEventHandler;
+import net.jamcraft.chowtime.core.harvestxp.HarvestXPCore;
+import net.jamcraft.chowtime.core.harvestxp.HarvestXPServer;
 import net.jamcraft.chowtime.core.materials.CloudMaterial;
 import net.jamcraft.chowtime.core.mobs.GingerbreadMan.EntityGingerbreadMan;
 import net.jamcraft.chowtime.core.mobs.SeedMob.EntitySeedMob;
@@ -96,11 +98,11 @@ public class ChowTime
 
     public static Material cloud = new CloudMaterial();
 
-    public static NBTTagCompound saveData = new NBTTagCompound();
-    public static File harvestingLVL;
-    public static File dir;
-    public static int harvestXP = 0;
-    public static int harvestLVL = 0;
+//    public static NBTTagCompound saveData = new NBTTagCompound();
+//    public static File harvestingLVL;
+//    public static File dir;
+//    public static int harvestXP = 0;
+//    public static int harvestLVL = 0;
 
     @SidedProxy(clientSide = "net.jamcraft.chowtime.core.client.ClientProxy", serverSide = "net.jamcraft.chowtime.core.CommonProxy")
     public static CommonProxy proxy;
@@ -162,7 +164,7 @@ public class ChowTime
         //        MinecraftForge.EVENT_BUS.register(BucketHandler.INSTANCE);
         //        BucketHandler.INSTANCE.buckets.put(CTInits.ChocolateMilk, CTInits.ItemBucketChoco);
 
-        dir = event.getModConfigurationDirectory();
+//        dir = event.getModConfigurationDirectory();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
@@ -237,6 +239,7 @@ public class ChowTime
     public void serverLoad(FMLServerStartingEvent event)
     {
         event.registerServerCommand(new ChowTimeCommand());
+//        HarvestXPServer.INSTANCE.init();
     }
 
     @Mod.EventHandler
