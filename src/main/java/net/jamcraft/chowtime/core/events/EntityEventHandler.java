@@ -22,7 +22,6 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.jamcraft.chowtime.ChowTime;
 import net.jamcraft.chowtime.core.Config;
-import net.jamcraft.chowtime.core.crops.*;
 import net.jamcraft.chowtime.core.harvestxp.HarvestXPClient;
 import net.jamcraft.chowtime.core.harvestxp.HarvestXPServer;
 import net.jamcraft.chowtime.core.registrars.HarvestLevelRegistry;
@@ -41,7 +40,10 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import net.minecraftforge.event.world.WorldEvent;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * Created by DarkKnight on 5/18/14.
@@ -57,8 +59,16 @@ public class EntityEventHandler
         {
             EntityPlayer player = (EntityPlayer) event.entity;
 
-//            ChowTime.harvestXP = ChowTime.saveData.getInteger("harvestXP" + (player).getCommandSenderName());
-//            ChowTime.harvestLVL = ChowTime.saveData.getInteger("harvestLVL" + (player).getCommandSenderName());
+            //TODO: Remove in next update
+            ChowTime.harvestXP = ChowTime.saveData.getInteger("harvestXP" + (player).getCommandSenderName());
+            ChowTime.harvestLVL = ChowTime.saveData.getInteger("harvestLVL" + (player).getCommandSenderName());
+
+            //TODO: Remove in next update
+            //Backwards compat
+            if (!event.world.isRemote)
+            {
+                HarvestXPServer.INSTANCE.SetXPForUser(player.getCommandSenderName(), ChowTime.harvestXP);
+            }
 
             if (event.world.isRemote && !HasBeenNotified)
             {
@@ -86,37 +96,40 @@ public class EntityEventHandler
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event)
     {
-//        if (!event.world.isRemote)
-//        {
-//            new File(ChowTime.dir + File.separator + "ChowTime").mkdirs();
-//            ChowTime.harvestingLVL = new File(ChowTime.dir + File.separator + "ChowTime", "CT" + event.world.getWorldInfo().getWorldName() + ".cfg");
-//            try
-//            {
-//                if (!ChowTime.harvestingLVL.exists())
-//                    ChowTime.harvestingLVL.createNewFile();
-//            }
-//            catch (IOException e)
-//            {
-//                e.printStackTrace();
-//            }
-//        }
+        //TODO: Remove on update
+        if (!event.world.isRemote)
+        {
+            new File(ChowTime.dir + File.separator + "ChowTime").mkdirs();
+            ChowTime.harvestingLVL = new File(ChowTime.dir + File.separator + "ChowTime", "CT" + event.world.getWorldInfo().getWorldName() + ".cfg");
+            try
+            {
+                if (!ChowTime.harvestingLVL.exists())
+                    ChowTime.harvestingLVL.createNewFile();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
 
         if (FMLCommonHandler.instance().getEffectiveSide().isServer())
         {
             HarvestXPServer.INSTANCE.Load();
-//            try
-//            {
-//                if (ChowTime.harvestingLVL.exists())
-//                    ChowTime.saveData = CompressedStreamTools.readCompressed(new FileInputStream(ChowTime.harvestingLVL));
-//            }
-//            catch (EOFException e)
-//            {
-//                e.printStackTrace();
-//            }
-//            catch (IOException e)
-//            {
-//                e.printStackTrace();
-//            }
+
+            //TODO: This code will be removed in the next release, it is simply to permit compat w/ old save format
+            try
+            {
+                if (ChowTime.harvestingLVL.exists())
+                    ChowTime.saveData = CompressedStreamTools.readCompressed(new FileInputStream(ChowTime.harvestingLVL));
+            }
+            catch (EOFException e)
+            {
+                e.printStackTrace();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -126,86 +139,89 @@ public class EntityEventHandler
         if (FMLCommonHandler.instance().getEffectiveSide().isServer())
         {
             HarvestXPServer.INSTANCE.Save();
-//            try
+
+            //Don't save to the old save format, only load from it.
+
+            //            try
+            //            {
+            //                if (ChowTime.harvestingLVL.exists())
+            //                    CompressedStreamTools.writeCompressed(ChowTime.saveData, new FileOutputStream(ChowTime.harvestingLVL));
+            //                int i = event.world.playerEntities.size();
+            //                for (int j = 0; j < i; j++)
+            //                {
+            //                    ChowTime.saveData.setInteger("harvestXP" + ((EntityPlayer) event.world.playerEntities.get(j)).getCommandSenderName(), ChowTime.harvestXP);
+            //                    ChowTime.saveData.setInteger("harvestLVL" + ((EntityPlayer) event.world.playerEntities.get(j)).getCommandSenderName(), ChowTime.harvestLVL);
+            //                }
+            //            }
+            //            catch (EOFException e)
+            //            {
+            //                e.printStackTrace();
+            //            }
+            //            catch (IOException e)
+            //            {
+            //                e.printStackTrace();
+            //            }
+        }
+    }
+
+//    @SubscribeEvent
+//    public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
+//    {
+//        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
+//        {
+//            if (event.entityLiving instanceof EntityPlayer)
 //            {
-//                if (ChowTime.harvestingLVL.exists())
-//                    CompressedStreamTools.writeCompressed(ChowTime.saveData, new FileOutputStream(ChowTime.harvestingLVL));
-//                int i = event.world.playerEntities.size();
-//                for (int j = 0; j < i; j++)
-//                {
-//                    ChowTime.saveData.setInteger("harvestXP" + ((EntityPlayer) event.world.playerEntities.get(j)).getCommandSenderName(), ChowTime.harvestXP);
-//                    ChowTime.saveData.setInteger("harvestLVL" + ((EntityPlayer) event.world.playerEntities.get(j)).getCommandSenderName(), ChowTime.harvestLVL);
-//                }
 //            }
-//            catch (EOFException e)
-//            {
-//                e.printStackTrace();
-//            }
-//            catch (IOException e)
-//            {
-//                e.printStackTrace();
-//            }
-        }
-    }
+//        }
+//    }
 
-    @SubscribeEvent
-    public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
-    {
-        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-        {
-            if (event.entityLiving instanceof EntityPlayer)
-            {
-            }
-        }
-    }
+//    @SubscribeEvent
+//    public void onItemUseStart(PlayerUseItemEvent.Start event)
+//    {
+//        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
+//        {
+//
+//        }
+//    }
 
-    @SubscribeEvent
-    public void onItemUseStart(PlayerUseItemEvent.Start event)
-    {
-        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-        {
+//    @SubscribeEvent
+//    public void onItemUseTick(PlayerUseItemEvent.Tick event)
+//    {
+//        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
+//        {
+//
+//        }
+//    }
 
-        }
-    }
+//    @SubscribeEvent
+//    public void onItemUseStopBeforeFinish(PlayerUseItemEvent.Stop event)
+//    {
+//        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
+//        {
+//
+//        }
+//    }
 
-    @SubscribeEvent
-    public void onItemUseTick(PlayerUseItemEvent.Tick event)
-    {
-        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-        {
-
-        }
-    }
-
-    @SubscribeEvent
-    public void onItemUseStopBeforeFinish(PlayerUseItemEvent.Stop event)
-    {
-        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-        {
-
-        }
-    }
-
-    @SubscribeEvent
-    public void onItemUseFinish(PlayerUseItemEvent.Finish event)
-    {
-        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-        {
+//    @SubscribeEvent
+//    public void onItemUseFinish(PlayerUseItemEvent.Finish event)
+//    {
+//        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
+//        {
             // if (event.item.getItem() instanceof ItemAppleGold ||
             // event.item.getItem() instanceof ItemFood || event.item.getItem()
             // instanceof ItemSoup || event.item.getItem() instanceof
             // ItemFishFood) event.entityPlayer.addChatMessage(new
             // ChatComponentTranslation("Munch munch munch"));
-        }
-    }
+//        }
+//    }
 
     @SubscribeEvent
     public void breakSpeed(PlayerEvent.BreakSpeed event)
     {
         if (FMLCommonHandler.instance().getEffectiveSide().isServer())
         {
-            String user=event.entityPlayer.getCommandSenderName();
-            int harvestXP=HarvestXPServer.INSTANCE.GetXPForUser(user);
+            String user = event.entityPlayer.getCommandSenderName();
+            int harvestXP = HarvestXPServer.INSTANCE.GetXPForUser(user);
             if (!(event.entityPlayer instanceof FakePlayer))
             {
                 boolean canHarvest = true;
@@ -237,9 +253,9 @@ public class EntityEventHandler
             }
             if (event.metadata == 7 && !(event.entityPlayer instanceof FakePlayer))
             {
-                int hx1=harvestXP;
+                int hx1 = harvestXP;
                 if (harvestXP >= 0 && HarvestLevelRegistry.IsCropAtLevel(event.block, 1))
-                    harvestXP+=1;
+                    harvestXP += 1;
                 else if (harvestXP >= 20 && HarvestLevelRegistry.IsCropAtLevel(event.block, 2))
                     harvestXP += 2;
                 else if (harvestXP >= 100 && HarvestLevelRegistry.IsCropAtLevel(event.block, 3))
@@ -248,18 +264,19 @@ public class EntityEventHandler
                     harvestXP += 5;
                 else if (harvestXP >= 300 && HarvestLevelRegistry.IsCropAtLevel(event.block, 5))
                     harvestXP += 10;
-                if(hx1!=harvestXP)HarvestXPServer.INSTANCE.SetXPForUser(user,harvestXP);
+                if (hx1 != harvestXP)
+                    HarvestXPServer.INSTANCE.SetXPForUser(user, harvestXP);
             }
         }
     }
 
-    @SubscribeEvent
-    public void harvestCheck(PlayerEvent.HarvestCheck event)
-    {
-        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-        {
-        }
-    }
+//    @SubscribeEvent
+//    public void harvestCheck(PlayerEvent.HarvestCheck event)
+//    {
+//        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
+//        {
+//        }
+//    }
 
     @SubscribeEvent
     public void blockInteraction(PlayerInteractEvent event)
@@ -268,13 +285,12 @@ public class EntityEventHandler
         {
             if (event.action == Action.LEFT_CLICK_BLOCK && !(event.entityPlayer instanceof FakePlayer))
             {
-                // if(HarvestLevelRegistry.IsInList(event.entityPlayer.worldObj.getBlock(event.x,
-                // event.y, event.z)))
-                if (event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropStrawberry || event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropBlueberry || event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropCranberry || event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropRaspberry || event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropTomato || event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropCorn || event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropGrape || event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropBarley)
+                if (HarvestLevelRegistry.IsRegistered(event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z)))
+                //                if (event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropStrawberry || event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropBlueberry || event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropCranberry || event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropRaspberry || event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropTomato || event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropCorn || event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropGrape || event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof CropBarley)
                 {
                     // This needs to change slightly... if you go from 99 to
                     // 101, you never get the message...
-                    int harvestXP=HarvestXPServer.INSTANCE.GetXPForUser(event.entityPlayer.getCommandSenderName());
+                    int harvestXP = HarvestXPServer.INSTANCE.GetXPForUser(event.entityPlayer.getCommandSenderName());
                     if (harvestXP == 19)
                         event.entityPlayer.addChatMessage(new ChatComponentTranslation("chat.HXPGain20"));
                     if (harvestXP == 99)
@@ -285,7 +301,7 @@ public class EntityEventHandler
             }
             if (event.action == Action.RIGHT_CLICK_BLOCK && !(event.entityPlayer instanceof FakePlayer) && event.entityPlayer.getHeldItem() != null && event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof BlockFarmland)
             {
-                int harvestXP=HarvestXPServer.INSTANCE.GetXPForUser(event.entityPlayer.getCommandSenderName());
+                int harvestXP = HarvestXPServer.INSTANCE.GetXPForUser(event.entityPlayer.getCommandSenderName());
                 boolean canPlant = true;
                 if (harvestXP < 20)
                 {

@@ -34,9 +34,16 @@ public class HarvestLevelRegistry
     private static Map<Block, Integer> blockReg = new HashMap<Block, Integer>();
     private static Map<Item, Block> seedReg = new HashMap<Item, Block>();
 
-    public static void AddBlockHavestXP(Block crop, Item seed, int harvestXP)
+    /**
+     * Registers a crop block and its seed item with the harvesting level
+     * required for it.
+     * @param crop The crop block
+     * @param seed The seed item
+     * @param level The level required to harvest/plant this crop
+     */
+    public static void AddBlockHavestXP(Block crop, Item seed, int level)
     {
-        blockReg.put(crop, Integer.valueOf(harvestXP));
+        blockReg.put(crop, Integer.valueOf(level));
         seedReg.put(seed, crop);
     }
 
@@ -50,6 +57,13 @@ public class HarvestLevelRegistry
         return blocks.toArray(new Block[] { });
     }
 
+    /**
+     *
+     * @param block The block to check
+     * @param level The level to check
+     * @return Returns whether a specified block's harvest level is less than
+     * or equal to the level given
+     */
     public static boolean IsCropAtLevel(Block block, int level)
     {
         if (!blockReg.keySet().contains(block)) return false;
@@ -60,10 +74,26 @@ public class HarvestLevelRegistry
         return false;
     }
 
+    /**
+     *
+     * @param seed The seed to check
+     * @param level The level to check
+     * @return Returns whether a specified item's harvest level is less than
+     * or equal to the level given
+     */
     public static boolean IsSeedAtLevel(Item seed, int level)
     {
         if (!seedReg.keySet().contains(seed)) return false;
         return IsCropAtLevel(seedReg.get(seed), level);
     }
 
+    public static boolean IsRegistered(Block block)
+    {
+        return blockReg.containsKey(block);
+    }
+
+    public static boolean IsRegistered(Item item)
+    {
+        return seedReg.containsKey(item);
+    }
 }

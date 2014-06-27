@@ -98,11 +98,16 @@ public class ChowTime
 
     public static Material cloud = new CloudMaterial();
 
-//    public static NBTTagCompound saveData = new NBTTagCompound();
-//    public static File harvestingLVL;
-//    public static File dir;
-//    public static int harvestXP = 0;
-//    public static int harvestLVL = 0;
+    @Deprecated
+    public static NBTTagCompound saveData = new NBTTagCompound();
+    @Deprecated
+    public static File harvestingLVL;
+    @Deprecated
+    public static File dir;
+    @Deprecated
+    public static int harvestXP = 0;
+    @Deprecated
+    public static int harvestLVL = 0;
 
     @SidedProxy(clientSide = "net.jamcraft.chowtime.core.client.ClientProxy", serverSide = "net.jamcraft.chowtime.core.CommonProxy")
     public static CommonProxy proxy;
@@ -164,7 +169,8 @@ public class ChowTime
         //        MinecraftForge.EVENT_BUS.register(BucketHandler.INSTANCE);
         //        BucketHandler.INSTANCE.buckets.put(CTInits.ChocolateMilk, CTInits.ItemBucketChoco);
 
-//        dir = event.getModConfigurationDirectory();
+        //TODO: Remove in next update
+        dir = event.getModConfigurationDirectory();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
