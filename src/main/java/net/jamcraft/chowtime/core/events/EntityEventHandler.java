@@ -69,6 +69,10 @@ public class EntityEventHandler
             {
                 HarvestXPServer.INSTANCE.SetXPForUser(player.getCommandSenderName(), ChowTime.harvestXP);
             }
+            if (event.world.isRemote)
+            {
+                HarvestXPClient.INSTANCE.xp=ChowTime.harvestXP;
+            }
 
             if (event.world.isRemote && !HasBeenNotified)
             {
