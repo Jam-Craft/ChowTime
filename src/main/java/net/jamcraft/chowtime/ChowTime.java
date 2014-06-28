@@ -77,8 +77,6 @@ public class ChowTime
 {
     public static String version = "@VERSION@";
 
-    public static EnumMap<Side, FMLEmbeddedChannel> channels;
-
     public static CreativeTabs creativeTab = new CreativeTabs("ChowTime")
     {
         @Override
@@ -118,7 +116,6 @@ public class ChowTime
         // FMLInterModComms.sendMessage("Waila", "register",
         // "allout58.mods.prisoncraft.compat.waila.WailaProvider.callbackRegister");
 
-        channels = NetworkRegistry.INSTANCE.newChannel(ModConstants.MODID, new PacketHandler());
         logger = event.getModLog();
 
         ObfHelper.init();
@@ -135,6 +132,8 @@ public class ChowTime
         CTRegistry.CTCrops();
         CTRegistry.CTItems();
         CTRegistry.CTTileEntities();
+
+        PacketHandler.init();
 
         //        try
         //        {

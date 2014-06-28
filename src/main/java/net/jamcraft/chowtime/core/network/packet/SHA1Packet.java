@@ -16,38 +16,49 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core.network;
+package net.jamcraft.chowtime.core.network.packet;
 
+import cpw.mods.fml.common.network.ByteBufUtils;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.jamcraft.chowtime.remote.RemoteMain;
 
 /**
  * Created by James Hollowell on 5/18/2014.
  */
-public class SHA1Packet implements IPacket
+public class SHA1Packet
+        implements IMessage, IMessageHandler<SHA1Packet, IMessage>
 {
     private String sha1;
 
+    @SuppressWarnings("unused")
     public SHA1Packet()
-    {}
+    {
+    }
 
     public SHA1Packet(String hash)
     {
-        sha1=hash;
+        sha1 = hash;
     }
 
-    @Override public void readBytes(ByteBuf bytes)
+    @Override
+    public void fromBytes(ByteBuf buf)
     {
-        sha1=NetworkUtils.readString(bytes);
+        sha1 = ByteBufUtils.readUTF8String(buf);
     }
 
-    @Override public void writeBytes(ByteBuf bytes)
+    @Override
+    public void toBytes(ByteBuf buf)
     {
-        NetworkUtils.writeString(bytes,sha1);
+        ByteBufUtils.writeUTF8String(buf, sha1);
     }
 
-    @Override public void postProcess()
+    @Override
+    public IMessage onMessage(SHA1Packet message, MessageContext ctx)
     {
         RemoteMain.IsSyncedWithServer(sha1);
+        return null;
     }
 }
