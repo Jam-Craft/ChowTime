@@ -18,12 +18,9 @@
 
 package net.jamcraft.chowtime.core.harvestxp;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.jamcraft.chowtime.ChowTime;
-import net.jamcraft.chowtime.core.network.HarvestXPPacket;
-import net.jamcraft.chowtime.core.network.NetworkUtils;
-import net.minecraft.client.Minecraft;
+import net.jamcraft.chowtime.core.network.PacketHandler;
+import net.jamcraft.chowtime.core.network.packet.HarvestXPPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -60,12 +57,12 @@ public class HarvestXPServer
 
     public void SyncClient(EntityPlayer user)
     {
-        String name=user.getCommandSenderName();
+        String name = user.getCommandSenderName();
         if (!userXP.containsKey(name))
             SetXPForUser(name, 0);
         if (user != null)
         {
-            NetworkUtils.SendPacketToPlayer(user, new HarvestXPPacket(GetXPForUser(name)));
+            PacketHandler.INSTANCE.sendTo(new HarvestXPPacket(GetXPForUser(name)), (net.minecraft.entity.player.EntityPlayerMP) user);
         }
     }
 
@@ -97,7 +94,7 @@ public class HarvestXPServer
 
     public void Load()
     {
-        if(saveFile==null) init();
+        if (saveFile == null) init();
         NBTTagCompound head;
         try
         {
@@ -110,11 +107,11 @@ public class HarvestXPServer
             return;
         }
 
-        NBTTagList tagList= (NBTTagList) head.getTag("list");
-        for(int i=0;i<tagList.tagCount();i++)
+        NBTTagList tagList = (NBTTagList) head.getTag("list");
+        for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound userTag=tagList.getCompoundTagAt(i);
-            userXP.put(userTag.getString("user"),userTag.getInteger("xp"));
+            NBTTagCompound userTag = tagList.getCompoundTagAt(i);
+            userXP.put(userTag.getString("user"), userTag.getInteger("xp"));
         }
     }
 
@@ -128,7 +125,7 @@ public class HarvestXPServer
         }
         catch (IOException e)
         {
-            ChowTime.logger.error("Error creating ChowTime XP save file: {}",e);
+            ChowTime.logger.error("Error creating ChowTime XP save file: {}", e);
         }
     }
 }

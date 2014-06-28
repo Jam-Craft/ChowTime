@@ -16,17 +16,20 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core.network;
+package net.jamcraft.chowtime.core.network.packet;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.jamcraft.chowtime.core.harvestxp.HarvestXPClient;
 
 /**
  * Created by James Hollowell on 6/26/2014.
  */
-public class HarvestXPPacket implements IPacket
+public class HarvestXPPacket implements IMessage, IMessageHandler<HarvestXPPacket, IMessage>
 {
-    int xp = 0;
+    private int xp = 0;
 
     public HarvestXPPacket()
     {
@@ -38,20 +41,21 @@ public class HarvestXPPacket implements IPacket
     }
 
     @Override
-    public void readBytes(ByteBuf bytes)
+    public void fromBytes(ByteBuf buf)
     {
-        this.xp = bytes.readInt();
+        this.xp = buf.readInt();
     }
 
     @Override
-    public void writeBytes(ByteBuf bytes)
+    public void toBytes(ByteBuf buf)
     {
-        bytes.writeInt(xp);
+        buf.writeInt(xp);
     }
 
     @Override
-    public void postProcess()
+    public IMessage onMessage(HarvestXPPacket message, MessageContext ctx)
     {
         HarvestXPClient.INSTANCE.SyncServer(xp);
+        return null;
     }
 }
