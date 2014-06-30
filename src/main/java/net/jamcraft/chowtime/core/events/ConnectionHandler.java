@@ -44,12 +44,6 @@ public class ConnectionHandler
     @SubscribeEvent
     public void connectToServer(FMLNetworkEvent.ServerConnectionFromClientEvent e)
     {
-        if (!e.isLocal)
-        {
-            if(!RemoteMain.isSyncedWithServer)
-            {
-//                e.setCanceled(true);
-            }
-        }
+
     }
 }

@@ -18,11 +18,14 @@
 
 package net.jamcraft.chowtime.core.network.packet;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
+import net.jamcraft.chowtime.ChowTime;
+import net.jamcraft.chowtime.core.network.NetworkUtils;
 import net.jamcraft.chowtime.remote.RemoteMain;
 
 /**
@@ -31,7 +34,7 @@ import net.jamcraft.chowtime.remote.RemoteMain;
 public class SHA1Packet
         implements IMessage, IMessageHandler<SHA1Packet, IMessage>
 {
-    private String sha1;
+    private String sha1="";
 
     @SuppressWarnings("unused")
     public SHA1Packet()
@@ -46,18 +49,21 @@ public class SHA1Packet
     @Override
     public void fromBytes(ByteBuf buf)
     {
-        sha1 = ByteBufUtils.readUTF8String(buf);
+        ChowTime.logger.info("fromBytes");
+        sha1 = NetworkUtils.readString(buf);
     }
 
     @Override
     public void toBytes(ByteBuf buf)
     {
-        ByteBufUtils.writeUTF8String(buf, sha1);
+        ChowTime.logger.info("tobytes: "+sha1);
+        NetworkUtils.writeString(buf, sha1);
     }
 
     @Override
     public IMessage onMessage(SHA1Packet message, MessageContext ctx)
     {
+        ChowTime.logger.info("onMessage: "+sha1);
         RemoteMain.IsSyncedWithServer(sha1);
         return null;
     }

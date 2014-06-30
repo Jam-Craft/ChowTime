@@ -29,6 +29,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.jamcraft.chowtime.core.*;
+import net.jamcraft.chowtime.core.commands.CTTestCommand;
 import net.jamcraft.chowtime.core.commands.ChowTimeCommand;
 import net.jamcraft.chowtime.core.commands.client.ChowTimeClientCommand;
 import net.jamcraft.chowtime.core.events.ConnectionHandler;
@@ -236,6 +237,7 @@ public class ChowTime
     public void serverLoad(FMLServerStartingEvent event)
     {
         event.registerServerCommand(new ChowTimeCommand());
+        event.registerServerCommand(new CTTestCommand());
     }
 
     @Mod.EventHandler
