@@ -30,7 +30,9 @@ import net.minecraft.item.Item;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Modifier;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +43,7 @@ public class DynItems
 {
     public static Map<String, Item> items = new HashMap<String, Item>();
 
-    private static ReloadableClassLoader loader;
+    //    private static ReloadableClassLoader loader;
 
     /**
      * Add all the required classes to the classpath and register them with Forge
@@ -64,8 +66,7 @@ public class DynItems
         }
         try
         {
-            if (loader == null)
-                loader = new ReloadableClassLoader(new URL[] { dynLoc.toURI().toURL() }, DynItems.class.getClassLoader());
+            URLClassLoader loader = new URLClassLoader(new URL[] { dynLoc.toURI().toURL() }, DynItems.class.getClassLoader());
 
             for (DynDescription desc : RemoteMain.local.getObjects())
             {
@@ -141,9 +142,19 @@ public class DynItems
     public static void reloadClasses(String[] names)
             throws ClassNotFoundException
     {
-        for (String name : names)
+        File dynLoc = new File(ModConstants.DYN_LOC);
+        try
         {
-            loader.reloadClass(name);
+            //Create a new classloader to reload the mod
+            URLClassLoader loader = new URLClassLoader(new URL[] { dynLoc.toURI().toURL() }, DynItems.class.getClassLoader());
+            for (String name : names)
+            {
+                loader.loadClass(name);
+            }
+        }
+        catch (MalformedURLException e)
+        {
+
         }
     }
 }
