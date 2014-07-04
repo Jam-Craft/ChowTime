@@ -90,7 +90,6 @@ public class RemoteMain
             //Reload local
             LoadLocal();
         }
-        HashCTD();
     }
 
     public static boolean LoadLocal()
@@ -100,6 +99,7 @@ public class RemoteMain
         File f = new File(ModConstants.DYN_LOC + "/local.ctd");
         local.readFromFile(f);
         ChowTime.logger.error("Done loading local..");
+        HashCTD();
         return true;
     }
 
@@ -211,7 +211,7 @@ public class RemoteMain
                 sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
             }
 
-//            System.out.println("Digest(in hex format):: " + sb.toString());
+            System.out.println("Digest(in hex format):: " + sb.toString());
             localHash=sb.toString();
         }
         catch (Exception e)
@@ -222,7 +222,7 @@ public class RemoteMain
 
     public static boolean IsSyncedWithServer(String serverHash)
     {
-        isSyncedWithServer=serverHash.equals(localHash);
+        isSyncedWithServer = localHash.equals(serverHash);
         if(!isSyncedWithServer && player!=null)
         {
             player.addChatComponentMessage(new ChatComponentTranslation("string.nosync"));

@@ -45,14 +45,14 @@ public class CTFarmland extends BlockFarmland
      */
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
     {
-        return AxisAlignedBB.getAABBPool().getAABB((double)(x), (double)(y), (double)(z), (double)(x + 1), (double)(y + 1), (double)(z + 1));
+        return AxisAlignedBB.getBoundingBox((double) (x), (double) (y), (double) (z), (double) (x + 1), (double) (y + 1), (double) (z + 1));
     }
-    
+
     public boolean renderAsNormalBlock()
     {
         return false;
     }
-    
+
     public boolean isOpaqueCube()
     {
         return false;
@@ -98,7 +98,7 @@ public class CTFarmland extends BlockFarmland
     {
         if (!world.isRemote && world.rand.nextFloat() < distance - 0.5F)
         {
-            if (!(entity instanceof EntityPlayer) && !world.getGameRules().getGameRuleBooleanValue("mobGriefing") || (entity instanceof EntityPlayer && ((EntityPlayer)entity).inventory.armorInventory[0] != null && ((EntityPlayer)entity).inventory.armorInventory[0].getItem() == CTInits.FarmerBoots))
+            if (!(entity instanceof EntityPlayer) && !world.getGameRules().getGameRuleBooleanValue("mobGriefing") || (entity instanceof EntityPlayer && ((EntityPlayer) entity).inventory.armorInventory[0] != null && ((EntityPlayer) entity).inventory.armorInventory[0].getItem() == CTInits.FarmerBoots))
             {
                 return;
             }
@@ -106,6 +106,7 @@ public class CTFarmland extends BlockFarmland
             world.setBlock(x, y, z, Blocks.dirt);
         }
     }
+
     public boolean canSustainPlant(IBlockAccess world, int x, int y, int z, ForgeDirection direction, IPlantable plantable)
     {
         EnumPlantType plantType = plantable.getPlantType(world, x, y + 1, z);
@@ -115,7 +116,7 @@ public class CTFarmland extends BlockFarmland
 
         return true;
     }
-    
+
     public boolean isFertile(World world, int x, int y, int z)
     {
         return world.getBlockMetadata(x, y, z) > 0;
@@ -131,7 +132,7 @@ public class CTFarmland extends BlockFarmland
             {
                 Block block = world.getBlock(l, y + 1, i1);
 
-                if (block instanceof IPlantable && canSustainPlant(world, x, y, z, ForgeDirection.UP, (IPlantable)block))
+                if (block instanceof IPlantable && canSustainPlant(world, x, y, z, ForgeDirection.UP, (IPlantable) block))
                 {
                     return true;
                 }

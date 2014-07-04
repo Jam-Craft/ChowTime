@@ -46,7 +46,7 @@ public class HarvestXPServer
     {
         userXP.put(user, Integer.valueOf(xp));
         Save();
-        SyncClient(MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(user));
+        SyncClient(MinecraftServer.getServer().getConfigurationManager().func_152612_a(user));//getPlayerForUsername(user));
     }
 
     public int GetXPForUser(String user)
