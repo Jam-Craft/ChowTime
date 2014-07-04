@@ -222,7 +222,7 @@ public class RemoteMain
 
     public static boolean IsSyncedWithServer(String serverHash)
     {
-        isSyncedWithServer=serverHash.equals(localHash);
+        isSyncedWithServer = localHash.equals(serverHash);
         if(!isSyncedWithServer && player!=null)
         {
             player.addChatComponentMessage(new ChatComponentTranslation("string.nosync"));

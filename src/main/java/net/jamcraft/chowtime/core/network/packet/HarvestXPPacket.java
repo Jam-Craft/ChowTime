@@ -27,9 +27,10 @@ import net.jamcraft.chowtime.core.harvestxp.HarvestXPClient;
 /**
  * Created by James Hollowell on 6/26/2014.
  */
-public class HarvestXPPacket implements IMessage, IMessageHandler<HarvestXPPacket, IMessage>
+public class HarvestXPPacket
+        implements IMessage, IMessageHandler<HarvestXPPacket, IMessage>
 {
-    private int xp = 0;
+    public int xp = 0;
 
     public HarvestXPPacket()
     {
@@ -55,7 +56,7 @@ public class HarvestXPPacket implements IMessage, IMessageHandler<HarvestXPPacke
     @Override
     public IMessage onMessage(HarvestXPPacket message, MessageContext ctx)
     {
-        HarvestXPClient.INSTANCE.SyncServer(xp);
+        HarvestXPClient.INSTANCE.SyncServer(message.xp);
         return null;
     }
 }

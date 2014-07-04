@@ -31,7 +31,7 @@ import net.jamcraft.chowtime.remote.RemoteMain;
 public class SHA1Packet
         implements IMessage, IMessageHandler<SHA1Packet, IMessage>
 {
-    private String sha1;
+    public String sha1;
 
     @SuppressWarnings("unused")
     public SHA1Packet()
@@ -58,7 +58,7 @@ public class SHA1Packet
     @Override
     public IMessage onMessage(SHA1Packet message, MessageContext ctx)
     {
-        RemoteMain.IsSyncedWithServer(sha1);
+        RemoteMain.IsSyncedWithServer(message.sha1);
         return null;
     }
 }
