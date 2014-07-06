@@ -64,7 +64,7 @@ public class DynTextures
                 }
             }
 
-            //HAKS!!! Get the Resource Pack list from FML. Reflection for the WIN!
+            //HAKS!!! Get the Resource Pack list from FML rather than MC... no reobf ;) Reflection for the WIN!
             try
             {
                 Class<?> c = FMLClientHandler.class;

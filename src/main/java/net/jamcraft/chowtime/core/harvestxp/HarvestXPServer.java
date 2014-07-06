@@ -88,30 +88,33 @@ public class HarvestXPServer
         }
         catch (IOException e)
         {
-            ChowTime.logger.error("Error saving ChowTime XP to file: {}", e);
+            ChowTime.logger.error("Error saving ChowTime XP to file: ", e);
         }
     }
 
     public void Load()
     {
         if (saveFile == null) init();
-        NBTTagCompound head;
-        try
+        else
         {
-            InputStream is = new FileInputStream(saveFile);
-            head = CompressedStreamTools.readCompressed(is);
-        }
-        catch (IOException e)
-        {
-            ChowTime.logger.error("Error reading ChowTime XP from file: {}", e);
-            return;
-        }
+            NBTTagCompound head;
+            try
+            {
+                InputStream is = new FileInputStream(saveFile);
+                head = CompressedStreamTools.readCompressed(is);
+            }
+            catch (IOException e)
+            {
+                ChowTime.logger.error("Error reading ChowTime XP from file: {}", e);
+                return;
+            }
 
-        NBTTagList tagList = (NBTTagList) head.getTag("list");
-        for (int i = 0; i < tagList.tagCount(); i++)
-        {
-            NBTTagCompound userTag = tagList.getCompoundTagAt(i);
-            userXP.put(userTag.getString("user"), userTag.getInteger("xp"));
+            NBTTagList tagList = (NBTTagList) head.getTag("list");
+            for (int i = 0; i < tagList.tagCount(); i++)
+            {
+                NBTTagCompound userTag = tagList.getCompoundTagAt(i);
+                userXP.put(userTag.getString("user"), userTag.getInteger("xp"));
+            }
         }
     }
 
@@ -125,7 +128,7 @@ public class HarvestXPServer
         }
         catch (IOException e)
         {
-            ChowTime.logger.error("Error creating ChowTime XP save file: {}", e);
+            ChowTime.logger.error("Error creating ChowTime XP save file: ", e);
         }
     }
 }

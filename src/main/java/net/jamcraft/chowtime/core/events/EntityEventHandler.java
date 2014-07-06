@@ -118,7 +118,7 @@ public class EntityEventHandler
 
         if (FMLCommonHandler.instance().getEffectiveSide().isServer())
         {
-            HarvestXPServer.INSTANCE.Load();
+//            HarvestXPServer.INSTANCE.Load();
 
             //TODO: This code will be removed in the next release, it is simply to permit compat w/ old save format
             try

@@ -20,6 +20,7 @@ package net.jamcraft.chowtime.compat.nei;
 
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
+import cpw.mods.fml.common.Optional;
 
 /**
  * Created by James Hollowell on 5/25/2014.

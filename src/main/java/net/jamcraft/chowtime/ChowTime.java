@@ -244,11 +244,12 @@ public class ChowTime
     public void serverLoad(FMLServerStartingEvent event)
     {
         event.registerServerCommand(new ChowTimeCommand());
-//        HarvestXPServer.INSTANCE.init();
+        HarvestXPServer.INSTANCE.Load();
     }
 
     @Mod.EventHandler
     public void serverUnload(FMLServerStoppingEvent event)
     {
+        HarvestXPServer.INSTANCE.Save();
     }
 }

@@ -83,7 +83,7 @@ public class DynItems
                         continue;
                     if (clazz.getConstructor((Class<?>[]) null) != null)
                     {
-                        System.setSecurityManager(LockdownSecuityManager.instance);
+//                        System.setSecurityManager(LockdownSecuityManager.instance);
                         o = clazz.newInstance();
                     }
 
@@ -98,17 +98,17 @@ public class DynItems
                         items.put(rn, (Item) o);
                     }
                 }
-                System.setSecurityManager(null);
+//                System.setSecurityManager(null);
             }
         }
         catch (Exception e)
         {
-            System.setSecurityManager(null);
+//            System.setSecurityManager(null);
             e.printStackTrace();
         }
         finally
         {
-            System.setSecurityManager(null);
+//            System.setSecurityManager(null);
         }
     }
 
@@ -126,12 +126,12 @@ public class DynItems
             }
             catch (SecurityException e)
             {
-                System.setSecurityManager(null);
+//                System.setSecurityManager(null);
                 e.printStackTrace();
             }
             finally
             {
-                System.setSecurityManager(null);
+//                System.setSecurityManager(null);
             }
         }
     }
