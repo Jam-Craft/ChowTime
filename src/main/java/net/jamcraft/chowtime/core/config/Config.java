@@ -16,7 +16,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core;
+package net.jamcraft.chowtime.core.config;
 
 import net.minecraftforge.common.config.Configuration;
 
@@ -37,6 +37,7 @@ public class Config
     {
         config = conf;
         conf.load();
+        remoteLoc= conf.getString()
         remoteLoc = conf.get("Dynamic", "RemoteLocation", "http://jam-craft.github.io/ChowTime/").getString();
         forceLocal = conf.get("Dynamic", "ForceLocal", false).getBoolean(false);
         useDev = conf.get("Dynamic","UseDevVersions",false).getBoolean(false);

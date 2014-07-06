@@ -18,7 +18,7 @@
 
 package net.jamcraft.chowtime.core.commands.client;
 
-import net.jamcraft.chowtime.core.Config;
+import net.jamcraft.chowtime.core.config.Config;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;

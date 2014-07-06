@@ -18,10 +18,8 @@
 
 package net.jamcraft.chowtime.core.events;
 
-import net.jamcraft.chowtime.ChowTime;
-import net.jamcraft.chowtime.core.Config;
+import net.jamcraft.chowtime.core.config.Config;
 import net.jamcraft.chowtime.core.harvestxp.HarvestXPClient;
-import net.jamcraft.chowtime.core.harvestxp.HarvestXPCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;

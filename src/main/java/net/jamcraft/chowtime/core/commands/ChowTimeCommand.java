@@ -18,8 +18,6 @@
 
 package net.jamcraft.chowtime.core.commands;
 
-import net.jamcraft.chowtime.ChowTime;
-import net.jamcraft.chowtime.core.Config;
 import net.jamcraft.chowtime.core.harvestxp.HarvestXPServer;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
