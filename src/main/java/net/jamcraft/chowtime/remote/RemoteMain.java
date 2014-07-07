@@ -100,6 +100,7 @@ public class RemoteMain
         File f = new File(ModConstants.DYN_LOC + "/local.ctd");
         local.readFromFile(f);
         ChowTime.logger.error("Done loading local..");
+        HashCTD();
         return true;
     }
 
