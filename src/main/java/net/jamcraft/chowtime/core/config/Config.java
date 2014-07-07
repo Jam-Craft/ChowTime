@@ -37,21 +37,20 @@ public class Config
     {
         config = conf;
         conf.load();
-        remoteLoc= conf.getString()
         remoteLoc = conf.get("Dynamic", "RemoteLocation", "http://jam-craft.github.io/ChowTime/").getString();
         forceLocal = conf.get("Dynamic", "ForceLocal", false).getBoolean(false);
-        useDev = conf.get("Dynamic","UseDevVersions",false).getBoolean(false);
-        shouldRenderXP = conf.get("Static","RenderChowTimeInfo",false).getBoolean(false);
-        remoteLoc = remoteLoc+(useDev?"dev/":"");
+        useDev = conf.get("Dynamic", "UseDevVersions", false).getBoolean(false);
+        shouldRenderXP = conf.get("Static", "RenderChowTimeInfo", false).getBoolean(false);
+        remoteLoc = remoteLoc + (useDev ? "dev/" : "");
         conf.save();
     }
 
     public static void save()
     {
         config.load();
-//        config.get("Dynamic", "RemoteLocation", remoteLoc).set(remoteLoc);
-//        config.get("Dynamic", "ForceLocal", forceLocal).set(forceLocal);
-//        config.get("Dynamic", "useDev", useDev).set(useDev);
+        //        config.get("Dynamic", "RemoteLocation", remoteLoc).set(remoteLoc);
+        //        config.get("Dynamic", "ForceLocal", forceLocal).set(forceLocal);
+        //        config.get("Dynamic", "useDev", useDev).set(useDev);
         config.get("Static", "RenderChowTimeInfo", shouldRenderXP).set(shouldRenderXP);
         config.save();
     }
