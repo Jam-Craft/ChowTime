@@ -18,6 +18,8 @@
 
 package net.jamcraft.chowtime.core.config;
 
+import cpw.mods.fml.client.event.ConfigChangedEvent;
+import net.jamcraft.chowtime.core.ModConstants;
 import net.minecraftforge.common.config.Configuration;
 
 /**
@@ -53,5 +55,13 @@ public class Config
         //        config.get("Dynamic", "useDev", useDev).set(useDev);
         config.get("Static", "RenderChowTimeInfo", shouldRenderXP).set(shouldRenderXP);
         config.save();
+    }
+
+    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
+    {
+        if(event.modID.equals(ModConstants.MODID))
+        {
+
+        }
     }
 }

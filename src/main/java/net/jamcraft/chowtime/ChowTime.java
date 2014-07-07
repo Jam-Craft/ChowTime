@@ -27,13 +27,17 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.jamcraft.chowtime.core.*;
+import net.jamcraft.chowtime.core.CTInits;
+import net.jamcraft.chowtime.core.CTRegistry;
+import net.jamcraft.chowtime.core.CommonProxy;
+import net.jamcraft.chowtime.core.ModConstants;
 import net.jamcraft.chowtime.core.commands.ChowTimeCommand;
 import net.jamcraft.chowtime.core.commands.client.ChowTimeClientCommand;
 import net.jamcraft.chowtime.core.config.Config;
 import net.jamcraft.chowtime.core.events.ConnectionHandler;
 import net.jamcraft.chowtime.core.events.EntityEventHandler;
 import net.jamcraft.chowtime.core.events.GuiEventHandler;
+import net.jamcraft.chowtime.core.harvestxp.HarvestXPServer;
 import net.jamcraft.chowtime.core.materials.CloudMaterial;
 import net.jamcraft.chowtime.core.mobs.GingerbreadMan.EntityGingerbreadMan;
 import net.jamcraft.chowtime.core.mobs.SeedMob.EntitySeedMob;
@@ -187,7 +191,7 @@ public class ChowTime
         //            Throwables.propagate(e);
         //        }
 
-        if(FMLCommonHandler.instance().getEffectiveSide().isClient())
+        if (FMLCommonHandler.instance().getEffectiveSide().isClient())
             ClientCommandHandler.instance.registerCommand(new ChowTimeClientCommand());
 
         FMLCommonHandler.instance().bus().register(new ConnectionHandler());
