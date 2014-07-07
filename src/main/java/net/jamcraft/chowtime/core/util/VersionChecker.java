@@ -21,7 +21,7 @@ package net.jamcraft.chowtime.core.util;
 import com.google.gson.Gson;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.jamcraft.chowtime.ChowTime;
-import net.jamcraft.chowtime.core.Config;
+import net.jamcraft.chowtime.core.config.Config;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;

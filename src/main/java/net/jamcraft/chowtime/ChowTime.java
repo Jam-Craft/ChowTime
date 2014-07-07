@@ -22,7 +22,6 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.*;
-import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -31,11 +30,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.jamcraft.chowtime.core.*;
 import net.jamcraft.chowtime.core.commands.ChowTimeCommand;
 import net.jamcraft.chowtime.core.commands.client.ChowTimeClientCommand;
+import net.jamcraft.chowtime.core.config.Config;
 import net.jamcraft.chowtime.core.events.ConnectionHandler;
 import net.jamcraft.chowtime.core.events.EntityEventHandler;
 import net.jamcraft.chowtime.core.events.GuiEventHandler;
-import net.jamcraft.chowtime.core.harvestxp.HarvestXPCore;
-import net.jamcraft.chowtime.core.harvestxp.HarvestXPServer;
 import net.jamcraft.chowtime.core.materials.CloudMaterial;
 import net.jamcraft.chowtime.core.mobs.GingerbreadMan.EntityGingerbreadMan;
 import net.jamcraft.chowtime.core.mobs.SeedMob.EntitySeedMob;
@@ -69,7 +67,6 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.util.EnumMap;
 
 /**
  * Created by James Hollowell on 5/14/2014.

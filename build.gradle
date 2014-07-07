@@ -28,7 +28,7 @@ if (System.getenv()['BUILD_NUMBER']) {
 }
 
 minecraft {
-    version = "1.7.2-10.12.2.1121"
+    version = "1.7.10-10.13.0.1160"
     assetDir = "eclipse/assets"
 
     // replacing
@@ -65,13 +65,14 @@ repositories {
     }
     maven { // the repo from which to get NEI and stuff
         name 'CB Repo'
-        url "http://chickenbones.net/maven/"
+        url "http://chickenbones.net/maven"
     }
 }
 
 dependencies {
     // I dont have to specify NEI.. because gradle magic. aka: transitive dependency resolution
-    compile "mcp.mobius.waila:Waila:1.5.2a"
+//    compile "net.codechicken.NotEnoughItems:NotEnoughItems:1.7.10-1.0.2.15-dev"
+    //compile "mcp.mobius.waila:Waila:1.5.2a"
     //compile "org.reflections:reflections:0.9.9-RC1"
     //compile 'org.projectlombok:lombok:1.12.6'
 }

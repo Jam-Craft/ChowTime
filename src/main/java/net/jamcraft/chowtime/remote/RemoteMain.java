@@ -20,7 +20,7 @@ package net.jamcraft.chowtime.remote;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.jamcraft.chowtime.ChowTime;
-import net.jamcraft.chowtime.core.Config;
+import net.jamcraft.chowtime.core.config.Config;
 import net.jamcraft.chowtime.core.ModConstants;
 import net.jamcraft.chowtime.core.util.ObfHelper;
 import net.minecraft.client.Minecraft;
@@ -90,7 +90,6 @@ public class RemoteMain
             //Reload local
             LoadLocal();
         }
-        HashCTD();
     }
 
     public static boolean LoadLocal()
@@ -212,7 +211,7 @@ public class RemoteMain
                 sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
             }
 
-//            System.out.println("Digest(in hex format):: " + sb.toString());
+            System.out.println("Digest(in hex format):: " + sb.toString());
             localHash=sb.toString();
         }
         catch (Exception e)
