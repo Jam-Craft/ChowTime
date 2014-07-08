@@ -19,6 +19,7 @@
 package net.jamcraft.chowtime.core.config;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.jamcraft.chowtime.core.ModConstants;
 import net.minecraftforge.common.config.Configuration;
 
@@ -27,41 +28,49 @@ import net.minecraftforge.common.config.Configuration;
  */
 public class Config
 {
+    public static final String DYN_CATEGORY="dynamic";
+    public static final String STATIC_CATEGORY="static";
+
     //and public static vars here
     public static String remoteLoc;
     public static boolean forceLocal;
     public static boolean useDev;
     public static boolean shouldRenderXP;
 
-    private static Configuration config;
+    public static Configuration config;
 
     public static void init(Configuration conf)
     {
         config = conf;
-        conf.load();
-        remoteLoc = conf.get("Dynamic", "RemoteLocation", "http://jam-craft.github.io/ChowTime/").getString();
-        forceLocal = conf.get("Dynamic", "ForceLocal", false).getBoolean(false);
-        useDev = conf.get("Dynamic", "UseDevVersions", false).getBoolean(false);
-        shouldRenderXP = conf.get("Static", "RenderChowTimeInfo", false).getBoolean(false);
-        remoteLoc = remoteLoc + (useDev ? "dev/" : "");
-        conf.save();
+        load();
     }
 
     public static void save()
     {
-        config.load();
-        //        config.get("Dynamic", "RemoteLocation", remoteLoc).set(remoteLoc);
-        //        config.get("Dynamic", "ForceLocal", forceLocal).set(forceLocal);
-        //        config.get("Dynamic", "useDev", useDev).set(useDev);
-        config.get("Static", "RenderChowTimeInfo", shouldRenderXP).set(shouldRenderXP);
+        //        config.get(DYN_CATEGORY, "RemoteLocation", remoteLoc).set(remoteLoc);
+        //        config.get(DYN_CATEGORY, "ForceLocal", forceLocal).set(forceLocal);
+        //        config.get(DYN_CATEGORY, "useDev", useDev).set(useDev);
+        config.get(STATIC_CATEGORY, "RenderChowTimeInfo", shouldRenderXP).set(shouldRenderXP);
         config.save();
     }
 
+    public static void load()
+    {
+        remoteLoc = config.get(DYN_CATEGORY, "RemoteLocation", "http://jam-craft.github.io/ChowTime/").getString();
+        forceLocal = config.get(DYN_CATEGORY, "ForceLocal", false).getBoolean(false);
+        useDev = config.get(DYN_CATEGORY, "UseDevVersions", false).getBoolean(false);
+        shouldRenderXP = config.get(STATIC_CATEGORY, "RenderChowTimeInfo", false).getBoolean(false);
+        remoteLoc = remoteLoc + (useDev ? "dev/" : "");
+        if (config.hasChanged())
+            config.save();
+    }
+
+    @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
     {
-        if(event.modID.equals(ModConstants.MODID))
+        if (event.modID.equals(ModConstants.MODID))
         {
-
+            load();
         }
     }
 }

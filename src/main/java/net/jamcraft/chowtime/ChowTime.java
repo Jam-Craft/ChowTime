@@ -75,7 +75,7 @@ import java.io.File;
 /**
  * Created by James Hollowell on 5/14/2014.
  */
-@Mod(modid = ModConstants.MODID, name = ModConstants.NAME, version = "@VERSION@", acceptedMinecraftVersions = "@MC_VERSION@")
+@Mod(modid = ModConstants.MODID, name = ModConstants.NAME, version = "@VERSION@", acceptedMinecraftVersions = "@MC_VERSION@", guiFactory = "net.jamcraft.chowtime.core.config.ConfigGuiFactory")
 public class ChowTime
 {
     public static String version = "@VERSION@";
@@ -119,7 +119,7 @@ public class ChowTime
     public void preInit(FMLPreInitializationEvent event)
     {
         if (version.contains("VERSION"))
-            version = "1.0.1-rev4";//Hardcode if in dev environment
+            version = "1.0.1-rev5";//Hardcode if in dev environment
 
         // FMLInterModComms.sendMessage("Waila", "register",
         // "allout58.mods.prisoncraft.compat.waila.WailaProvider.callbackRegister");
@@ -191,10 +191,11 @@ public class ChowTime
         //            Throwables.propagate(e);
         //        }
 
-        if (FMLCommonHandler.instance().getEffectiveSide().isClient())
+        if (event.getSide().isClient())
             ClientCommandHandler.instance.registerCommand(new ChowTimeClientCommand());
 
         FMLCommonHandler.instance().bus().register(new ConnectionHandler());
+        FMLCommonHandler.instance().bus().register(new Config());
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(CTInits.Juicer, 1, 0), "WBW", "WPW", "ISI", 'W', "plankWood", 'B', Items.glass_bottle, 'P', Blocks.piston, 'I', "ingotIron", 'S', Blocks.stone));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(CTInits.Fermenter, 1, 0), "WBW", "WBW", "ISI", 'W', "plankWood", 'B', Items.glass_bottle, 'I', "ingotIron", 'S', Blocks.stone));
