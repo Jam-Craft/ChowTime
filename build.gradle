@@ -15,22 +15,13 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
-
 apply plugin: 'forge'
 
-version = "1.0.1-rev5"
+boolean fullbuild=true
+
+version = "1.0.1-rev6"
 group = "net.jam-craft.chowTime"
 archivesBaseName = "ChowTime"
-
-//Shinies for JamCraft Jenkins, but only on Jenkins
-if (System.getenv()['BUILD_NUMBER']) {
-    version += "-jnks" + System.getenv()['BUILD_NUMBER']
-}
-
-if(System.getenv().DRONE_BUILD_NUMBER)
-{
-	version += "-droneio"+System.getenv().DRONE_BUILD_NUMBER
-}
 
 minecraft {
     version = "1.7.2-10.12.2.1147"
@@ -42,25 +33,37 @@ minecraft {
     replaceIn "ChowTime.java"
 }
 
+//Shinies for JamCraft Jenkins, but only on Jenkins
+if (System.getenv()['BUILD_NUMBER']) {
+    version += "-jnks" + System.getenv()['BUILD_NUMBER']
+    fullbuild=false
+}
+
+if(System.getenv().DRONE_BUILD_NUMBER)
+{
+	version += "-droneio"+System.getenv().DRONE_BUILD_NUMBER
+    fullbuild=false
+}
+
 processResources
-        {
-            // this will ensure that this task is redone when the versions change.
-            inputs.property "version", project.version
-            inputs.property "mcversion", project.minecraft.version
+{
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
 
-            // replace stuff in mcmod.info, nothing else
-            from(sourceSets.main.resources.srcDirs) {
-                include 'mcmod.info'
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
 
-                // replace version and mcversion
-                expand 'version': project.version, 'mcversion': project.minecraft.version
-            }
+        // replace version and mcversion
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+    }
 
-            // copy everything else, thats not the mcmod.info
-            from(sourceSets.main.resources.srcDirs) {
-                exclude 'mcmod.info'
-            }
-        }
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
 
 //Taken with love from AbrarSyed's SecretRoomsMod
 repositories {
@@ -109,7 +112,10 @@ task deobfJar(type: Jar) {
 
 
 artifacts {
-//    archives sourceJar
+    if(fullbuild)
+    {
+    archives sourceJar
     archives deobfJar
-//    archives javadocJar
+    archives javadocJar
+    }
 }
