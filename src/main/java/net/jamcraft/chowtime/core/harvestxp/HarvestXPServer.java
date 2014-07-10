@@ -42,11 +42,11 @@ public class HarvestXPServer
     protected Map<String, Integer> userXP = new HashMap<String, Integer>();
     protected File saveFile;
 
-    public void SetXPForUser(String user, int xp)
+    public void SetXPForUser(EntityPlayer user, int xp)
     {
-        userXP.put(user, Integer.valueOf(xp));
+        userXP.put(user.getCommandSenderName(), Integer.valueOf(xp));
         Save();
-        SyncClient(MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(user));
+        SyncClient(user);
     }
 
     public int GetXPForUser(String user)
@@ -59,7 +59,7 @@ public class HarvestXPServer
     {
         String name = user.getCommandSenderName();
         if (!userXP.containsKey(name))
-            SetXPForUser(name, 0);
+            SetXPForUser(user, 0);
         if (user != null)
         {
             PacketHandler.INSTANCE.sendTo(new HarvestXPPacket(GetXPForUser(name)), (net.minecraft.entity.player.EntityPlayerMP) user);

@@ -68,7 +68,7 @@ public class EntityEventHandler
                 //Only do it if the new system is @ 0.
                 if(HarvestXPServer.INSTANCE.GetXPForUser(player.getCommandSenderName())==0)
                 {
-                    HarvestXPServer.INSTANCE.SetXPForUser(player.getCommandSenderName(), ChowTime.harvestXP);
+                    HarvestXPServer.INSTANCE.SetXPForUser(player, ChowTime.harvestXP);
                 }
             }
             if (event.world.isRemote)
@@ -271,7 +271,7 @@ public class EntityEventHandler
                 else if (harvestXP >= 300 && HarvestLevelRegistry.IsCropAtLevel(event.block, 5))
                     harvestXP += 10;
                 if (hx1 != harvestXP)
-                    HarvestXPServer.INSTANCE.SetXPForUser(user, harvestXP);
+                    HarvestXPServer.INSTANCE.SetXPForUser(event.entityPlayer, harvestXP);
             }
         }
     }

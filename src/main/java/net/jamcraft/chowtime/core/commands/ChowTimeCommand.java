@@ -76,7 +76,7 @@ public class ChowTimeCommand implements ICommand
         else if (astring[0].equals("setXP"))
         {
             int xp = Integer.parseInt(astring[1]);
-            HarvestXPServer.INSTANCE.SetXPForUser(commandSender.getCommandSenderName(),xp);
+            HarvestXPServer.INSTANCE.SetXPForUser((net.minecraft.entity.player.EntityPlayer) commandSender,xp);
             commandSender.addChatMessage(new ChatComponentTranslation("chat.setXP", xp));
         }
 //        else if (astring[0].equals("toggleXPBar"))
