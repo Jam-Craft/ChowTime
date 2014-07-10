@@ -20,6 +20,7 @@ net.jamcraft.chowtime.dyn.items.ItemStrawberryJuice 0.0.1
 net.jamcraft.chowtime.dyn.items.ItemStrawberryBread 0.0.2
 net.jamcraft.chowtime.dyn.items.ItemBarleyDough 0.0.1
 net.jamcraft.chowtime.dyn.items.ItemBarleyFlour 0.0.1
+net.jamcraft.chowtime.dyn.items.ItemCottonCandy 0.0.1
 }
 resources
 {
