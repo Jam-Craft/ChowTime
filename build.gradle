@@ -27,6 +27,11 @@ if (System.getenv()['BUILD_NUMBER']) {
     version += "-jnks" + System.getenv()['BUILD_NUMBER']
 }
 
+if(System.getenv().DRONE_BUILD_NUMBER)
+{
+	version += "-droneio"+System.getenv().DRONE_BUILD_NUMBER
+}
+
 minecraft {
     version = "1.7.2-10.12.2.1147"
     assetDir = "eclipse/assets"
