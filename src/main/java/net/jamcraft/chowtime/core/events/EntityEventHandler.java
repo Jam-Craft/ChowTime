@@ -65,7 +65,11 @@ public class EntityEventHandler
             //Backwards compat
             if (!event.world.isRemote)
             {
-                HarvestXPServer.INSTANCE.SetXPForUser(player.getCommandSenderName(), ChowTime.harvestXP);
+                //Only do it if the new system is @ 0.
+                if(HarvestXPServer.INSTANCE.GetXPForUser(player.getCommandSenderName())==0)
+                {
+                    HarvestXPServer.INSTANCE.SetXPForUser(player.getCommandSenderName(), ChowTime.harvestXP);
+                }
             }
             if (event.world.isRemote)
             {

@@ -28,37 +28,37 @@ import net.jamcraft.chowtime.remote.RemoteMain;
 /**
  * Created by James Hollowell on 5/18/2014.
  */
-public class SHA1Packet
-        implements IMessage, IMessageHandler<SHA1Packet, IMessage>
+public class HashPacket
+        implements IMessage, IMessageHandler<HashPacket, IMessage>
 {
-    public String sha1;
+    public String hash;
 
     @SuppressWarnings("unused")
-    public SHA1Packet()
+    public HashPacket()
     {
     }
 
-    public SHA1Packet(String hash)
+    public HashPacket(String hash)
     {
-        sha1 = hash;
+        this.hash = hash;
     }
 
     @Override
     public void fromBytes(ByteBuf buf)
     {
-        sha1 = ByteBufUtils.readUTF8String(buf);
+        hash = ByteBufUtils.readUTF8String(buf);
     }
 
     @Override
     public void toBytes(ByteBuf buf)
     {
-        ByteBufUtils.writeUTF8String(buf, sha1);
+        ByteBufUtils.writeUTF8String(buf, hash);
     }
 
     @Override
-    public IMessage onMessage(SHA1Packet message, MessageContext ctx)
+    public IMessage onMessage(HashPacket message, MessageContext ctx)
     {
-        RemoteMain.IsSyncedWithServer(message.sha1);
+        RemoteMain.IsSyncedWithServer(message.hash);
         return null;
     }
 }

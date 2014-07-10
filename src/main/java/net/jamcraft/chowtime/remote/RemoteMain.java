@@ -20,13 +20,16 @@ package net.jamcraft.chowtime.remote;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.jamcraft.chowtime.ChowTime;
-import net.jamcraft.chowtime.core.config.Config;
 import net.jamcraft.chowtime.core.ModConstants;
+import net.jamcraft.chowtime.core.config.Config;
 import net.jamcraft.chowtime.core.util.ObfHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentTranslation;
-import java.io.*;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.util.List;
@@ -40,9 +43,9 @@ public class RemoteMain
     private static LooseObjList remote = new LooseObjList();
 
     public static boolean hasUpdated = false;
-    public static boolean isSyncedWithServer=false;
-    public static String localHash="";
-    public static EntityPlayer  player;
+    public static boolean isSyncedWithServer = false;
+    public static String localHash = "";
+    public static EntityPlayer player;
 
     public static void init()
     {
@@ -114,20 +117,20 @@ public class RemoteMain
             File dyn = new File(ModConstants.DYN_LOC + "/remote.ctd");
             if (!dyn.exists()) dyn.createNewFile();
 
-            org.apache.commons.io.FileUtils.copyURLToFile(url,dyn);
+            org.apache.commons.io.FileUtils.copyURLToFile(url, dyn);
 
-//            URLConnection con = url.openConnection();
-//            InputStreamReader isr = new InputStreamReader(con.getInputStream());
-//            BufferedReader br = new BufferedReader(isr);
-//
-//            FileWriter fw = new FileWriter(dyn);
-//            while (br.ready())
-//            {
-//                fw.write(br.readLine());
-//                fw.write("\n");
-//            }
-//            fw.close();
-//            br.close();
+            //            URLConnection con = url.openConnection();
+            //            InputStreamReader isr = new InputStreamReader(con.getInputStream());
+            //            BufferedReader br = new BufferedReader(isr);
+            //
+            //            FileWriter fw = new FileWriter(dyn);
+            //            while (br.ready())
+            //            {
+            //                fw.write(br.readLine());
+            //                fw.write("\n");
+            //            }
+            //            fw.close();
+            //            br.close();
 
             ChowTime.logger.error("Done downloading remote ctd...");
             ChowTime.logger.error("Loading remote ctd...");
@@ -150,7 +153,7 @@ public class RemoteMain
         {
             ChowTime.logger.warn("Downloading remote " + remotepath + " to local " + localpath);
             if (remotepath == null) remotepath = localpath;
-            URL url = new URL(Config.remoteLoc  + "dyn/current" + remotepath);
+            URL url = new URL(Config.remoteLoc + "dyn/current" + remotepath);
 
             File f = new File(ModConstants.DYN_LOC + localpath);
             if (!f.exists())
@@ -161,27 +164,27 @@ public class RemoteMain
 
             org.apache.commons.io.FileUtils.copyURLToFile(url, f);
 
-//            URLConnection con = url.openConnection();
-//            InputStream reader = url.openStream();
-//
-//            FileOutputStream writer = new FileOutputStream(ModConstants.DYN_LOC + localpath);
-//            int total = con.getContentLength();
-//            int size_dl = 0;
-//            byte[] buffer = new byte[blk_size];
-//            int bytesRead = 0;
-//            while ((bytesRead = reader.read(buffer)) > 0)
-//            {
-//                size_dl += bytesRead;
-//                writer.write(buffer, 0, bytesRead);
-//                buffer = new byte[blk_size];
-//            }
-//            writer.close();
-//            reader.close();
+            //            URLConnection con = url.openConnection();
+            //            InputStream reader = url.openStream();
+            //
+            //            FileOutputStream writer = new FileOutputStream(ModConstants.DYN_LOC + localpath);
+            //            int total = con.getContentLength();
+            //            int size_dl = 0;
+            //            byte[] buffer = new byte[blk_size];
+            //            int bytesRead = 0;
+            //            while ((bytesRead = reader.read(buffer)) > 0)
+            //            {
+            //                size_dl += bytesRead;
+            //                writer.write(buffer, 0, bytesRead);
+            //                buffer = new byte[blk_size];
+            //            }
+            //            writer.close();
+            //            reader.close();
             ChowTime.logger.warn("Download complete...");
         }
         catch (IOException e)
         {
-            ChowTime.logger.error("Error downloading file "+remotepath);
+            ChowTime.logger.error("Error downloading file " + remotepath);
         }
     }
 
@@ -191,7 +194,7 @@ public class RemoteMain
         try
         {
             //TODO: Update to Guava
-            MessageDigest md = MessageDigest.getInstance("SHA1");
+            MessageDigest md = MessageDigest.getInstance("MD5");
             FileInputStream fis = new FileInputStream(ModConstants.DYN_LOC + "/local.ctd");
             byte[] dataBytes = new byte[1024];
 
@@ -211,8 +214,8 @@ public class RemoteMain
                 sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
             }
 
-            System.out.println("Digest(in hex format):: " + sb.toString());
-            localHash=sb.toString();
+            ChowTime.logger.info("Local.ctd hash digest(in hex format):: " + sb.toString());
+            localHash = sb.toString();
         }
         catch (Exception e)
         {
@@ -222,11 +225,14 @@ public class RemoteMain
 
     public static boolean IsSyncedWithServer(String serverHash)
     {
+        //TODO: Fallback method of actually sending the whole file.
         isSyncedWithServer = localHash.equals(serverHash);
-        if(!isSyncedWithServer && player!=null)
+        if (!isSyncedWithServer && player != null)
         {
             player.addChatComponentMessage(new ChatComponentTranslation("string.nosync"));
-            if(FMLCommonHandler.instance().getEffectiveSide().isClient())
+            ChowTime.logger.error("Error connecting to server: Different ctd versions.");
+            ChowTime.logger.error("Local ctd hash: " + localHash + " Remote server's ctd hash: " + serverHash);
+            if (FMLCommonHandler.instance().getEffectiveSide().isClient())
             {
                 Minecraft.getMinecraft().theWorld.sendQuittingDisconnectingPacket();
             }

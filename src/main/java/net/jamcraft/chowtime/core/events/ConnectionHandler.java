@@ -22,7 +22,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.jamcraft.chowtime.core.harvestxp.HarvestXPServer;
 import net.jamcraft.chowtime.core.network.PacketHandler;
-import net.jamcraft.chowtime.core.network.packet.SHA1Packet;
+import net.jamcraft.chowtime.core.network.packet.HashPacket;
 import net.jamcraft.chowtime.remote.RemoteMain;
 
 /**
@@ -33,7 +33,7 @@ public class ConnectionHandler
     @SubscribeEvent
     public void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
     {
-        PacketHandler.INSTANCE.sendTo(new SHA1Packet(RemoteMain.localHash), (net.minecraft.entity.player.EntityPlayerMP) event.player);
+        PacketHandler.INSTANCE.sendTo(new HashPacket(RemoteMain.localHash), (net.minecraft.entity.player.EntityPlayerMP) event.player);
         HarvestXPServer.INSTANCE.SyncClient(event.player);
     }
 

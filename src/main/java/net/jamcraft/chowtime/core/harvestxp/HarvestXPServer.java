@@ -105,7 +105,7 @@ public class HarvestXPServer
             }
             catch (IOException e)
             {
-                ChowTime.logger.error("Error reading ChowTime XP from file: {}", e);
+                ChowTime.logger.error("Error reading ChowTime XP from file: ", e);
                 return;
             }
 

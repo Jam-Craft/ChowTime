@@ -23,7 +23,7 @@ tile.farmland.name=Tilled Soil
 string.updated=ChowTime has updated! Look for new foods and recipes.
 string.warnlocal=[ChowTime] Warning! Remote update has been disabled!
 string.nosync=[ChowTime] Client dynamic version different than server.. Disconnecting.
-string.usedev=[ChowTime] You are updating with the development branch! Thanks for testing, but be careful, bugs are a definite possibility
+string.usedev=[ChowTime] You are updating with the development branch! Thanks for testing, but be careful, bugs are a definite possibility.
 
 chat.getXP=[ChowTime] Your current harvesting XP is %d
 chat.setXP=[ChowTime] Setting your harvesting XP to %d

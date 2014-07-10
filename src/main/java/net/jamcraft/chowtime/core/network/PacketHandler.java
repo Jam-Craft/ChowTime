@@ -23,7 +23,7 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import net.jamcraft.chowtime.core.ModConstants;
 import net.jamcraft.chowtime.core.network.packet.HarvestXPPacket;
-import net.jamcraft.chowtime.core.network.packet.SHA1Packet;
+import net.jamcraft.chowtime.core.network.packet.HashPacket;
 
 /**
  * Created by James Hollowell on 5/18/2014.
@@ -34,7 +34,7 @@ public class PacketHandler
 
     public static void init()
     {
-        INSTANCE.registerMessage(SHA1Packet.class, SHA1Packet.class, 0, Side.CLIENT);
+        INSTANCE.registerMessage(HashPacket.class, HashPacket.class, 0, Side.CLIENT);
         INSTANCE.registerMessage(HarvestXPPacket.class, HarvestXPPacket.class, 1, Side.CLIENT);
     }
 
