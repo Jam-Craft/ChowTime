@@ -18,20 +18,26 @@
 
 package net.jamcraft.chowtime.remote;
 
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hashing;
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.jamcraft.chowtime.ChowTime;
 import net.jamcraft.chowtime.core.ModConstants;
 import net.jamcraft.chowtime.core.config.Config;
+import net.jamcraft.chowtime.core.network.PacketHandler;
+import net.jamcraft.chowtime.core.network.packet.RequestFallbackCheckPacket;
 import net.jamcraft.chowtime.core.util.ObfHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentTranslation;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
-import java.security.MessageDigest;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -49,7 +55,7 @@ public class RemoteMain
 
     public static void init()
     {
-        ChowTime.logger.error("Starting remote checking...");
+        ChowTime.logger.info("Starting remote checking...");
         File dyndir = new File(ModConstants.DYN_LOC);
         if (!dyndir.exists()) dyndir.mkdir();
         LoadLocal();
@@ -97,11 +103,11 @@ public class RemoteMain
 
     public static boolean LoadLocal()
     {
-        ChowTime.logger.error("Loading local..");
+        ChowTime.logger.info("Loading local..");
         local.getObjects().clear();
         File f = new File(ModConstants.DYN_LOC + "/local.ctd");
         local.readFromFile(f);
-        ChowTime.logger.error("Done loading local..");
+        ChowTime.logger.info("Done loading local..");
         HashCTD();
         return true;
     }
@@ -110,8 +116,8 @@ public class RemoteMain
     {
         try
         {
-            ChowTime.logger.error("Loading remote...");
-            ChowTime.logger.error("Downloading remote...");
+            ChowTime.logger.info("Loading remote...");
+            ChowTime.logger.info("Downloading remote...");
             URL url = new URL(Config.remoteLoc + "dyn/current.ctd");
 
             File dyn = new File(ModConstants.DYN_LOC + "/remote.ctd");
@@ -119,24 +125,11 @@ public class RemoteMain
 
             org.apache.commons.io.FileUtils.copyURLToFile(url, dyn);
 
-            //            URLConnection con = url.openConnection();
-            //            InputStreamReader isr = new InputStreamReader(con.getInputStream());
-            //            BufferedReader br = new BufferedReader(isr);
-            //
-            //            FileWriter fw = new FileWriter(dyn);
-            //            while (br.ready())
-            //            {
-            //                fw.write(br.readLine());
-            //                fw.write("\n");
-            //            }
-            //            fw.close();
-            //            br.close();
-
-            ChowTime.logger.error("Done downloading remote ctd...");
-            ChowTime.logger.error("Loading remote ctd...");
+            ChowTime.logger.info("Done downloading remote ctd...");
+            ChowTime.logger.info("Loading remote ctd...");
 
             remote.readFromFile(dyn);
-            ChowTime.logger.error("Done loading remote...");
+            ChowTime.logger.info("Done loading remote...");
             return true;
         }
         catch (IOException e)
@@ -151,7 +144,7 @@ public class RemoteMain
     {
         try
         {
-            ChowTime.logger.warn("Downloading remote " + remotepath + " to local " + localpath);
+            ChowTime.logger.info("Downloading remote " + remotepath + " to local " + localpath);
             if (remotepath == null) remotepath = localpath;
             URL url = new URL(Config.remoteLoc + "dyn/current" + remotepath);
 
@@ -164,23 +157,7 @@ public class RemoteMain
 
             org.apache.commons.io.FileUtils.copyURLToFile(url, f);
 
-            //            URLConnection con = url.openConnection();
-            //            InputStream reader = url.openStream();
-            //
-            //            FileOutputStream writer = new FileOutputStream(ModConstants.DYN_LOC + localpath);
-            //            int total = con.getContentLength();
-            //            int size_dl = 0;
-            //            byte[] buffer = new byte[blk_size];
-            //            int bytesRead = 0;
-            //            while ((bytesRead = reader.read(buffer)) > 0)
-            //            {
-            //                size_dl += bytesRead;
-            //                writer.write(buffer, 0, bytesRead);
-            //                buffer = new byte[blk_size];
-            //            }
-            //            writer.close();
-            //            reader.close();
-            ChowTime.logger.warn("Download complete...");
+            ChowTime.logger.info("Download complete...");
         }
         catch (IOException e)
         {
@@ -188,55 +165,74 @@ public class RemoteMain
         }
     }
 
-    @SuppressWarnings("resource")
     public static void HashCTD()
     {
         try
         {
-            //TODO: Update to Guava
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            FileInputStream fis = new FileInputStream(ModConstants.DYN_LOC + "/local.ctd");
-            byte[] dataBytes = new byte[1024];
+            HashFunction hasher = Hashing.md5();
 
-            int nread = 0;
+            FileReader fis = new FileReader(ModConstants.DYN_LOC + "/local.ctd");
+            BufferedReader br = new BufferedReader(fis);
 
-            while ((nread = fis.read(dataBytes)) != -1)
+            String line = br.readLine();
+            String file = "";
+            while (line != null)
             {
-                md.update(dataBytes, 0, nread);
+                file += line;
+                line = br.readLine();
             }
 
-            byte[] mdbytes = md.digest();
+            HashCode hash = hasher.hashString(file, Charset.defaultCharset());
 
-            //convert the byte to hex format
-            StringBuffer sb = new StringBuffer("");
-            for (int i = 0; i < mdbytes.length; i++)
-            {
-                sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-
-            ChowTime.logger.info("Local.ctd hash digest(in hex format):: " + sb.toString());
-            localHash = sb.toString();
+            ChowTime.logger.info("Local.ctd hash digest(in hex format):: " + hash.toString());
+            localHash = hash.toString();
         }
         catch (Exception e)
         {
-
+            e.printStackTrace();
         }
     }
 
     public static boolean IsSyncedWithServer(String serverHash)
     {
         //TODO: Fallback method of actually sending the whole file.
-        isSyncedWithServer = localHash.equals(serverHash);
-        if (!isSyncedWithServer && player != null)
+        //isSyncedWithServer = localHash.equals(serverHash);
+        isSyncedWithServer = false;
+        if (!isSyncedWithServer)
         {
-            player.addChatComponentMessage(new ChatComponentTranslation("string.nosync"));
-            ChowTime.logger.error("Error connecting to server: Different ctd versions.");
+            ChowTime.logger.error("Error connecting to server: Different ctd hashes. Falling back to full file transfer.");
             ChowTime.logger.error("Local ctd hash: " + localHash + " Remote server's ctd hash: " + serverHash);
-            if (FMLCommonHandler.instance().getEffectiveSide().isClient())
-            {
-                Minecraft.getMinecraft().theWorld.sendQuittingDisconnectingPacket();
-            }
+            FallbackSyncStart();
         }
         return isSyncedWithServer;
+    }
+
+    public static void FallbackSyncStart()
+    {
+        PacketHandler.INSTANCE.sendToServer(new RequestFallbackCheckPacket());
+    }
+
+    public static void FallbackSyncEnd()
+    {
+        LooseObjList serverlist = new LooseObjList();
+        File f = new File(ModConstants.DYN_LOC + "/sync.ctd");
+        serverlist.readFromFile(f);
+        if (!serverlist.equals(local))
+        {
+            ChowTime.logger.error("Error connecting to server with fallback. Leaving server.");
+            failSync();
+        }
+        f.delete();
+    }
+
+    private static void failSync()
+    {
+        if (player != null)
+            player.addChatComponentMessage(new ChatComponentTranslation("string.nosync"));
+        ChowTime.logger.error("Error connecting to server: Different ctd versions.");
+        if (FMLCommonHandler.instance().getEffectiveSide().isClient())
+        {
+            Minecraft.getMinecraft().theWorld.sendQuittingDisconnectingPacket();
+        }
     }
 }

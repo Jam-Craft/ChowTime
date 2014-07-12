@@ -22,8 +22,10 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import net.jamcraft.chowtime.core.ModConstants;
+import net.jamcraft.chowtime.core.network.packet.FallbackFileResponsePacket;
 import net.jamcraft.chowtime.core.network.packet.HarvestXPPacket;
 import net.jamcraft.chowtime.core.network.packet.HashPacket;
+import net.jamcraft.chowtime.core.network.packet.RequestFallbackCheckPacket;
 
 /**
  * Created by James Hollowell on 5/18/2014.
@@ -36,6 +38,8 @@ public class PacketHandler
     {
         INSTANCE.registerMessage(HashPacket.class, HashPacket.class, 0, Side.CLIENT);
         INSTANCE.registerMessage(HarvestXPPacket.class, HarvestXPPacket.class, 1, Side.CLIENT);
+        INSTANCE.registerMessage(RequestFallbackCheckPacket.class, RequestFallbackCheckPacket.class, 2, Side.SERVER);
+        INSTANCE.registerMessage(FallbackFileResponsePacket.class, FallbackFileResponsePacket.class, 3, Side.CLIENT);
     }
 
 }
