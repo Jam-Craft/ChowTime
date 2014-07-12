@@ -3,7 +3,7 @@
     1,
     0,
     1,
-    4
+    6
   ],
-  "changelog": "Change Log: Bla de bla da blargh"
+  "changelog": "Change Log: Fix major bugs: Unable to respawn on servers; unable to connect to some Linux servers  Added: Recipe for food book"
 }
