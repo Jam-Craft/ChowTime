@@ -1,6 +1,6 @@
 classes
 {
-net.jamcraft.chowtime.dyn.items.ItemCone 0.0.6
+net.jamcraft.chowtime.dyn.items.ItemCone 0.0.7
 net.jamcraft.chowtime.dyn.items.ItemStrawberryJam 0.0.2
 net.jamcraft.chowtime.dyn.items.ItemVinegar 0.0.3
 net.jamcraft.chowtime.dyn.items.ItemAJuice 0.0.2
@@ -18,8 +18,8 @@ net.jamcraft.chowtime.dyn.items.ItemGrapeJam 0.0.1
 net.jamcraft.chowtime.dyn.items.ItemGrapeJuice 0.0.1
 net.jamcraft.chowtime.dyn.items.ItemStrawberryJuice 0.0.1
 net.jamcraft.chowtime.dyn.items.ItemStrawberryBread 0.0.2
-net.jamcraft.chowtime.dyn.items.ItemBarleyDough 0.0.1
-net.jamcraft.chowtime.dyn.items.ItemBarleyFlour 0.0.1
+net.jamcraft.chowtime.dyn.items.ItemBarleyDough 0.0.2
+net.jamcraft.chowtime.dyn.items.ItemBarleyFlour 0.0.2
 net.jamcraft.chowtime.dyn.items.ItemCottonCandy 0.0.1
 }
 resources
