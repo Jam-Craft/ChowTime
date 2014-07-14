@@ -25,9 +25,9 @@ public abstract class HarvestXPCore
 {
     public static int GetHarvestLevelFromXP(int xp)
     {
-        if (xp <= 20) return 1;
-        if (xp <= 100) return 2;
-        if (xp <= 300) return 4; //also includes 3 for some reason...
+        if (xp < 20) return 1;
+        if (xp < 100) return 2;
+        if (xp < 300) return 4; //also includes 3 for some reason...
         return 5;
     }
 }

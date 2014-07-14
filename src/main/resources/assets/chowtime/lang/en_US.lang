@@ -25,16 +25,16 @@ string.warnlocal=Warning! Remote update has been disabled!
 string.nosync=Client dynamic version different than server.. Disconnecting.
 string.usedev=You are updating with the development branch! Thanks for testing, but be careful, bugs are a definite possibility.
 
-chat.ctprefix=[ChowTime]
-chat.getXP=Your current harvesting XP is %d
-chat.setXP=Setting your harvesting XP to %d
-chat.toggleXPBar=Toggled ChowTime info.
-chat.welcomeMessage=Welcome to Chow Time! This mod adds harvesting experience that unlocks more plantable crops as you harvest. To start with, grow some Barley or Blueberries! More crops unlocked at 20 HXP!
-chat.HXPGain20=Congratulations! You have gained 20 harvesting experience! You can now plant & harvest Tomatoes, Raspberries and Cranberries. More crops unlocked at 100 HXP!
-chat.HXPGain100=Congratulations! You have gained 100 harvesting experience! You can now plant & harvest Corn, Grapes. More crops unlocked at 300 HXP!
-chat.HXPGain300=Congratulations! You have gained 300 harvesting experience! You can now plant & harvest Strawberries. You are now the Harvest Master!
-chat.notExperienced=You are not experienced enough to plant these seeds. Try gaining more levels first.
-chat.gainExperience=To gain more experience break fully grown crops that are on your level.
+chat.ctprefix=[§2ChowTime§r]
+chat.getXP= %s's current harvesting XP is %d
+chat.setXP= Setting %s's harvesting XP to %d
+chat.toggleXPBar= Toggled ChowTime info.
+chat.welcomeMessage= Welcome to ChowTime! This mod adds harvesting experience that unlocks more plantable crops as you harvest. To start with, grow some Barley or Blueberries! More crops unlocked at 20 HXP!
+chat.HXPGain20= Congratulations! You have gained 20 harvesting experience! You can now plant & harvest Tomatoes, Raspberries and Cranberries. More crops unlocked at 100 HXP!
+chat.HXPGain100= Congratulations! You have gained 100 harvesting experience! You can now plant & harvest Corn, Grapes. More crops unlocked at 300 HXP!
+chat.HXPGain300= Congratulations! You have gained 300 harvesting experience! You can now plant & harvest Strawberries. You are now the Harvest Master!
+chat.notExperienced= You are not experienced enough to plant these seeds. Try gaining more levels first.
+chat.gainExperience= To gain more experience break fully grown crops that are on your level.
 
 item.barley.name=Barley
 item.seedBarley.name=Barley Seeds

@@ -19,9 +19,11 @@
 package net.jamcraft.chowtime.core.commands;
 
 import net.jamcraft.chowtime.core.harvestxp.HarvestXPServer;
-import net.minecraft.command.ICommand;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.command.PlayerSelector;
 import net.minecraft.command.WrongUsageException;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ import java.util.List;
 /**
  * Created by James Hollowell on 5/24/2014.
  */
-public class ChowTimeCommand implements ICommand
+public class ChowTimeCommand extends CommandBase
 {
     @SuppressWarnings("rawtypes")
     private List aliases;
@@ -52,8 +54,8 @@ public class ChowTimeCommand implements ICommand
     @Override
     public String getCommandUsage(ICommandSender var1)
     {
-        String use = "/chowtime getXP | ";
-        use += "/chowtime setXP <xp>";
+        String use = "/chowtime getXP <user> | ";
+        use += "/chowtime setXP <user> <xp>";
         return use;
     }
 
@@ -71,25 +73,18 @@ public class ChowTimeCommand implements ICommand
             throw new WrongUsageException(getCommandUsage(commandSender));
         if (astring[0].equals("getXP"))
         {
-            commandSender.addChatMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("chat.getXP", HarvestXPServer.INSTANCE.GetXPForUser(commandSender.getCommandSenderName()))));
+            if (astring.length != 2)
+                throw new WrongUsageException(getCommandUsage(commandSender));
+            commandSender.addChatMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("chat.getXP", astring[1], HarvestXPServer.INSTANCE.GetXPForUser(astring[1]))));
         }
         else if (astring[0].equals("setXP"))
         {
-            int xp = Integer.parseInt(astring[1]);
-            HarvestXPServer.INSTANCE.SetXPForUser((net.minecraft.entity.player.EntityPlayer) commandSender,xp);
-            commandSender.addChatMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("chat.setXP", xp)));
+            if (astring.length != 3)
+                throw new WrongUsageException(getCommandUsage(commandSender));
+            int xp = CommandBase.parseIntWithMin(commandSender, astring[2], 0);
+            HarvestXPServer.INSTANCE.SetXPForUser(MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(astring[1]), xp);
+            commandSender.addChatMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("chat.setXP", astring[1], xp)));
         }
-//        else if (astring[0].equals("toggleXPBar"))
-//        {
-//            Config.shouldRenderXP = !Config.shouldRenderXP;
-//            commandSender.addChatMessage(new ChatComponentTranslation("chat.toggleXPBar"));
-//        }
-    }
-
-    @Override
-    public boolean canCommandSenderUseCommand(ICommandSender var1)
-    {
-        return true;
     }
 
     @SuppressWarnings("rawtypes")
@@ -102,25 +97,12 @@ public class ChowTimeCommand implements ICommand
         {
             if ("getXP".toLowerCase().startsWith(ARG_LC)) MATCHES.add("getXP");
             if ("setXP".toLowerCase().startsWith(ARG_LC)) MATCHES.add("setXP");
-//            if ("toggleXPBar".toLowerCase().startsWith(ARG_LC))
-//                MATCHES.add("toggleXPBar");
+        }
+        else if (astring.length == 2)
+        {
+            for (String un : MinecraftServer.getServer().getAllUsernames())
+                if (un.toLowerCase().startsWith(ARG_LC)) MATCHES.add(un);
         }
         return MATCHES.isEmpty() ? null : MATCHES;
-    }
-
-    @Override
-    public boolean isUsernameIndex(String[] var1, int var2)
-    {
-        return false;
-    }
-
-    @Override
-    public int compareTo(Object o)
-    {
-        if(o instanceof ICommand)
-        {
-            return this.getCommandName().compareTo(((ICommand) o).getCommandName());
-        }
-        return 0;
     }
 }
