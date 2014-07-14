@@ -20,6 +20,7 @@ package net.jamcraft.chowtime.core.events;
 
 import net.jamcraft.chowtime.core.config.Config;
 import net.jamcraft.chowtime.core.harvestxp.HarvestXPClient;
+import net.jamcraft.chowtime.core.harvestxp.HarvestXPCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
@@ -101,6 +102,24 @@ public class GuiEventHandler
                 fontrenderer.drawString(s3, j2, k2 - 1, 0);
                 fontrenderer.drawString(s3, j2, k2, 0xfeee00);
             }
+
+            s3 = "Harvest level: ";
+            j2= k- fontrenderer.getStringWidth(s3) - 4;
+            k2+=12;
+            fontrenderer.drawString(s3, j2 + 1, k2, 0);
+            fontrenderer.drawString(s3, j2 - 1, k2, 0);
+            fontrenderer.drawString(s3, j2, k2 + 1, 0);
+            fontrenderer.drawString(s3, j2, k2 - 1, 0);
+            fontrenderer.drawString(s3, j2, k2, 0xfeee00);
+
+            s3=""+ HarvestXPCore.GetHarvestLevelFromXP(HarvestXPClient.INSTANCE.xp);
+            j2= k- fontrenderer.getStringWidth(s3) - 4;
+            k2+=12;
+            fontrenderer.drawString(s3, j2 + 1, k2, 0);
+            fontrenderer.drawString(s3, j2 - 1, k2, 0);
+            fontrenderer.drawString(s3, j2, k2 + 1, 0);
+            fontrenderer.drawString(s3, j2, k2 - 1, 0);
+            fontrenderer.drawString(s3, j2, k2, 0xfe0000);
         }
     }
 }

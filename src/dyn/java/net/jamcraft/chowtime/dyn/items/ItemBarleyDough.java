@@ -31,7 +31,7 @@ public class ItemBarleyDough extends Item implements IDynItem
 
     @Override public void registerRecipe()
     {
-        CraftingManager.getInstance().addShapelessRecipe(new ItemStack(this), new ItemStack(DynItems.items.get("barleyFlour")));
+        CraftingManager.getInstance().addShapelessRecipe(new ItemStack(this), new ItemStack(DynItems.items.get("barleyFlour")), new ItemStack(Items.water_bucket));
         FurnaceRecipes.smelting().func_151394_a(new ItemStack(this),new ItemStack(Items.bread),.175F);
     }
 }

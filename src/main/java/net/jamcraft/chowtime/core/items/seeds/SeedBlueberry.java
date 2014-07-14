@@ -21,15 +21,16 @@ package net.jamcraft.chowtime.core.items.seeds;
 import net.jamcraft.chowtime.ChowTime;
 import net.jamcraft.chowtime.core.CTInits;
 import net.jamcraft.chowtime.core.ModConstants;
+import net.jamcraft.chowtime.core.items.CTSeed;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemSeeds;
 
 /**
  * Created by DarkKnight on 5/18/14.
  */
-public class SeedBlueberry extends ItemSeeds {
-
-    public SeedBlueberry(){
+public class SeedBlueberry extends CTSeed
+{
+    public SeedBlueberry()
+    {
         super(CTInits.CropBlueberry, Blocks.farmland);
         this.setCreativeTab(ChowTime.creativeTab);
         this.setTextureName(ModConstants.MODID + ":" + "blueberrySeeds");

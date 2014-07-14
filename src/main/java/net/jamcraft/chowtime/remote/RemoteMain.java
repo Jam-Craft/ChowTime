@@ -196,8 +196,7 @@ public class RemoteMain
     public static boolean IsSyncedWithServer(String serverHash)
     {
         //TODO: Fallback method of actually sending the whole file.
-        //isSyncedWithServer = localHash.equals(serverHash);
-        isSyncedWithServer = false;
+        isSyncedWithServer = localHash.equals(serverHash);
         if (!isSyncedWithServer)
         {
             ChowTime.logger.error("Error connecting to server: Different ctd hashes. Falling back to full file transfer.");

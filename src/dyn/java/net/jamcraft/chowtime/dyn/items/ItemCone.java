@@ -30,6 +30,6 @@ public class ItemCone extends CTItem implements IDynItem
 
     @Override public void registerRecipe()
     {
-        GameRegistry.addRecipe(new ItemStack(this),"   ","B B"," B ",'B', DynItems.items.get("barleyDough"));
+        GameRegistry.addRecipe(new ItemStack(this, 3),"   ","B B"," B ",'B', DynItems.items.get("barleyDough"));
     }
 }

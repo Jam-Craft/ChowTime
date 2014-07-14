@@ -96,4 +96,9 @@ public class HarvestLevelRegistry
     {
         return seedReg.containsKey(item);
     }
+
+    public static int LevelForSeed(Item item)
+    {
+        return blockReg.get(seedReg.get(item));
+    }
 }

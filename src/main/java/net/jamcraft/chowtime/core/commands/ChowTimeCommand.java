@@ -71,13 +71,13 @@ public class ChowTimeCommand implements ICommand
             throw new WrongUsageException(getCommandUsage(commandSender));
         if (astring[0].equals("getXP"))
         {
-            commandSender.addChatMessage(new ChatComponentTranslation("chat.getXP", HarvestXPServer.INSTANCE.GetXPForUser(commandSender.getCommandSenderName())));
+            commandSender.addChatMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("chat.getXP", HarvestXPServer.INSTANCE.GetXPForUser(commandSender.getCommandSenderName()))));
         }
         else if (astring[0].equals("setXP"))
         {
             int xp = Integer.parseInt(astring[1]);
             HarvestXPServer.INSTANCE.SetXPForUser((net.minecraft.entity.player.EntityPlayer) commandSender,xp);
-            commandSender.addChatMessage(new ChatComponentTranslation("chat.setXP", xp));
+            commandSender.addChatMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("chat.setXP", xp)));
         }
 //        else if (astring[0].equals("toggleXPBar"))
 //        {

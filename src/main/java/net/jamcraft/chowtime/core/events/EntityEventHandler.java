@@ -57,41 +57,41 @@ public class EntityEventHandler
         {
             EntityPlayer player = (EntityPlayer) event.entity;
 
-            //TODO: Remove in next update
-            ChowTime.harvestXP = ChowTime.saveData.getInteger("harvestXP" + (player).getCommandSenderName());
-            ChowTime.harvestLVL = ChowTime.saveData.getInteger("harvestLVL" + (player).getCommandSenderName());
-
-            //TODO: Remove in next update
-            //Backwards compat
-            if (!event.world.isRemote)
-            {
-                //Only do it if the new system is @ 0.
-                if(HarvestXPServer.INSTANCE.GetXPForUser(player.getCommandSenderName())==0)
-                {
-                    HarvestXPServer.INSTANCE.SetXPForUser(player, ChowTime.harvestXP);
-                }
-            }
-            if (event.world.isRemote)
-            {
-                HarvestXPClient.INSTANCE.xp=ChowTime.harvestXP;
-            }
+//            //TODO: Remove in next update
+//            ChowTime.harvestXP = ChowTime.saveData.getInteger("harvestXP" + (player).getCommandSenderName());
+//            ChowTime.harvestLVL = ChowTime.saveData.getInteger("harvestLVL" + (player).getCommandSenderName());
+//
+//            //TODO: Remove in next update
+//            //Backwards compat
+//            if (!event.world.isRemote)
+//            {
+//                //Only do it if the new system is @ 0.
+//                if(HarvestXPServer.INSTANCE.GetXPForUser(player.getCommandSenderName())==0)
+//                {
+//                    HarvestXPServer.INSTANCE.SetXPForUser(player, ChowTime.harvestXP);
+//                }
+//            }
+//            if (event.world.isRemote)
+//            {
+//                HarvestXPClient.INSTANCE.xp=ChowTime.harvestXP;
+//            }
 
             if (event.world.isRemote && !HasBeenNotified)
             {
                 if (HarvestXPClient.INSTANCE.xp == 0)
-                    player.addChatMessage(new ChatComponentTranslation("chat.welcomeMessage"));
+                    player.addChatMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("chat.welcomeMessage")));
                 if (RemoteMain.hasUpdated)
                 {
-                    player.addChatComponentMessage(new ChatComponentTranslation("string.updated"));
+                    player.addChatComponentMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("string.updated")));
                     RemoteMain.hasUpdated = false;
                 }
                 if (Config.forceLocal)
                 {
-                    player.addChatComponentMessage(new ChatComponentTranslation("string.warnlocal"));
+                    player.addChatComponentMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("string.warnlocal")));
                 }
                 if (Config.useDev)
                 {
-                    player.addChatComponentMessage(new ChatComponentTranslation("string.usedev"));
+                    player.addChatComponentMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("string.usedev")));
                 }
                 RemoteMain.player = player;
                 HasBeenNotified = true;
@@ -102,41 +102,41 @@ public class EntityEventHandler
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event)
     {
-        //TODO: Remove on update
-        if (!event.world.isRemote)
-        {
-            new File(ChowTime.dir + File.separator + "ChowTime").mkdirs();
-            ChowTime.harvestingLVL = new File(ChowTime.dir + File.separator + "ChowTime", "CT" + event.world.getWorldInfo().getWorldName() + ".cfg");
-            try
-            {
-                if (!ChowTime.harvestingLVL.exists())
-                    ChowTime.harvestingLVL.createNewFile();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-        {
-//            HarvestXPServer.INSTANCE.Load();
-
-            //TODO: This code will be removed in the next release, it is simply to permit compat w/ old save format
-            try
-            {
-                if (ChowTime.harvestingLVL.exists())
-                    ChowTime.saveData = CompressedStreamTools.readCompressed(new FileInputStream(ChowTime.harvestingLVL));
-            }
-            catch (EOFException e)
-            {
-                e.printStackTrace();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
+//        //TODO: Remove on update
+//        if (!event.world.isRemote)
+//        {
+//            new File(ChowTime.dir + File.separator + "ChowTime").mkdirs();
+//            ChowTime.harvestingLVL = new File(ChowTime.dir + File.separator + "ChowTime", "CT" + event.world.getWorldInfo().getWorldName() + ".cfg");
+//            try
+//            {
+//                if (!ChowTime.harvestingLVL.exists())
+//                    ChowTime.harvestingLVL.createNewFile();
+//            }
+//            catch (IOException e)
+//            {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
+//        {
+////            HarvestXPServer.INSTANCE.Load();
+//
+//            //TODO: This code will be removed in the next release, it is simply to permit compat w/ old save format
+//            try
+//            {
+//                if (ChowTime.harvestingLVL.exists())
+//                    ChowTime.saveData = CompressedStreamTools.readCompressed(new FileInputStream(ChowTime.harvestingLVL));
+//            }
+//            catch (EOFException e)
+//            {
+//                e.printStackTrace();
+//            }
+//            catch (IOException e)
+//            {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     @SubscribeEvent
@@ -298,11 +298,11 @@ public class EntityEventHandler
                     // 101, you never get the message...
                     int harvestXP = HarvestXPServer.INSTANCE.GetXPForUser(event.entityPlayer.getCommandSenderName());
                     if (harvestXP == 19)
-                        event.entityPlayer.addChatMessage(new ChatComponentTranslation("chat.HXPGain20"));
+                        event.entityPlayer.addChatMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("chat.HXPGain20")));
                     if (harvestXP == 99)
-                        event.entityPlayer.addChatMessage(new ChatComponentTranslation("chat.HXPGain100"));
+                        event.entityPlayer.addChatMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("chat.HXPGain100")));
                     if (harvestXP == 299)
-                        event.entityPlayer.addChatMessage(new ChatComponentTranslation("chat.HXPGain300"));
+                        event.entityPlayer.addChatMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("chat.HXPGain300")));
                 }
             }
             if (event.action == Action.RIGHT_CLICK_BLOCK && !(event.entityPlayer instanceof FakePlayer) && event.entityPlayer.getHeldItem() != null && event.entityPlayer.worldObj.getBlock(event.x, event.y, event.z) instanceof BlockFarmland)
@@ -330,7 +330,7 @@ public class EntityEventHandler
                 if (!canPlant)
                 {
                     event.setCanceled(true);
-                    event.entityPlayer.addChatMessage(new ChatComponentTranslation("chat.notExperienced"));
+                    event.entityPlayer.addChatMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("chat.notExperienced")));
                     event.entityPlayer.addChatMessage(new ChatComponentTranslation("chat.gainExperience"));
                 }
             }

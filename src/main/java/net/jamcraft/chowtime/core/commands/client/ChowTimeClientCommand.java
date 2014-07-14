@@ -71,7 +71,7 @@ public class ChowTimeClientCommand implements ICommand
         {
             Config.shouldRenderXP = !Config.shouldRenderXP;
             Config.save();
-            commandSender.addChatMessage(new ChatComponentTranslation("chat.toggleXPBar"));
+            commandSender.addChatMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("chat.toggleXPBar")));
         }
         else
             throw new WrongUsageException(getCommandUsage(commandSender));
@@ -106,6 +106,10 @@ public class ChowTimeClientCommand implements ICommand
     @Override
     public int compareTo(Object o)
     {
+        if(o instanceof ICommand)
+        {
+            return this.getCommandName().compareTo(((ICommand) o).getCommandName());
+        }
         return 0;
     }
 }

@@ -35,6 +35,7 @@ public class CTFoodBook extends Item
         setCreativeTab(ChowTime.creativeTab);
         setUnlocalizedName("foodbook");
         setTextureName(ModConstants.MODID + ":foodbook");
+        setMaxStackSize(1);
     }
 
     @Override
