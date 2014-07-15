@@ -20,7 +20,6 @@ package net.jamcraft.chowtime.core.events;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.jamcraft.chowtime.ChowTime;
 import net.jamcraft.chowtime.core.config.Config;
 import net.jamcraft.chowtime.core.harvestxp.HarvestXPClient;
 import net.jamcraft.chowtime.core.harvestxp.HarvestXPServer;
@@ -29,7 +28,6 @@ import net.jamcraft.chowtime.remote.RemoteMain;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -37,11 +35,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.event.world.WorldEvent;
-
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 /**
  * Created by DarkKnight on 5/18/14.
@@ -57,24 +50,24 @@ public class EntityEventHandler
         {
             EntityPlayer player = (EntityPlayer) event.entity;
 
-//            //TODO: Remove in next update
-//            ChowTime.harvestXP = ChowTime.saveData.getInteger("harvestXP" + (player).getCommandSenderName());
-//            ChowTime.harvestLVL = ChowTime.saveData.getInteger("harvestLVL" + (player).getCommandSenderName());
-//
-//            //TODO: Remove in next update
-//            //Backwards compat
-//            if (!event.world.isRemote)
-//            {
-//                //Only do it if the new system is @ 0.
-//                if(HarvestXPServer.INSTANCE.GetXPForUser(player.getCommandSenderName())==0)
-//                {
-//                    HarvestXPServer.INSTANCE.SetXPForUser(player, ChowTime.harvestXP);
-//                }
-//            }
-//            if (event.world.isRemote)
-//            {
-//                HarvestXPClient.INSTANCE.xp=ChowTime.harvestXP;
-//            }
+            //            //TODO: Remove in next update
+            //            ChowTime.harvestXP = ChowTime.saveData.getInteger("harvestXP" + (player).getCommandSenderName());
+            //            ChowTime.harvestLVL = ChowTime.saveData.getInteger("harvestLVL" + (player).getCommandSenderName());
+            //
+            //            //TODO: Remove in next update
+            //            //Backwards compat
+            //            if (!event.world.isRemote)
+            //            {
+            //                //Only do it if the new system is @ 0.
+            //                if(HarvestXPServer.INSTANCE.GetXPForUser(player.getCommandSenderName())==0)
+            //                {
+            //                    HarvestXPServer.INSTANCE.SetXPForUser(player, ChowTime.harvestXP);
+            //                }
+            //            }
+            //            if (event.world.isRemote)
+            //            {
+            //                HarvestXPClient.INSTANCE.xp=ChowTime.harvestXP;
+            //            }
 
             if (event.world.isRemote && !HasBeenNotified)
             {
@@ -102,41 +95,41 @@ public class EntityEventHandler
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event)
     {
-//        //TODO: Remove on update
-//        if (!event.world.isRemote)
-//        {
-//            new File(ChowTime.dir + File.separator + "ChowTime").mkdirs();
-//            ChowTime.harvestingLVL = new File(ChowTime.dir + File.separator + "ChowTime", "CT" + event.world.getWorldInfo().getWorldName() + ".cfg");
-//            try
-//            {
-//                if (!ChowTime.harvestingLVL.exists())
-//                    ChowTime.harvestingLVL.createNewFile();
-//            }
-//            catch (IOException e)
-//            {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-//        {
-////            HarvestXPServer.INSTANCE.Load();
-//
-//            //TODO: This code will be removed in the next release, it is simply to permit compat w/ old save format
-//            try
-//            {
-//                if (ChowTime.harvestingLVL.exists())
-//                    ChowTime.saveData = CompressedStreamTools.readCompressed(new FileInputStream(ChowTime.harvestingLVL));
-//            }
-//            catch (EOFException e)
-//            {
-//                e.printStackTrace();
-//            }
-//            catch (IOException e)
-//            {
-//                e.printStackTrace();
-//            }
-//        }
+        //        //TODO: Remove on update
+        //        if (!event.world.isRemote)
+        //        {
+        //            new File(ChowTime.dir + File.separator + "ChowTime").mkdirs();
+        //            ChowTime.harvestingLVL = new File(ChowTime.dir + File.separator + "ChowTime", "CT" + event.world.getWorldInfo().getWorldName() + ".cfg");
+        //            try
+        //            {
+        //                if (!ChowTime.harvestingLVL.exists())
+        //                    ChowTime.harvestingLVL.createNewFile();
+        //            }
+        //            catch (IOException e)
+        //            {
+        //                e.printStackTrace();
+        //            }
+        //        }
+        //
+        //        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
+        //        {
+        ////            HarvestXPServer.INSTANCE.Load();
+        //
+        //            //TODO: This code will be removed in the next release, it is simply to permit compat w/ old save format
+        //            try
+        //            {
+        //                if (ChowTime.harvestingLVL.exists())
+        //                    ChowTime.saveData = CompressedStreamTools.readCompressed(new FileInputStream(ChowTime.harvestingLVL));
+        //            }
+        //            catch (EOFException e)
+        //            {
+        //                e.printStackTrace();
+        //            }
+        //            catch (IOException e)
+        //            {
+        //                e.printStackTrace();
+        //            }
+        //        }
     }
 
     @SubscribeEvent
@@ -170,56 +163,56 @@ public class EntityEventHandler
         }
     }
 
-//    @SubscribeEvent
-//    public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
-//    {
-//        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-//        {
-//            if (event.entityLiving instanceof EntityPlayer)
-//            {
-//            }
-//        }
-//    }
+    //    @SubscribeEvent
+    //    public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
+    //    {
+    //        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
+    //        {
+    //            if (event.entityLiving instanceof EntityPlayer)
+    //            {
+    //            }
+    //        }
+    //    }
 
-//    @SubscribeEvent
-//    public void onItemUseStart(PlayerUseItemEvent.Start event)
-//    {
-//        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-//        {
-//
-//        }
-//    }
+    //    @SubscribeEvent
+    //    public void onItemUseStart(PlayerUseItemEvent.Start event)
+    //    {
+    //        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
+    //        {
+    //
+    //        }
+    //    }
 
-//    @SubscribeEvent
-//    public void onItemUseTick(PlayerUseItemEvent.Tick event)
-//    {
-//        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-//        {
-//
-//        }
-//    }
+    //    @SubscribeEvent
+    //    public void onItemUseTick(PlayerUseItemEvent.Tick event)
+    //    {
+    //        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
+    //        {
+    //
+    //        }
+    //    }
 
-//    @SubscribeEvent
-//    public void onItemUseStopBeforeFinish(PlayerUseItemEvent.Stop event)
-//    {
-//        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-//        {
-//
-//        }
-//    }
+    //    @SubscribeEvent
+    //    public void onItemUseStopBeforeFinish(PlayerUseItemEvent.Stop event)
+    //    {
+    //        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
+    //        {
+    //
+    //        }
+    //    }
 
-//    @SubscribeEvent
-//    public void onItemUseFinish(PlayerUseItemEvent.Finish event)
-//    {
-//        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-//        {
-            // if (event.item.getItem() instanceof ItemAppleGold ||
-            // event.item.getItem() instanceof ItemFood || event.item.getItem()
-            // instanceof ItemSoup || event.item.getItem() instanceof
-            // ItemFishFood) event.entityPlayer.addChatMessage(new
-            // ChatComponentTranslation("Munch munch munch"));
-//        }
-//    }
+    //    @SubscribeEvent
+    //    public void onItemUseFinish(PlayerUseItemEvent.Finish event)
+    //    {
+    //        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
+    //        {
+    // if (event.item.getItem() instanceof ItemAppleGold ||
+    // event.item.getItem() instanceof ItemFood || event.item.getItem()
+    // instanceof ItemSoup || event.item.getItem() instanceof
+    // ItemFishFood) event.entityPlayer.addChatMessage(new
+    // ChatComponentTranslation("Munch munch munch"));
+    //        }
+    //    }
 
     @SubscribeEvent
     public void breakSpeed(PlayerEvent.BreakSpeed event)
@@ -260,29 +253,30 @@ public class EntityEventHandler
             if (event.metadata == 7 && !(event.entityPlayer instanceof FakePlayer))
             {
                 int hx1 = harvestXP;
-                if (harvestXP >= 0 && HarvestLevelRegistry.IsCropAtLevel(event.block, 1))
-                    harvestXP += 1;
-                else if (harvestXP >= 20 && HarvestLevelRegistry.IsCropAtLevel(event.block, 2))
-                    harvestXP += 2;
-                else if (harvestXP >= 100 && HarvestLevelRegistry.IsCropAtLevel(event.block, 3))
-                    harvestXP += 4;
+                if (harvestXP >= 300 && HarvestLevelRegistry.IsCropAtLevel(event.block, 5))
+                    harvestXP += 10;
                 else if (harvestXP >= 100 && HarvestLevelRegistry.IsCropAtLevel(event.block, 4))
                     harvestXP += 5;
-                else if (harvestXP >= 300 && HarvestLevelRegistry.IsCropAtLevel(event.block, 5))
-                    harvestXP += 10;
+                else if (harvestXP >= 100 && HarvestLevelRegistry.IsCropAtLevel(event.block, 3))
+                    harvestXP += 4;
+                else if (harvestXP >= 20 && HarvestLevelRegistry.IsCropAtLevel(event.block, 2))
+                    harvestXP += 2;
+                else if (harvestXP >= 0 && HarvestLevelRegistry.IsCropAtLevel(event.block, 1))
+                    harvestXP += 1;
+                
                 if (hx1 != harvestXP)
                     HarvestXPServer.INSTANCE.SetXPForUser(event.entityPlayer, harvestXP);
             }
         }
     }
 
-//    @SubscribeEvent
-//    public void harvestCheck(PlayerEvent.HarvestCheck event)
-//    {
-//        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-//        {
-//        }
-//    }
+    //    @SubscribeEvent
+    //    public void harvestCheck(PlayerEvent.HarvestCheck event)
+    //    {
+    //        if (FMLCommonHandler.instance().getEffectiveSide().isServer())
+    //        {
+    //        }
+    //    }
 
     @SubscribeEvent
     public void blockInteraction(PlayerInteractEvent event)
