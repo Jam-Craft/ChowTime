@@ -95,7 +95,8 @@ public class HarvestXPServer
 
     public void Load()
     {
-        if (saveFile == null) init();
+        getSaveFile();
+        if (!saveFile.exists()) init();
         else
         {
             NBTTagCompound head;
@@ -121,8 +122,6 @@ public class HarvestXPServer
 
     public void init()
     {
-        SaveHandler saveHandler = (SaveHandler) MinecraftServer.getServer().worldServerForDimension(0).getSaveHandler();
-        saveFile = new File(saveHandler.getWorldDirectory().getAbsolutePath() + "/ChowTimeXP.dat");
         try
         {
             if (!saveFile.exists()) saveFile.createNewFile();
@@ -131,5 +130,11 @@ public class HarvestXPServer
         {
             ChowTime.logger.error("Error creating ChowTime XP save file: ", e);
         }
+    }
+
+    public void getSaveFile()
+    {
+        SaveHandler saveHandler = (SaveHandler) MinecraftServer.getServer().worldServerForDimension(0).getSaveHandler();
+        saveFile = new File(saveHandler.getWorldDirectory().getAbsolutePath() + "/ChowTimeXP.dat");
     }
 }
