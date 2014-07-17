@@ -215,19 +215,22 @@ public class ChowTime
         SeedRegistry.AddSeed((ItemSeeds) CTInits.StrawberrySeeds);
         SeedRegistry.AddSeed((ItemSeeds) CTInits.TomatoSeeds);
 
-        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropBarley, CTInits.BarleySeeds, 1);
-        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropBlueberry, CTInits.BlueberrySeeds, 1);
-        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropTomato, CTInits.TomatoSeeds, 2);
-        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropCranberry, CTInits.CranberrySeeds, 2);
-        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropRaspberry, CTInits.RaspberrySeeds, 2);
-        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropGrape, CTInits.GrapeSeeds, 3);
-        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropCorn, CTInits.CornSeeds, 4);
-        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropStrawberry, CTInits.StrawberrySeeds, 5);
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropBarley, CTInits.BarleySeeds, null, 1);// null to prevent conflicting recipes with seeds and flour
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropBlueberry, CTInits.BlueberrySeeds, CTInits.Blueberry, 1);
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropTomato, CTInits.TomatoSeeds, CTInits.Tomato, 2);
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropCranberry, CTInits.CranberrySeeds, CTInits.Cranberry, 2);
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropRaspberry, CTInits.RaspberrySeeds, CTInits.Raspberry, 2);
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropGrape, CTInits.GrapeSeeds, CTInits.Grape, 3);
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropCorn, CTInits.CornSeeds, CTInits.Corn, 4);
+        HarvestLevelRegistry.AddBlockHavestXP(CTInits.CropStrawberry, CTInits.StrawberrySeeds, CTInits.Strawberry, 5);
+
+        HarvestLevelRegistry.registerSeedRecipies();
 
         proxy.registerRenderers();
 
         createEntity(EntitySeedMob.class, "SeedMob", 0x00AF00, 0xAA2167);
         createEntity(EntityGingerbreadMan.class, "GingerbreadMan", 0xAF4200, 0x612400);
+
         EntityRegistry.addSpawn(EntitySeedMob.class, 5, 2, 3, EnumCreatureType.creature, BiomeGenBase.forest, BiomeGenBase.forestHills, BiomeGenBase.birchForest, BiomeGenBase.birchForestHills, BiomeGenBase.plains, BiomeGenBase.beach, BiomeGenBase.coldBeach, BiomeGenBase.frozenRiver);
     }
 
