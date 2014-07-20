@@ -27,9 +27,10 @@ import net.minecraft.item.ItemFood;
  */
 public class ItemCorn extends ItemFood
 {
+    //Tier 4
     public ItemCorn()
     {
-        super(3,false);
+        super(6,false);
         this.setCreativeTab(ChowTime.creativeTab);
         setUnlocalizedName("corn");
         this.setTextureName(ModConstants.MODID + ":corn");

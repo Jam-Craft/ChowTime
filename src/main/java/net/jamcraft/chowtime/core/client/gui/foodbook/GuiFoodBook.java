@@ -158,6 +158,16 @@ public class GuiFoodBook extends GuiScreen
         {
             mc.displayGuiScreen(null);
         }
+        else if (key==Keyboard.KEY_LEFT && pageIndex>0)
+        {
+            pageIndex--;
+            updateButtonState();
+        }
+        else if(key==Keyboard.KEY_RIGHT && pageIndex<pages.size())
+        {
+            pageIndex++;
+            updateButtonState();
+        }
         else if (Character.getType(lowerCase) == Character.LOWERCASE_LETTER)
         {
             for (int i = 0, len = pages.size(); i < len; ++i)

@@ -6,12 +6,13 @@ import net.jamcraft.chowtime.core.recipies.IceCreamRecipies;
 import net.jamcraft.chowtime.dyn.common.IDynItem;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSnowball;
 import net.minecraft.item.ItemStack;
 
 /**
  * Created by James Hollowell on 5/17/2014.
  */
-public class ItemChocoIceCream extends Item implements IDynItem
+public class ItemChocoIceCream extends ItemSnowball implements IDynItem
 {
     public ItemChocoIceCream()
     {

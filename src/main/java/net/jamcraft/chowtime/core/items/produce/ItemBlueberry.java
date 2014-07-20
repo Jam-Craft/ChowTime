@@ -27,6 +27,7 @@ import net.minecraft.item.ItemFood;
  */
 public class ItemBlueberry extends ItemFood
 {
+    //Tier 1
     public ItemBlueberry()
     {
         super(2,false);

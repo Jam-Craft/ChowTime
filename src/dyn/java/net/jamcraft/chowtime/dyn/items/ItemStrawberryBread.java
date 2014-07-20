@@ -16,7 +16,7 @@ public class ItemStrawberryBread extends ItemFood implements IDynItem
 {
     public ItemStrawberryBread()
     {
-        super(8, false);
+        super(12, false);
         setCreativeTab(ChowTime.creativeTab);
         setTextureName(ModConstants.MODID + ":strawberryBread");
         setUnlocalizedName("strawberryBread");

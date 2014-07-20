@@ -27,7 +27,7 @@ import net.minecraft.item.Item;
  */
 public class ItemBarley extends Item
 {
-
+    //Tier 1
     public ItemBarley()
     {
         super();

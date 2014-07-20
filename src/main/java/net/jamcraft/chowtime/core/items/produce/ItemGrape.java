@@ -27,9 +27,10 @@ import net.minecraft.item.ItemFood;
  */
 public class ItemGrape extends ItemFood
 {
+    //Tier 3
     public ItemGrape()
     {
-        super(3,false);
+        super(5,false);
         this.setCreativeTab(ChowTime.creativeTab);
         setUnlocalizedName("grape");
         this.setTextureName(ModConstants.MODID + ":grape");
