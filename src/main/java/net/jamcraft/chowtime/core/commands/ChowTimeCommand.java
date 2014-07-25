@@ -82,7 +82,7 @@ public class ChowTimeCommand extends CommandBase
             if (astring.length != 3)
                 throw new WrongUsageException(getCommandUsage(commandSender));
             int xp = CommandBase.parseIntWithMin(commandSender, astring[2], 0);
-            HarvestXPServer.INSTANCE.SetXPForUser(MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(astring[1]), xp);
+            HarvestXPServer.INSTANCE.SetXPForUser(MinecraftServer.getServer().getConfigurationManager().func_152612_a(astring[1]), xp);
             commandSender.addChatMessage(new ChatComponentTranslation("chat.ctprefix").appendSibling(new ChatComponentTranslation("chat.setXP", astring[1], xp)));
         }
     }

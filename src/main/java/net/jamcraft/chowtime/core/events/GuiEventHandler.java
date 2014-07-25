@@ -42,7 +42,7 @@ public class GuiEventHandler
     {
         if(Config.shouldRenderXP)
         {
-            ScaledResolution scaledresolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+            ScaledResolution scaledresolution = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
             int k = scaledresolution.getScaledWidth();
             int l = scaledresolution.getScaledHeight();
             FontRenderer fontrenderer = this.mc.fontRenderer;
