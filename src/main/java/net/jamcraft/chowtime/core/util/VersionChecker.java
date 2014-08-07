@@ -104,7 +104,7 @@ public class VersionChecker implements Runnable
                 }
             }
         }
-        ChowTime.logger.error("ChowTime Remote version check failed after {} attempts.", CHECK_COUNT);
+        ChowTime.logger.error("ChowTime Remote version check failed after {} attempts. Tried loading from {}", CHECK_COUNT, Config.remoteLoc+"version.json");
     }
 
     private void LogResult()

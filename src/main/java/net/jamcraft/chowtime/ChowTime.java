@@ -22,6 +22,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.*;
+import cpw.mods.fml.common.network.NetworkCheckHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -72,6 +73,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * Created by James Hollowell on 5/14/2014.
@@ -98,16 +100,6 @@ public class ChowTime
 
     public static Material cloud = new CloudMaterial();
 
-    @Deprecated
-    public static NBTTagCompound saveData = new NBTTagCompound();
-    @Deprecated
-    public static File harvestingLVL;
-    @Deprecated
-    public static File dir;
-    @Deprecated
-    public static int harvestXP = 0;
-    @Deprecated
-    public static int harvestLVL = 0;
 
     @SidedProxy(clientSide = "net.jamcraft.chowtime.core.client.ClientProxy", serverSide = "net.jamcraft.chowtime.core.CommonProxy")
     public static CommonProxy proxy;
@@ -121,9 +113,6 @@ public class ChowTime
     {
         if (version.contains("VERSION"))
             version = "1.0.1-rev5";//Hardcode if in dev environment
-
-        // FMLInterModComms.sendMessage("Waila", "register",
-        // "allout58.mods.prisoncraft.compat.waila.WailaProvider.callbackRegister");
 
         logger = event.getModLog();
 
@@ -169,9 +158,6 @@ public class ChowTime
 
         //        MinecraftForge.EVENT_BUS.register(BucketHandler.INSTANCE);
         //        BucketHandler.INSTANCE.buckets.put(CTInits.ChocolateMilk, CTInits.ItemBucketChoco);
-
-        //TODO: Remove in next update
-        dir = event.getModConfigurationDirectory();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
@@ -258,5 +244,11 @@ public class ChowTime
     public void serverUnload(FMLServerStoppingEvent event)
     {
         HarvestXPServer.INSTANCE.Save();
+    }
+
+    @NetworkCheckHandler
+    public boolean netowrkCheck(Map<String,String> mods, Side side)
+    {
+        return true;//if can connect
     }
 }
