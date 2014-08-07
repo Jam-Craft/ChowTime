@@ -16,23 +16,37 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core.items.produce;
+package net.jamcraft.chowtime.dyn.items;
 
 import net.jamcraft.chowtime.ChowTime;
 import net.jamcraft.chowtime.core.ModConstants;
+import net.jamcraft.chowtime.dyn.DynItems;
+import net.jamcraft.chowtime.dyn.common.IDynItem;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 
 /**
- * Created by DarkKnight on 5/18/14.
+ * Created by James Hollowell on 5/17/2014.
  */
-public class ItemStrawberry extends ItemFood
+public class ItemAppleBread extends ItemFood implements IDynItem
 {
-    // Tier 5
-    public ItemStrawberry()
+    public ItemAppleBread()
     {
-        super(6,false);
-        this.setCreativeTab(ChowTime.creativeTab);
-        setUnlocalizedName("strawberry");
-        this.setTextureName(ModConstants.MODID + ":strawberry");
+        super(10, false);
+        setCreativeTab(ChowTime.creativeTab);
+        setTextureName(ModConstants.MODID + ":appleBread");
+        setUnlocalizedName("appleBread");
+    }
+
+    @Override public String getRegistrationName()
+    {
+        return "appleBread";
+    }
+
+    @Override public void registerRecipe()
+    {
+        CraftingManager.getInstance().addShapelessRecipe(new ItemStack(this), new ItemStack(Items.bread), new ItemStack(DynItems.items.get("appleJam")));
     }
 }

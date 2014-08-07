@@ -16,7 +16,7 @@ public class ItemGrapeBread extends ItemFood implements IDynItem
 {
     public ItemGrapeBread()
     {
-        super(8, false);
+        super(11, false);
         setCreativeTab(ChowTime.creativeTab);
         setTextureName(ModConstants.MODID + ":grapeBread");
         setUnlocalizedName("grapeBread");

@@ -27,6 +27,7 @@ import net.minecraft.item.ItemFood;
  */
 public class ItemTomato extends ItemFood
 {
+    //Tier 2
     public ItemTomato()
     {
         super(3,true);

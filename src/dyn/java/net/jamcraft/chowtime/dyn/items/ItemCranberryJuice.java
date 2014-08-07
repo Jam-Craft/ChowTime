@@ -16,23 +16,37 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.jamcraft.chowtime.core.items.produce;
+package net.jamcraft.chowtime.dyn.items;
 
 import net.jamcraft.chowtime.ChowTime;
+import net.jamcraft.chowtime.core.CTInits;
 import net.jamcraft.chowtime.core.ModConstants;
-import net.minecraft.item.ItemFood;
+import net.jamcraft.chowtime.core.recipies.JuicerRecipes;
+import net.jamcraft.chowtime.dyn.common.IDynItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 /**
- * Created by DarkKnight on 5/18/14.
+ * Created by James Hollowell on 5/17/2014.
  */
-public class ItemStrawberry extends ItemFood
+public class ItemCranberryJuice extends Item implements IDynItem
 {
-    // Tier 5
-    public ItemStrawberry()
+
+    public ItemCranberryJuice()
     {
-        super(6,false);
-        this.setCreativeTab(ChowTime.creativeTab);
-        setUnlocalizedName("strawberry");
-        this.setTextureName(ModConstants.MODID + ":strawberry");
+        super();
+        setCreativeTab(ChowTime.creativeTab);
+        setTextureName(ModConstants.MODID + ":cranberryJuice");
+        setUnlocalizedName("cranberryJuice");
+    }
+
+    @Override public String getRegistrationName()
+    {
+        return "cranberryjuice";
+    }
+
+    @Override public void registerRecipe()
+    {
+        JuicerRecipes.AddRecipe(new ItemStack(CTInits.Blueberry), new ItemStack(this), 200);
     }
 }

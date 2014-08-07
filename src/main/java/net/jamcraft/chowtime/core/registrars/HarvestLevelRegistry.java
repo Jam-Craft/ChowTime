@@ -18,8 +18,10 @@
 
 package net.jamcraft.chowtime.core.registrars;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,18 +35,22 @@ public class HarvestLevelRegistry
 {
     private static Map<Block, Integer> blockReg = new HashMap<Block, Integer>();
     private static Map<Item, Block> seedReg = new HashMap<Item, Block>();
+    private static Map<Item, Item> fruitReg = new HashMap<Item, Item>();
 
     /**
      * Registers a crop block and its seed item with the harvesting level
      * required for it.
-     * @param crop The crop block
-     * @param seed The seed item
+     *
+     * @param crop  The crop block
+     * @param seed  The seed item
+     * @param fruit The fruit of the crop items
      * @param level The level required to harvest/plant this crop
      */
-    public static void AddBlockHavestXP(Block crop, Item seed, int level)
+    public static void AddBlockHavestXP(Block crop, Item seed, Item fruit, int level)
     {
         blockReg.put(crop, Integer.valueOf(level));
         seedReg.put(seed, crop);
+        fruitReg.put(seed, fruit);
     }
 
     public static Block[] GetCropsForLevel(int level)
@@ -58,7 +64,6 @@ public class HarvestLevelRegistry
     }
 
     /**
-     *
      * @param block The block to check
      * @param level The level to check
      * @return Returns whether a specified block's harvest level is less than
@@ -75,8 +80,7 @@ public class HarvestLevelRegistry
     }
 
     /**
-     *
-     * @param seed The seed to check
+     * @param seed  The seed to check
      * @param level The level to check
      * @return Returns whether a specified item's harvest level is less than
      * or equal to the level given
@@ -100,5 +104,16 @@ public class HarvestLevelRegistry
     public static int LevelForSeed(Item item)
     {
         return blockReg.get(seedReg.get(item));
+    }
+
+    public static void registerSeedRecipies()
+    {
+        for (int i = 0; i < fruitReg.keySet().size(); i++)
+        {
+            Item seed = (Item) fruitReg.keySet().toArray()[i];
+            Item fruit = fruitReg.get(seed);
+            if (fruit != null)
+                GameRegistry.addShapelessRecipe(new ItemStack(seed), new ItemStack(fruit));
+        }
     }
 }

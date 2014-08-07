@@ -1,6 +1,5 @@
 -Fix Chocolate Textures
 -Add Candy Land Dimention
--Refactor all the xp code out into its own package
 -Add food infusion(ask DarkKnight if you want to know more)
 
 
